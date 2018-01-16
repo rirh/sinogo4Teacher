@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<style>
+			.tab {
+				height: 1.1rem;
+				background: #ffffff;
+				font-size: 0.26rem;
+				line-height: 1.10rem;
+				color: #666666;
+				width: 100%;
+			}
+			.tab div {
+				display: block;
+				float: left;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				word-break: keep-all;
+			}
+			.mtab {
+				float: left;
+			}
+			.hicbox {
+				width: 16%;
+			}
+			.hic {
+				margin-top: 0.1rem;
+				margin-left: 0.23rem;
+				height: 0.9rem;
+				width: 0.9rem;
+				border-radius: 50%;
+				background-size: 100% !important;
+			}
+			/* .name{
+			 overflow:hidden;
+			 text-overflow:ellipsis;
+			 white-space:nowrap;
+			 word-break:keep-all;   }
+			 .sex{margin-left: 0.64rem; }
+			 .less{
+			 margin-left: 1rem;max-width: 1.232167rem;overflow:hidden;
+			 text-overflow:ellipsis;
+			 white-space:nowrap;
+			 word-break:keep-all; }
+			 .tel{
+			 margin-left: 1.1rem;
+			 overflow:hidden;
+			 text-overflow:ellipsis;
+			 white-space:nowrap;
+			 word-break:keep-all;  }
+			 .hic{ width: 16%; text-align: center;}*/
+			.name {
+				width: 16%;
+				text-align: center;
+			}
+			.sex {
+				width: 16%;
+				text-align: center;
+			}
+			.less {
+				width: 26%;
+				text-align: center;
+			}
+			.tel {
+				width: 26%;
+				text-align: center;
+			}
+			.line {
+				position: relative;
+			}
+			.line:after {
+				border-bottom: 1px solid #d9d9d9;
+				content: "";
+				display: block;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				-webkit-transform-origin: 0 0;
+				-webkit-transform: scaleY(0.5);
+			}
+			/****************************************************************************************************************/
+		</style>
+	</head>
+	<body>
+		<div class="flex-wrap flex-vertical"></div>
+	</body>
+	<script type="template" id="dotTmpl">
+		{{for(var i = 0 ; i<it.length;i++){}}
+		<div class="tab" onclick="studentdetails('{{=i}}')">
+		<div class="hicbox"><div class="mtab hic"></div></div>
+		<div class="mtab name">{{=it[i].name}}</div>
+		<div class="mtab sex">{{=it[i].sex}}</div>
+		<div class="mtab less">{{=it[i].age}}</div>
+		<div class="mtab tel">{{=it[i].tel}}</div>
+		</div>
+		<div class="line"></div>
+		{{}}}
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript">
+		var imageUrl;
+		function json() {
+			var json = [];
+			var sex = ['男', '女'];
+			for (var i = 0; i < hotcities.length; i++) {
+				var list = {};
+				list.name = hotcities[i].studentName;
+				list.sex = sex[hotcities[i].studentGender];
+				if(hotcities[i].surplus==null){
+				list.age ="";
+				}else{
+				list.age = hotcities[i].surplus;
+				}
+				list.tel = hotcities[i].userPhone;
+				json.push(list);
+			}
+			var tmpl = doT.template($api.text($api.dom("#dotTmpl")));
+			$api.html($api.dom(".flex-wrap"), tmpl(json));
+		}
+
+		function studentdetails(i) {
+			var student = hotcities[i].studentId;
+			var classid = hotcities[i].classId
+			api.openWin({
+				name : 'studentdetails',
+				url : 'studentdetails.html',
+				reload : true,
+				pageParam : {
+					id : student,
+					classid : classid
+				}
+			});
+		}
+
+		var hotcities;
+		function getHotCities(id) {
+			var data = {};
+			data.method = "classStudent";
+			data.request = {
+				"classId" : id
+			}
+			api.showProgress();
+			console.log(JSON.stringify(data));
+			ajaxRequest(data, function(ret, err) {
+				api.hideProgress();
+				if (ret) {
+					if (ret.responseBody != null) {
+						hotcities = ret.responseBody;
+						json();
+						var icon = $api.domAll('.hic');
+						for (var i = 0; i < icon.length; i++) {
+							if (hotcities[i].studentImage.length > 0) {
+								$api.css(icon[i], "background: url(" + imageUrl + hotcities[i].studentImage + ")");
+							} else {
+								$api.css(icon[i], "background: url(../../image/eg_header_1.png)");
+							}
+						}
+					} else {
+						alert('没有数据');
+					}
+				} else {
+					alert(err.msg)
+				}
+			})
+		}
+
+		imready = function() {
+			imageUrl = api.getPrefs({
+				sync : true,
+				key : 'imageUrl'
+			});
+			$api.fixStatusBar($api.dom('header'));
+			console.log(JSON.stringify(api.pageParam.id));
+			getHotCities(api.pageParam.id)
+		};
+	</script>
+</html>

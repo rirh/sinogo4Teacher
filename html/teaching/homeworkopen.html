@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <style>
+     .h-right{
+		     text-align:right;
+		     margin-right:0.23rem;
+	        -webkit-flex: 0.3;        /* Chrome */  
+		    -ms-flex:  0.3 ;            /* IE 10 */  
+		    flex:  0.3;                /* NEW, Spec - Opera 12.1, Firefox 20+ */
+		    -webkit-box-flex:  0.3 ;    /* OLD - iOS 6-, Safari 3.1-6 */  
+		    -moz-box-flex:  0.3;  
+	   }
+     .h-left{
+     	    margin-left: 0.23rem;
+	        text-align:left;
+	       -webkit-flex: 0.3;        /* Chrome */  
+		    -ms-flex:  0.3 ;            /* IE 10 */  
+		    flex:  0.3;                /* NEW, Spec - Opera 12.1, Firefox 20+ */
+		    -webkit-box-flex:  0.3 ;    /* OLD - iOS 6-, Safari 3.1-6 */  
+		    -moz-box-flex:  0.3;  
+	   }
+	   .h-left img{
+	    	margin-top: 0.215rem;
+	        width: 0.25rem;
+	    	height: 0.45rem;
+	    	background: url(../../image/setting/icon-back.png);
+	    	background-size: cover;
+	    	margin-left: 0;
+	   }
+	   
+	   
+    	/****************************************************************************************************************/
+    	  	#filter{
+				height:0.78rem;
+				background:#F6F6F6;
+				overflow-x: hidden;
+				border-bottom:1px solid #CCCCCC;
+				top:0.88rem;
+				width:100%;
+			}
+			#filter li{
+				float:left;
+				width:33.33%;
+				height:0.78rem;
+				line-height:0.78rem;
+				text-align: center;		
+				background: url(../../image/icon_filter_down.png) no-repeat right 0.5rem center ;
+				background-size:0.18rem 0.09rem;	
+			}
+			#filter li.current{
+				background: url(../../image/icon_filter_up.png) no-repeat right 0.5rem  center;
+				background-size:0.18rem 0.09rem;	
+				color:#F76249;
+				height:0.75rem;
+				border-bottom: 0.03rem solid #FF8344;
+			}
+			#filter li span{
+				font-size:0.26rem;
+				margin-right:0.4rem;
+				width:99%;
+				height:0.46rem;
+				line-height:0.46rem;
+				background:rgba(0,0,0,0)
+			}
+			.head_span{
+				border-right: 1px solid #d9d9d9;
+			}
+			.osetbox{
+    	    background:#ffffff;
+    	    height:0.88rem;
+    	    line-height:0.88rem;
+    	    width:100%;
+    	    display: -webkit-flex;  /* 新版本语法: Chrome 21+ */
+		    display: flex;          /* 新版本语法: Opera 12.1, Firefox 22+ */
+		    display: -webkit-box;   /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+		    display: -moz-box;      /* 老版本语法: Firefox (buggy) */
+		    display: -ms-flexbox;   /* 混合版本语法: IE 10 */   
+    	}
+    	.osetleft{
+    	height:0.42rem;
+    	width:0.42rem;
+    	margin-top:0.23rem;
+    	display:block;
+    	margin-left: 0.23rem;
+    	line-height: 0.88rem;
+    	text-align: left;
+    	color: #333333;
+    	font-size: 0.28rem;
+    	}
+    	.osetcon{
+    	     text-align:left;
+    	     margin-left:0.23rem;
+    	     color:#333333;
+             font-size:0.26rem;
+    	    -webkit-flex: 1;        /* Chrome */  
+		    -ms-flex: 1 ;            /* IE 10 */  
+		    flex: 1;                /* NEW, Spec - Opera 12.1, Firefox 20+ */
+		    -webkit-box-flex: 1 ;    /* OLD - iOS 6-, Safari 3.1-6 */  
+		    -moz-box-flex: 1;
+		    margin-right: 0.23rem;  
+    	}
+    	.osetright{
+    	    display:inline-block;
+	    	margin-right:0.23rem;
+	    	background-size: cover;
+	    	color: #1ebeb6;
+    	}
+    	.default{
+    	background: url(../../image/teaching/checkboxf.png);
+    	background-size: cover;
+    	}
+    	.active{
+    	background: url(../../image/teaching/checkboxt.png);
+    	background-size: cover;}
+    	.line{
+    	position: relative;
+    	margin-left: 0.23rem;
+    	}
+    	.line:after{
+    		border-bottom: 1px solid #d9d9d9;
+    		content:"";
+    		display:block;
+    		position:absolute;
+    		bottom:0;left:0;right:0;
+    		-webkit-transform-origin: 0 0;
+    		-webkit-transform:scaleY(0.5);
+    	}
+    	 .endtab{
+	        position:fixed;
+	        bottom:0;
+			height: 0.98rem;
+			background: #cccccc;
+			border-top-color: #EEEEEE;
+		    text-align:center;
+		    line-height:0.98rem;
+			width:100%;
+			border-top:#EEEEEE solid 0.01rem; 
+			margin-bottom: 0;
+			color: #FFFFFF;
+			font-size: 0.32rem;
+			}
+    </style>
+</head>
+<body>
+		<header>
+			<div class="h-left" onclick="closeWin();"><img src="../../image/setting/icon-back.png" /></div>
+			<div class="h-conter">
+				发布内容
+			</div>
+			<div class="h-right"></div>
+		</header>
+		
+		<div id="filter">
+			<ul>
+				<li id="category" onclick="filterResult('category')"><span class="head_span">课程分类</span></li>
+				<li id="school" onclick="filterResult('school')" ><span class="head_span">作业类型</span></li>
+				<li id="place" onclick="filterResult('place')" ><span>作业机构</span></li>
+			</ul>
+		</div>
+		<div class="value">
+			
+		</div>
+		<div class="line"></div>
+		<div class="endtab" >发布作业</div>
+</body>
+<script type="template" id="dotTmpl">
+{{for(var i = 0 ; i<it.length;i++){ }}
+	<div class="osetbox" onclick="checkbox('{{=i}}')">
+							<div class="osetleft default"></div>
+							<div class="osetcon">{{=it[i].homework}}</div>
+							<div class="osetright ">{{=it[i].name}}</div>
+	</div>
+<div class="line"></div>
+{{}}}			
+			
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript">
+var isone = false;
+var checkarray=[];
+var date=[];
+	function json(){
+	 
+	 for(var i=0;i<10;i++){
+	 var list={};
+	 list.homework='初级围棋课04课时作业1';
+	 list.name='选择题';
+	 date.push(list);
+	 }
+	 var tmpl = doT.template($api.text($api.dom("#dotTmpl")));
+	 $api.html($api.dom(".value"), tmpl(date)); 
+	}
+	imready = function(){
+	$api.fixStatusBar($api.dom('header'));
+	json();
+	sevent()
+	};
+
+	function checkbox(i){
+	var check=$api.domAll('.osetleft');
+	if(!isone){
+			for(var a = 0 ; a <check.length;a++){
+				checkarray.push(false);
+			}
+		isone =true;
+	}
+	if($api.hasCls(check[i], 'default')){
+		$api.removeCls(check[i], 'default');
+		$api.addCls(check[i], 'active');
+		checkarray[i]=true;
+		istrue();
+	}else{
+		$api.removeCls(check[i], 'active');
+		$api.addCls(check[i], 'default');
+		checkarray[i]=false;
+		istrue();
+	}
+		console.log(checkarray)
+	}
+	 var index=[];
+   function istrue(){
+     index=[];
+	   for(var a = 0 ; a<checkarray.length;a++){
+		   if(checkarray[a]){
+			   index.push(a);
+			  }
+	  }
+  if(index.length>=1){
+  	 $api.css($api.dom('.endtab'), 'background: #ff8344;');
+  	$api.dom('.endtab').onclick=function(){
+  	send();
+  	}
+   }else{
+     $api.css($api.dom('.endtab'), 'background: #cccccc;');
+  }
+  
+  }
+  //接受弹出框发来的广播
+   function sevent(){
+	    api.addEventListener({
+	    name: 'checkbox'
+	}, function(ret, err) {
+	       $api.byId("filter").style.borderBottom="1px white hidden"
+          var mli = $api.domAll('#filter ul li');
+          for(var a = 0 ; a<mli.length;a++){
+           $api.removeCls(mli[a], 'current');         
+          }
+           alert(err.msg);
+	});
+    }
+  //发送广播给父页面
+  function send(){
+  api.closeToWin({
+	name: 'publicjob'
+});
+
+  var info=[];
+  for(var a = 0 ; a<index.length; a++){
+  info.push(date[a].homework);
+  }
+  console.log(JSON.stringify(info))
+  api.sendEvent({
+    name: 'homework',
+    extra: {
+        key1: info,
+    }
+});
+
+  }
+    
+  	function filterResult(type){
+            $api.byId("filter").style.borderBottom="1px grey hidden"
+			
+			var mtype = $api.byId(type);
+			var last = $api.dom(".current");
+			$api.removeCls(last, "current");
+			$api.addCls(mtype, "current");
+			api.openFrame({
+	            name: 'discover_filter',
+	            url: 'discover_filter.html',
+	            pageParam:{
+	            	type:type
+	            },
+	            bounces: false,
+	            vScrollBarEnabled:false,
+	            rect: {
+		            x:0,
+		            y:$api.offset($api.byId("filter")).h+$api.offset($api.dom("header")).h,
+		            w:api.winWidth,
+		            h:api.winHeight-($api.offset($api.byId("filter")).h+$api.offset($api.dom("header")).h),
+	            }
+	            
+            });
+            console.log($api.offset($api.byId("filter")).h+'---'+api.winWidth)
+            api.sendEvent({
+	            name:'filterEvent',
+	            extra:{
+	            	type:type
+	            }
+            });
+		}
+   
+	
+	
+	
+</script>
+</html>

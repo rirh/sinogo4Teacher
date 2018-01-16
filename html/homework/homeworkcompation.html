@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<!-- 此页面Vue工作模板-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>studentCompletion</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+
+    <style scoped>
+        /****************************模板导入***********************************************/
+
+        .h-right {
+            text-align: right;
+            margin-right: .23rem;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left {
+            margin-left: .23rem;
+            text-align: left;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left img {
+            margin-top: .215rem;
+            width: .25rem;
+            height: .45rem;
+            background: url(../../image/setting/icon-back.png);
+            background-size: cover;
+            margin-left: 0;
+        }
+        /*****************************************************************************************/
+
+        [v-cloak] {
+            display: none;
+        }
+
+        table {
+            background: #fff;
+            width: 100%;
+        }
+
+        table tr td {
+            height: .86rem;
+            width: 33.33%;
+            font-size: .28rem;
+            color: #666;
+            text-align: center;
+            border-bottom: solid 1px #eee;
+        }
+
+        table tr:nth-child(1) th {
+            height: .86rem;
+            width: 33.33%;
+            font-size: .3rem;
+            color: #1ebeb6;
+            border-bottom: solid 1px #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex-wrap flex-vertical">
+
+        <div class="flex-con" id="main">
+            <div v-cloak>
+                <student-completion :name="studentCompletion.name" :score="studentCompletion.score" :cevent="studentCompletion.cevent" :students="studentCompletion.students"></student-completion>
+            </div>
+            <footer id="footer" tapmode="" @click="confirmationRelease()">
+            </footer>
+        </div>
+
+    </div>
+</body>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<template id="studentCompletion" style="display:none">
+<table  class="studentCompletionBox">
+   <tr>
+     <th>{{name}}</th>
+     <th>{{score}}</th>
+     <th>{{cevent}}</th>
+   </tr>
+   <tr v-for="student in students" @click="goDetails(student)">
+     <td>{{student.studentName}}</td>
+     <td>{{student.studentScore}}</td>
+     <td>{{student.costTime| myfir }}秒</td>
+   </tr>
+   <
+</table>
+</template>
+<script>
+    var assigment; //全局控制器Controller
+    initVue = function() { //初始化Vue需要的是双向数据绑定 当改变数据以后view会做相应的改变
+        var date = vueDateManager();
+        var methods = vueMethodsManager();
+        var components = vueComponentsManager()
+        assigment = new Vue({
+            el: '#main', //绑定元素
+            data: date, //本页面的静态动态全部数据
+            methods: methods, //本页面的全部方法
+            components: components,
+
+        })
+    }
+
+    Vue.filter('myfir', function(value) {
+        // 返回处理后的值
+        return Math.floor(value);
+    })
+    vueDateManager = function() {
+        //初始化Vue数据date为一个json数组
+        var date = {};
+        date.pageParam = api.pageParam.jobDetails;
+        date.studentCompletion = {};
+        date.studentCompletion.name = "姓名";
+        date.studentCompletion.score = "分数";
+        date.studentCompletion.cevent = "完成时间";
+        date.studentCompletion.students = [];
+        for (var i = 0; i < 1; i++) {
+            var s = {};
+            s.studentName = "张一三";
+            s.studentScore = 100;
+            s.costTime = 10086;
+            date.studentCompletion.students.push(s);
+        }
+
+        console.log("数据管理者" + JSON.stringify(date));
+        return date;
+
+    }
+
+
+    vueMethodsManager = function() {
+        //时间管理中心 每个Vue事件的处理都可以在这管理
+        var methods = {};
+        methods.init = function() {
+            var data = {};
+            data.method = "getHomeWorkRanking";
+            data.request = {
+                "homeWorkId": assigment.pageParam.id,
+            };
+            console.log(api.frameName + "getHomeWorkAnalyze请求数据：" + JSON.stringify(data));
+            api.showProgress();
+            ajaxRequest(data, function(ret, err) {
+                api.hideProgress();
+                if (ret) {
+                    console.log(api.frameName + "getHomeWorkAnalyze返回数据：" + JSON.stringify(ret));
+
+                    if (ret.responseCode == 0) {
+                        assigment.studentCompletion.students = ret.responseBody;
+
+                    } else {
+                        api.toast({
+                            msg: ret.responseMsg,
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                } else {
+                    api.toast({
+                        msg: ret.responseMsg,
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                }
+            })
+        };
+
+        console.log("事件管理者：" + JSON.stringify(methods));
+        return methods;
+    }
+    vueComponentsManager = function() {
+        var components = {};
+        components.studentCompletion = {}; //学生完成
+        components.studentCompletion.template = "#studentCompletion";
+        components.studentCompletion.props = [];
+        components.studentCompletion.props.push("name"); //要传入的数据
+        components.studentCompletion.props.push("score"); //要传入的数据
+        components.studentCompletion.props.push("cevent"); //要传入的数据
+        components.studentCompletion.props.push("students"); //要传入的数据
+        components.studentCompletion.methods={};
+        components.studentCompletion.methods.goDetails = function(student) {
+           //某个学生的作业详情
+           if(student.costTime==0){
+               api.toast({
+                   msg: "该学生还没有答题",
+                   duration: 2000,
+                   location: 'bottom'
+               });
+               return;
+           }
+          api.openWin({
+              name: 'studentAnswerDetail_win',
+              url: 'studentAnswerDetail_win.html',
+              pageParam: {
+                  "student": student,
+                   classMessage:api.pageParam
+              }
+          });
+        }
+        console.log("组件管理者：" + JSON.stringify(components));
+        return components;
+    }
+    imready = function() {
+        api.parseTapmode(); //默认页面加载完成后，引擎会对 dom 里面的元素进行 tapmode 属性解析，若是之后用代码创建的 dom 元素，则需要调用该方法后 tapmode 属性才会生效
+        $api.fixStatusBar($api.dom('header'));
+        initVue();
+        assigment.init();
+    };
+</script>
+
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>作业列表</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+
+    <style>
+        .h-right {
+            text-align: right;
+            margin-right: .23rem;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left {
+            margin-left: .23rem;
+            text-align: left;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left img {
+            margin-top: .215rem;
+            width: .25rem;
+            height: .45rem;
+            background-size: cover;
+            margin-left: 0;
+        }
+        /*****************************************************************************************/
+
+        ul {
+            border-bottom: solid #cecece 1px;
+        }
+
+        ul li {
+            height: .86rem;
+            background: #fff;
+            float: left;
+            list-style-type: none;
+            width: 50%;
+            text-align: center;
+        }
+
+        ul li strong {
+            font-size: .28rem;
+            line-height: .86rem;
+        }
+
+        .default {
+            color: #666;
+        }
+
+        .active {
+            color: #1ebeb6;
+        }
+
+        ul li img {
+            width: .35rem;
+            height: .19rem;
+            margin-left: .35rem;
+        }
+
+        .tapmode {
+            background: #f6f6f6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex-wrap flex-vertical">
+        <header>
+            <div class="h-left" onclick="closeWin();"><img tapmode="tapmode" src="../../image/setting/icon-back.png" />
+            </div>
+            <div class="h-conter">
+                作业列表
+            </div>
+            <div class="h-right"></div>
+        </header>
+        <ul id="main">
+            <li @click="switchbar(1)" tapmode="tapmode"><strong :class="['default',{'active':classIsSwitch}]">{{className}}</strong></li>
+            <li @click="switchbar(2)" tapmode="tapmode"><strong :class="['default',{'active':stateIsSwitch}]">{{classStateValue}}</strong></li>
+        </ul>
+        <div class="flex-con">
+
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script>
+    var jobList; //全局控制器Controller
+    initVue = function() { //初始化Vue需要的是双向数据绑定 当改变数据以后view会做相应的改变
+        var date = vueDateManager();
+        var methods = vueMethodsManager();
+        jobList = new Vue({
+            el: '#main', //绑定元素
+            data: date, //本页面的静态动态全部数据
+            methods: methods, //本页面的全部方法
+
+        })
+    }
+
+    vueDateManager = function() {
+        //初始化Vue数据date为一个json数组
+        var date = {};
+        date.school = [];
+        date.dialogBox;
+        date.className = "班级";
+        date.classStateValue = "全部作业";
+        date.classState = ["全部作业", "未检查", "已检查"];
+        date.classIsSwitch = false;
+        date.stateIsSwitch = false;
+        date.pageParam;
+        console.log("数据管理者" + JSON.stringify(date));
+        return date;
+
+    }
+    vueMethodsManager = function() {
+        //时间管理中心 每个Vue事件的处理都可以在这管理
+        var methods = {};
+        methods.init = function() {
+            //获取班级列表 默认为第一个班级
+            var userid = api.getPrefs({
+                sync: true,
+                key: 'userid'
+            }); //获取教师id
+            var data = {};
+            data.method = "homeWorkClass";
+            data.request = {
+                "teacherId": userid,
+            };
+            console.log(api.frameName + "选择班级请求数据：" + JSON.stringify(data));
+            api.showProgress();
+            ajaxRequest(data, function(ret, err) {
+                api.hideProgress();
+                if (ret) {
+                    console.log("返回数据" + JSON.stringify(ret));
+                    if (ret.responseCode == 0) {
+                        jobList.school = [];
+                        for (var i = 0; i < ret.responseBody.length; i++) {
+                            if (ret.responseBody[i]) {
+                                jobList.school.push(ret.responseBody[i]);
+                            };
+                            jobList.className = jobList.school[0].className;
+                            jobList.pageParam = jobList.school[0];
+                            jobList.classIsSwitch = true;
+                            jobList.stateIsSwitch = true
+                            jobList.openFrame();
+                        }
+                    } else {
+                        api.toast({
+                            msg: ret.responseMsg,
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                } else {
+                    console.log(JSON.stringify(err));
+                }
+            });
+        };
+        methods.openFrame = function() {
+            api.openFrame({
+                name: 'jobList_frm',
+                url: 'jobList_frm.html',
+                bounces: true,
+                rect: {
+                    x: 0,
+                    y: $api.offset($api.dom("header")).h + $api.offset($api.dom("ul")).h,
+                    w: 'auto',
+                    h: 'auto'
+                },
+                pageParam: {
+                    "job": jobList.pageParam
+                }
+            })
+        }
+        methods.lister = function(value, isChecked) {
+            api.sendEvent({
+                name: 'joblist',
+                extra: {
+                    key1: value,
+                    key2: isChecked
+                }
+            });
+        }
+        methods.switchbar = function(index) { //确认发布作业
+            if (index == 1) {
+                var title = "选择班级";
+                var value = [];
+                for (var i = 0; i < jobList.school.length; i++) {
+                    var valuetext = {};
+                    valuetext.text = jobList.school[i].className;
+                    value.push(valuetext);
+                }
+                jobList.customAlert(title, value, function(ret, err) {
+                    if (ret) {
+                        jobList.className = value[ret.index].text;
+                        jobList.pageParam = jobList.school[ret.index];
+                        jobList.classStateValue="全部作业"
+                        jobList.classIsSwitch = true;
+                        jobList.lister(jobList.pageParam, false);
+                        jobList.dialogBox.close({
+                            dialogName: 'scene'
+                        });
+                    }
+                });
+
+            } else if (index == 2) {
+                var title = "选择状态";
+                var value = [];
+                for (var i = 0; i < jobList.classState.length; i++) {
+                    var valuetext = {};
+                    valuetext.text = jobList.classState[i];
+                    value.push(valuetext);
+                }
+                jobList.customAlert(title, value, function(ret, err) {
+                    if (ret) {
+                        jobList.lister(jobList.pageParam, ret.index);
+                        jobList.stateIsSwitch = true;
+                        jobList.classStateValue = jobList.classState[ret.index];
+                        jobList.dialogBox.close({
+                            dialogName: 'scene'
+                        });
+                    }
+                });
+
+            }
+        }
+        methods.customAlert = function(mtitle, value, callback) {
+          if (value.length > 5) {
+              height = 400;
+          } else {
+              height = (value.length+1) * 48;
+          };
+            console.log("作业弹出框的参数：" + JSON.stringify(value) + "作业弹出框的标题：" + mtitle);
+            jobList.dialogBox = api.require('dialogBox');
+            var dialogboxfontSize = api.frameWidth * 4 / 100;
+            jobList.dialogBox.scene({
+                rect: {
+                    w: 280,
+                    h: height
+                },
+                tapClose: true,
+                corner: 10,
+                texts: {
+                    title: mtitle
+                },
+                styles: {
+                    bg: '#fff',
+                    title: {
+                        bg: '#1ebeb6',
+                        h: 44,
+                        size: dialogboxfontSize,
+                        color: '#fff',
+                    },
+                },
+                optionDatas: value
+            }, function(ret, err) {
+                callback(ret, err);
+            });
+        }
+        console.log("事件管理者：" + JSON.stringify(methods));
+        return methods;
+    }
+    imready = function() {
+        api.parseTapmode(); //默认页面加载完成后，引擎会对 dom 里面的元素进行 tapmode 属性解析，若是之后用代码创建的 dom 元素，则需要调用该方法后 tapmode 属性才会生效
+        $api.fixStatusBar($api.dom('header'));
+        initVue();
+        jobList.init();
+        jobList.lister(); //发送广播选择事件
+
+    };
+</script>
+
+</html>

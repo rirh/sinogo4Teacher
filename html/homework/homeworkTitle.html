@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>homeworkTitle</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <style>
+        .h-right {
+            text-align: right;
+            margin-right: 0.23rem;
+            -webkit-flex: 0.3;
+            /* Chrome */
+            -ms-flex: 0.3;
+            /* IE 10 */
+            flex: 0.3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: 0.3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: 0.3;
+        }
+
+        .h-left {
+            margin-left: 0.23rem;
+            text-align: left;
+            -webkit-flex: 0.3;
+            /* Chrome */
+            -ms-flex: 0.3;
+            /* IE 10 */
+            flex: 0.3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: 0.3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: 0.3;
+        }
+
+        .h-left img {
+            margin-top: 0.215rem;
+            width: 0.25rem;
+            height: 0.45rem;
+            background: url(../../image/setting/icon-back.png);
+            background-size: cover;
+            margin-left: 0;
+        }
+        /****************************************************************************************************************/
+
+        [v-cloak] {
+            display: none;
+        }
+
+        #main {
+            position: relative
+        }
+
+        #main .deadline {
+            padding: 0.23rem;
+            background: #fff;
+        }
+
+        #main .deadline label {
+            color: #333;
+            font-size: 0.28rem;
+        }
+
+        #main .deadline span {
+            color: #666;
+            font-size: 0.26rem;
+            letter-spacing: 0.024rem
+        }
+
+        #main .completion .tips {
+            color: #1ebeb6;
+            padding: 0.28rem 0 0.44rem 0.28rem;
+            font-size: 0.28rem;
+        }
+
+        #main .completion .completionbox {
+            background: #f4f4f4;
+        }
+
+        #main .completion .completionbox .scoreboard {
+            background: #fff;
+            text-align: center;
+            width: 43%;
+        }
+
+        #main .completion .completionbox .completionleft {
+            float: left;
+            margin: 0 0.23rem 0 0.23rem;
+        }
+
+        #main .completion .completionbox .completionright {
+            float: right;
+            margin: 0 0.23rem 0 0.23rem;
+        }
+
+        #main .completion .completionbox .scoreboard p {
+            font-size: 0.28rem;
+            padding: 0.23rem 32.5% 0.10rem 32.5%;
+        }
+
+        #main .completion .completionbox .scoreboard p span {
+            color: #ff8344;
+            font-size: 0.43rem;
+        }
+
+        #main .switchbar {
+            width: 100%;
+            background: #fff;
+            height: 1.10rem;
+            margin-top: 0.44rem;
+            font-size: 0.28rem;
+            text-align: center;
+            line-height: 1.1rem;
+            display: -webkit-flex;
+            /* 新版本语法: Chrome 21+ */
+            display: flex;
+            /* 新版本语法: Opera 12.1, Firefox 22+ */
+            display: -webkit-box;
+            /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+            display: -moz-box;
+            /* 老版本语法: Firefox (buggy) */
+            display: -ms-flexbox;
+            /* 混合版本语法: IE 10 */
+        }
+
+        #main .switchbar .studenttripezoide {
+            -webkit-flex: 1;
+            /* Chrome */
+            -ms-flex: 1;
+            /* IE 10 */
+            flex: 1;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: 1;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: 1;
+            /* OLD - Firefox 19- */
+            position: relative;
+            display: block;
+            width: 0;
+        }
+
+        .stuactive {
+            height: 0;
+            border-bottom: 1.1rem solid #1ebeb6;
+            border-right: 1.1rem solid transparent;
+        }
+
+        #main .switchbar .homeworktripezoide {
+            -webkit-flex: 1;
+            /* Chrome */
+            -ms-flex: 1;
+            /* IE 10 */
+            flex: 1;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: 1;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: 1;
+            /* OLD - Firefox 19- */
+            position: relative;
+            display: block;
+            width: 0;
+        }
+
+        .switchbarleft {
+            position: absolute;
+            top: 0;
+        }
+
+        .switchbarright {
+            position: absolute;
+        }
+
+        .homactive {
+            height: 0;
+            border-top: 1.1rem solid #1ebeb6;
+            border-left: 1.1rem solid transparent;
+        }
+
+        #main .switchbar .studenttripezoide img {
+            height: 0.42rem;
+            width: 0.42rem;
+            margin-right: 0.23rem;
+            margin-left: 0.23rem;
+            margin-top: 0.34rem;
+            display: inline-block;
+        }
+
+        #main .switchbar span {
+            float: right;
+            margin-right: .32rem;
+        }
+
+        .unchoose {
+            color: #1ebeb6;
+        }
+
+        .choose {
+            color: #fff!important;
+        }
+
+        #main .switchbar .homeworktripezoide img {
+            height: 0.32rem;
+            width: 0.38rem;
+            margin-right: 0.23rem;
+            margin-left: 0.23rem;
+            margin-top: 0.39rem
+        }
+
+        #workspace {
+            width: 7.03rem;
+            margin: 0.29rem 0.23rem 0 0.23rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main" v-cloak class="flex-wrap flex-vertical">
+        <header>
+            <div class="h-left" onclick="closeWin();"><img src="../../image/setting/icon-back.png" />
+            </div>
+            <div class="h-conter">
+                <span>作业详情</span>
+            </div>
+            <div class="h-right"></div>
+        </header>
+        <div class="flex-con"></div>
+
+        <div class="deadline">
+            <!-- <label>{{stopTime}} &nbsp:</label><span>&nbsp {{stopTimeValue}}</span> -->
+        </div>
+        <div class="completion">
+            <p class="tips">{{completion}}</p>
+            <div class="completionbox">
+                <div class="scoreboard completionleft">
+                    <p><span>{{completionNumber}}/</span>{{totalNumber}}</p>
+                    <p style="padding-top:0px">{{completionName}}</p>
+                </div>
+                <div class="scoreboard completionright">
+                    <p><span>{{averageScoreValue|mavg}}</span></p>
+                    <p style="padding-top:0px">{{averageScore}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="switchbar">
+            <div :class="['studenttripezoide',{'stuactive':isStudentComletion}]" @click="switchbar(0)">
+                <div class="switchbarleft">
+                    <img :src="studentComletionimg" alt=""><span :class="['unchoose',{'choose':isStudentComletion}]">{{studentComletion}}</span>
+                </div>
+            </div>
+            <div :class="['homeworktripezoide',{'homactive':!isStudentComletion}]" @click="switchbar(1)">
+                <div class="switchbarright">
+                    <img :src="jobAccuracyimg"><span :class="['unchoose',{'choose':!isStudentComletion}]">{{studentjobAccuracy}}</span>
+                </div>
+            </div>
+        </div>
+        <div id="workspace">
+
+
+
+
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script>
+    var assigment; //全局控制器Controller
+    initVue = function() { //初始化Vue需要的是双向数据绑定 当改变数据以后view会做相应的改变
+        var date = vueDateManager();
+        var methods = vueMethodsManager();
+        assigment = new Vue({
+            el: '#main', //绑定元素
+            data: date, //本页面的静态动态全部数据
+            methods: methods //本页面的全部方法
+        })
+    }
+    Vue.filter('mavg', function(value) {
+        // 返回处理后的值
+        if(value==""||value==null){
+          return 0;
+        }
+        console.log();
+        return Math.round(value*100)/100;
+    })
+    vueDateManager = function() {
+        //初始化Vue数据date为一个json数组
+        var date = {};
+        date.pageParam = api.pageParam.jobDetails;
+        // date.stopTime = "截止时间";接口不提供截止时间
+        date.stopTimeValue = " ";
+        date.completion = "完成情况";
+        date.completionNumber = "";
+        date.totalNumber = "";
+        date.completionName = "完成作业";
+        date.averageScoreValue = "";
+        date.averageScore = "平均得分";
+        date.studentjobAccuracy = "作业正确率";
+        date.studentComletion = "学员完成情况";
+        date.isStudentComletion = false;
+        date.studentComletionimg = "../../image/homework_img/switch_studentt.png";
+        date.jobAccuracyimg = "../../image/homework_img/switch_homeworkt.png";
+        console.log("数据管理者" + JSON.stringify(date));
+        return date;
+    }
+    vueMethodsManager = function() {
+        //时间管理中心 每个Vue事件的处理都可以在这管理
+        var methods = {};
+        methods.init = function() {
+            var data = {};
+            data.method = "getHomeWorkAnalyze";
+            data.request = {
+                "homeWorkId": assigment.pageParam.id,
+            };
+            console.log(api.frameName + "getHomeWorkAnalyze请求数据：" + JSON.stringify(data));
+            api.showProgress();
+            ajaxRequest(data, function(ret, err) {
+                api.hideProgress();
+                console.log(api.frameName + "getHomeWorkAnalyze返回数据：" + JSON.stringify(ret));
+
+                if (ret) {
+                    if (ret.responseCode == 0) {
+                      assigment.completionNumber=ret.responseBody.completeNumber;
+                      assigment.totalNumber=ret.responseBody.studentNumber;
+                      assigment.averageScoreValue=ret.responseBody.avgScore;
+                    } else {
+                        api.toast({
+                            msg: ret.responseMsg,
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                } else {
+                    api.toast({
+                        msg: ret.responseMsg,
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                }
+
+            })
+
+
+
+
+        };
+        methods.switchbar = function(index) {
+            var y = $api.offset($api.dom("header")).h + 50 + $api.offset($api.dom(".deadline")).h + $api.offset($api.dom(".completion")).h + $api.offset($api.dom(".switchbar")).h;
+            var x = api.frameWidth * 4.3 / 100;
+            var switchRigiht = $api.dom(".switchbarright");
+
+            if (index == 0) {
+                assigment.isStudentComletion = true;
+                $api.css(switchRigiht, 'top:0');
+                api.openFrame({
+                    name: 'homeworkcompation',
+                    url: 'homeworkcompation.html',
+                    rect: {
+                        x: x,
+                        y: y,
+                        w: api.frameWidth - x - x,
+                        h: api.frameHeight - y
+                    },
+                    pageParam: {
+                        "jobDetails": assigment.pageParam
+                    },
+                    bounces: false,
+                    bgColor: 'rgba(0,0,0,0)',
+                    vScrollBarEnabled: true,
+                    hScrollBarEnabled: true
+                });
+            } else if (index == 1) {
+                assigment.isStudentComletion = false;
+                $api.css(switchRigiht, 'top:-1.1rem');
+                api.openFrame({
+                    name: 'studentCompletion',
+                    url: 'studentCompletion.html',
+                    rect: {
+                        x: x,
+                        y: y,
+                        w: api.frameWidth - x - x,
+                        h: api.frameHeight - y
+                    },
+                    pageParam: {
+                        "jobDetails": assigment.pageParam
+                    },
+                    bounces: false,
+                    bgColor: 'rgba(0,0,0,0)',
+                    vScrollBarEnabled: true,
+                    hScrollBarEnabled: true
+                });
+            }
+            if (assigment.isStudentComletion) {
+                assigment.studentComletionimg = "../../image/homework_img/switch_studentf.png";
+                assigment.jobAccuracyimg = "../../image/homework_img/switch_homeworkf.png";
+            } else {
+                assigment.studentComletionimg = "../../image/homework_img/switch_studentt.png";
+                assigment.jobAccuracyimg = "../../image/homework_img/switch_homeworkt.png";
+            }
+        };
+        methods.confirmationRelease = function() { //确认发布作业
+            //TODO
+
+
+
+        }
+        console.log("事件管理者：" + JSON.stringify(methods));
+        return methods;
+
+
+
+
+    };
+
+    imready = function() {
+        $api.fixStatusBar($api.dom('header'));
+        initVue();
+        assigment.init();
+        assigment.switchbar(0);
+
+    };
+</script>
+
+</html>

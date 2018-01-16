@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <style>
+    	html,body{
+    		height:100%;
+    		background:#F6F6F6;
+    	}
+		#wrap,#main{
+    		height:100%;
+			width:100%;
+		}
+    	.item{
+    		width:100%;
+    		height:2.65rem;
+    		background:#FFF;
+    		position: relative;
+    	}
+    	.item:after{
+    		border-bottom: 1px solid #CCCCCC;
+    		position: absolute;
+    		bottom: 0;left:0;right:0;
+    		content:"";display:block;
+    		pointer-events:none;
+    		-webkit-transform: scaleY(0.5);
+    		-webkit-transform-origin: 0 0;
+    	}
+    	.item .item-left{
+    		width:21.1%;
+    		height: 100%;
+    		float: left;
+    	}
+    	.item .item-left .item-left-inner{
+    		width:100%;
+    		height:1.97rem;
+    		margin-top:0.34rem;
+    		position:relative;
+    	}
+    	.item .item-left .item-left-inner:after{
+    		position: absolute;
+    		border-right:1px solid #cccccc;
+    		right:0;top:0;bottom:0;
+    		content:"";display:block;
+    		pointer-events:none;
+    		-webkit-transform: scaleX(0.5);
+    		-webkit-transform-origin: 0 0;
+    	}
+    	.item .item-left .item-left-inner .header{
+    		width:1rem;
+    		margin-left:0.23rem;
+    		padding-top: 0.5rem;
+    	}
+    	.item .item-left .item-left-inner .header img{
+    		width:1rem;
+    		height:1rem;
+    		display: block;
+    		border-radius: 0.5rem;
+    	}
+    	.item .item-left .item-left-inner .header .name{
+    		width:100%;
+    		text-align: center;
+    		color:#FF8344;
+    		font-size:0.26rem;
+    		padding-top:0.08rem;
+    	}
+    	.item .item-right{
+    		width:78.9%;
+    		height: 100%;
+    		float: left;
+    	}
+    	.item .item-right .item-right-inner{
+    		height:1.97rem;
+    		margin-top:0.34rem;
+    		margin-left:0.36rem;
+    		position: relative;
+    	}
+    	.item .item-right .item-right-inner .title{
+    		height: 25%;
+    		color:#333;
+    		font-size:0.28rem;
+    	}
+    	.item .item-right .item-right-inner .title .content{
+    		color:#666;
+    		font-size:0.26rem;
+    	}
+    	.item .item-right .item-right-inner .title .impcontent{
+    		color:#FF8344;
+    		font-size:0.26rem;
+    	}
+    	#empty{
+			width:100%;
+			height:100%;
+			text-align: center;
+		}
+		#empty .errnet{
+			height:30%;
+			background:url(../../image/icon_net_err.png) no-repeat center bottom ;
+			background-size:2.5rem 2.5rem;
+		}
+		#empty label{
+			margin-top:0.5rem;
+			color:#666666;
+			font-size:0.34rem;
+		}
+		#empty .try{
+			margin:0.3rem auto;
+			width:1.8rem;
+			height:0.6rem;
+			color: #1A9973;
+			font-size:0.34rem;
+			line-height:0.6rem;
+		}
+    </style>
+</head>
+<body>
+	<div id="wrap" class="flex-wrap flex-vertical">
+		<div id="main" class="flex-con">
+			<script type="text/x-dot-template" id="history_template">
+			{{ for(var i=0;i<it.length;i++){ }}
+			<div class="item"  onclick="goDetail('{{=it[i].orderNo}}','{{=it[i].studentName}}','{{=it[i].userPhone}}','{{=it[i].paymentTime}}','{{=it[i].createTime}}','{{=it[i].orderStatus}}')">
+				<div class="item-left">
+					<div class="item-left-inner">
+						<div class="header">
+							<img src="{{=(it[i].studentImage?(imageUrl+it[i].studentImage):'../../image/eg_header_1.png')}}" alt="" />
+						</div>
+					</div>
+				</div>
+				<div class="item-right">
+					<div class="item-right-inner">
+						<div class="title">学生姓名 : <span class="imp">{{=it[i].studentName}}</span> </div>
+						<div class="title">家长电话 : <span class="content">{{=it[i].userPhone}}</span> </div>
+						<div class="title">支付时间 : <span class="{{=(it[i].paymentTime?'content':'impcontent')}}">{{=(it[i].orderStatus==0?'待支付':(it[i].orderStatus==1?'已取消':it[i].paymentTime))}}</span> </div>
+						<div class="title"><span style="float:left;" >代报课程 : </span><span style="float:left;"  class="content ellipsis-1">《{{=it[i].goodsName}}》等{{=it[i].goodsCount==1?'1门':''}}</span> </div>
+					</div>
+				</div>
+			</div>
+			{{ } }}
+			</script>
+			<div id="history">
+			</div>
+		</div>
+		<div id="empty" style="display:none">
+			<div class="errnet"></div>
+			<label class="errmsg">网络连接异常</label>
+			<div class="try" onclick="tryAgain()">再试一次</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/jquery-3.1.1.js"></script>
+<script type="text/javascript">
+	var pageIndex = 1;
+	var pageSize = 10;
+	var loadEnd = false;
+	var imageUrl;
+	imready = function(){
+		imageUrl = api.getPrefs({
+	        sync:true,
+	        key:'imageUrl'
+        });
+		requestCoursesHistory();
+		api.setRefreshHeaderInfo({
+			visible: true,
+		    loadingImg: 'widget://image/refresh.png',
+		    bgColor: '#ccc',
+		    textColor: '#fff',
+		    textDown: '下拉刷新...',
+		    textUp: '松开刷新...',
+		    showTime: true
+        },function(ret,err){
+        	pageIndex=1;
+			loadEnd=false;
+			requestCoursesHistory();
+        });
+        //页面拉到底时自动加载更多  
+		$(window).scroll(function(event){ 
+		    var wScrollY = window.scrollY; // 当前滚动条位置    
+		    var wInnerH = window.innerHeight; // 设备窗口的高度（不会变）    
+		    var bScrollH = document.body.scrollHeight; // 滚动条总高度        
+		    if (wScrollY + wInnerH >= bScrollH) { 
+			    if(loadEnd){
+					api.toast({
+	                    msg:'没有更多内容了...',
+	                    location:'middle'
+                    });
+					return;
+				}
+		    	pageIndex++;
+		    	requestCoursesHistory();
+		    }  
+		});
+	};
+	function requestCoursesHistory(){
+		api.showProgress();
+		var body = {};
+		body.method="employeeInsteadSearch";
+		body.request = {
+			"employeeId":api.getPrefs({sync:true,key:'userid'}),
+			"goodsType":2,//1为教辅,2为课程
+			"page":pageIndex,
+			"pageSize":pageSize
+		}
+		console.log(JSON.stringify(body))
+		ajaxRequest(body,function(ret,err){
+			api.hideProgress();
+			console.log(JSON.stringify(ret))
+			api.refreshHeaderLoadDone();
+			if(ret){
+				if(ret.responseCode==0){
+					if(ret.responseBody.total==0){
+						showEmpty("暂无代购历史!",0)
+					}else{
+						$api.byId("empty").style.display="none"
+						$api.byId("main").style.display="block"
+						fillData(ret.responseBody)
+					}
+				}else{
+					showEmpty(ret.responseMsg)
+				}
+			}else{
+				showEmpty(err.msg)
+			}
+		})
+	}
+	
+	function showEmpty(msg,type){
+		$api.byId("empty").style.display="block"
+		$api.byId("main").style.display="none"
+		$api.dom(".errmsg").innerHTML=msg;
+		if(type==0){
+			$api.dom(".errnet").style.background="url(../../image/icon_empty.png) no-repeat center bottom "
+			$api.dom(".errnet").style.backgroundSize="2.18rem 2.18rem";
+		}else{
+			$api.dom(".errnet").style.background="url(../../image/icon_net_err.png) no-repeat center bottom "
+			$api.dom(".errnet").style.backgroundSize="2.5rem 2.5rem";
+		}
+	}
+	
+	function tryAgain(){
+		requestCoursesHistory();
+	}
+	
+	function fillData(ret){
+		$api.byId("empty").style.display="none"
+		loadEnd=(pageIndex==ret.totalPage)
+		var rows = ret.rows;
+		for(var i=0;i<rows.length;i++){
+			var row = rows[i]
+			var goods = row.recordGoods;
+			var currentgood ;
+			for(var j=0;j<goods.length;j++){
+				var good = goods[j]
+				if(good.goodsType==2||good.goodsType=="2"){
+					currentgood=good;
+				}
+			}
+			row.goodsName=currentgood.goodsName;
+			row.goodsCount=goods.length;
+		}
+		getInnerByDot("history","history_template",rows,pageIndex!=1)
+		
+		var schools = $api.domAll(".title .ellipsis-1");
+		for(var i=0;i<schools.length;i++){
+			var school = schools[i];
+			var title = school.parentNode;
+			var h = $api.offset(title).h;
+			school.style.height=h+"px"
+			school.style.lineHeight=h+"px"
+		}
+	}
+	
+	function goDetail(orderNo,studentName,parentPhone,paytime,ordertime,type){
+		//type已支付为2,待支付为0,1为已经取消
+		api.openWin({
+            name: 'orderPaymentCourse',
+            url: 'orderPaymentCourse.html',
+            pageParam:{
+            	type:type,
+            	from:'history',
+            	orderNo:orderNo,
+            	userInfo:[parentPhone,studentName,ordertime,paytime]
+            }
+        });
+	
+	}
+</script>
+</html>

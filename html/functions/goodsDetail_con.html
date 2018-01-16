@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <style>
+    	html,body{
+    		background:#F6F6F6;
+    		height:100%;
+    	}
+    	#wrap,#main,.content{
+    		overflow-x: hidden;
+    	}
+		#main{
+			width: 100%;
+		}
+    	#pic-content{
+    		overflow:hidden;
+    		height:4.18rem;
+    		position:relative;
+    	}
+    	#pic-inner{
+			position: relative;
+			overflow: hidden;
+    	}
+    	.pic{
+    		height:4.18rem;
+    		background:#F0F0F0;
+    		width:100%;
+    		text-align: center;
+    		line-height: 4.18rem;
+		 	position: relative;
+    		float:left;
+    	}
+    	.pic img{
+    		width:5.5rem;
+    		height:4rem;
+    		margin-top: 0.09rem;
+    	}
+    	#pagesize{
+    		position:absolute;
+    		right:0.5rem;
+    		top:3.25rem;
+    		width:0.68rem;
+    		display:inline-block;
+    		height:0.68rem;
+    		border-radius: 0.34rem;
+    		background: #FFF;
+    		line-height:1;
+    	}
+    	#pagesize .currentindex{
+    		font-size:0.3rem;
+    		height:0.68rem;
+    		line-height:0.68rem;
+    		color:#F48344;
+    		letter-spacing: 0;
+    	}
+    	#pagesize .size{
+    		font-size:0.26rem;
+    		height:0.68rem;
+    		line-height:0.68rem;
+    		color:#FFab88;
+    		letter-spacing: 0;
+    	}
+    	#summary{
+    		height:1.2rem;
+    		background:#FFFFFF;
+    		padding-left:0.25rem;
+    	}
+    	#summary #good_title{
+    		font-size:0.28rem;
+    		color:#333333;
+    		padding-top:0.2rem;
+    	}
+    	#summary #good_content {
+    		margin-top:0.15rem;
+    	}
+    	#summary #good_content span{
+    		color:#ff8344;
+    		font-size:0.26rem;
+    	}
+    	#summary #good_content .count{
+    		margin-left:0.38rem;
+    	}
+    	#summary #good_content .stock{
+    		float: right;
+    		margin-right:0.23rem;
+    	}
+    	#detail{
+    		padding-bottom: 0.98rem;
+    		padding:0.23rem;
+    		background: #FFF;
+    		margin-top: 0.26rem;
+    		overflow: hidden;
+    	}
+    	#detail img{
+    		max-width:100%;
+    	}
+    	#spec{
+    		height:0.88rem;
+    		line-height:0.88rem;
+    		margin-top:0.23rem;
+    		width:100%;
+    		padding: 0 0.23rem;
+    		background: #FFF
+    	}
+    	#spec .specarrow{
+    		margin-right:0.39rem;
+    		background:url(../../image/icon_arrow_right.png) no-repeat right center;
+    		background-size:0.16rem 0.28rem;
+    	}
+    </style>
+</head>
+<body >
+	<div id="wrap" class="flex-wrap flex-vertical">
+		<div id="main" class="flex-con">
+			<div class="content" class="flex-con">
+				<script type="text/x-dot-template" id="pic_template">
+				{{ for(var i=0;i<it.length;i++){ }}
+					<div class="pic">
+						<img src="{{=imageUrl+it[i]}}" alt="" />
+					</div>
+				{{ } }}
+				</script>
+				<div id="pic-content" class="swipe">
+					<div id="pic-inner"  class="swipe-wrap">
+					</div>
+					<div id="pagesize">
+						<span class="currentindex">&nbsp;1</span>
+						<span class="size">/5</span>
+					</div>
+				</div>
+				<script id="summary_template" type="text/x-dot-template">
+				<div id="good_title"><strong>{{=it.materialsGoodsName}}</strong></div>
+				<div id="good_content">
+					<span class="price">价格: {{=it.goodsSalesPrice}} 元</span>
+					<span class="count">已有 {{=it.goodsSalesCount}} 人购买</span>
+					<span class="stock">库存 {{=it.goodsSalesQuantity}} 件</span>
+				</div>
+				</script>
+				<div id="summary">
+					
+				</div>
+				<div id="spec" onclick="selectSpec();">
+					<div class="specarrow">
+					
+					</div>
+				</div>
+				<div id="detail">
+						<!--<ul>
+						<li class="bookname">书名:围棋布局中级教程</li>
+						<li>出版社:山西人民出版社</li>
+						<li>出版时间:2012年1月</li>
+						<li>ISBN:92888388383</li>
+						<li>版次:第四版</li>
+						<li>页数:全498页</li>
+						<li>包装:平装</li>
+						<li>定价:102.00￥</li>
+					</ul>-->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/swipe.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript">
+	var spec ;
+	var specarrow;
+	var db ;
+	var imageUrl
+	imready = function(){
+		
+		imageUrl = api.getPrefs({
+	        sync:true,
+	        key:'imageUrl'
+        });
+		db = api.require('db');
+		window.good_code = api.pageParam.good_code;
+		spec = $api.dom("#spec")
+		specarrow = $api.dom("#spec .specarrow")
+		requestGoodDetail();
+		api.addEventListener({
+	        name:'specChanged'
+        },function(ret,err){
+        	window.good_detail = ret.value.good_detail;
+        	var current = window.good_detail.currentItem;
+        	fillSummary(current.goodsSalesModelId,current.goodsSalesStandardId);
+        	fillImages();
+        });
+	};
+	
+	function requestGoodDetail(){
+		api.showProgress();
+		var body = {}
+		body.method="materialsGoodsDetail"
+		body.request={
+			materialsGoodsCode:window.good_code
+		}
+		console.log(JSON.stringify(body))
+		ajaxRequest(body,function(ret,err){
+			api.hideProgress();
+			console.log(JSON.stringify(ret))
+			if(ret){
+				if(ret.responseCode==0){
+					window.good_detail=ret.responseBody;
+					fillData();
+				}else{
+					alert(ret.responseMsg)
+				}
+			}else{
+				alert(err.msg)
+			}
+		})
+	}
+	
+	function fillData(){
+		var models = window.good_detail.materialsGoodsModelDetail
+		var standards = window.good_detail.materialsGoodsStandardDetail
+		for(var i=0;i<window.good_detail.materialsGoodsSalesDetails.length;i++){
+			var item = window.good_detail.materialsGoodsSalesDetails[i];
+			if(item.isChecked==true){
+				window.good_detail.currentItem=item;
+			}else{
+			}
+			item.materialsGoodsOrganization=window.good_detail.materialsGoodsOrganization;
+			item.materialsGoodsName=window.good_detail.materialsGoodsName;
+			item.materialsGoodsIntro=window.good_detail.materialsGoodsIntro;
+			item.materialsGoodsLogistics=window.good_detail.materialsGoodsLogistics;
+			
+			item.buyCount = 1;//默认购买一件,在规格选择和代购订单确认页面可以修改
+			
+			var modelId = item.goodsSalesModelId;
+			var standardId = item.goodsSalesStandardId;
+			if(modelId!=0){
+				for(var j=0;j<models.teachingMaterialsModels.length;j++){
+					if(modelId==models.teachingMaterialsModels[j].id){
+						item.spec1=models.teachingMaterialsModels[j].goodsModelName
+						item.goodsModelPreview=models.teachingMaterialsModels[j].goodsModelPreview
+					}
+				}
+			}
+			if(standardId!=0){
+				for(var j=0;j<standards.teachingMaterialsStandards.length;j++){
+					if(standardId==standards.teachingMaterialsStandards[j].id){
+						item.spec2=standards.teachingMaterialsStandards[j].goodsStandardName
+					}
+				}
+			}
+		}
+		fillSummary(modelId,standardId);
+		
+		$api.byId("detail").innerHTML=window.good_detail.materialsGoodsIntro
+		
+		var images = window.good_detail.materialsGoodsImages;
+		fillImages()
+		window.sliderLength=images.length;
+		$api.dom("#pagesize .size").innerHTML="/"+images.length;
+
+	}
+	
+	function fillImages(){
+		var images = window.good_detail.materialsGoodsImages;
+//		images[0]=window.good_detail.currentItem.goodsModelPreview
+		getInnerByDot("pic-inner","pic_template",images);
+		initSlider();
+	}
+	
+	function initSlider() {
+		var banner = $api.byId("pic-content");
+		window.mySlide = Swipe(banner, {
+			auto : 2000,
+			continuous : true,
+			disableScroll : true,
+			stopPropagation : true,
+			callback : function(index, element) {
+				$api.dom(".currentindex").innerHTML="&nbsp;"+(index%window.sliderLength+1)
+			},
+			transitionEnd : function(index, element) {
+			}
+		});
+	}
+	
+	function fillSummary(modelId,standardId){
+		api.sendEvent({
+	        name:'goodloadedok',
+	        extra:{quantity:window.good_detail.currentItem.goodsSalesQuantity}
+        });
+		getInnerByDot("summary","summary_template",window.good_detail.currentItem)
+		if(modelId==0&&standardId==0){//无规格,无参数,默认.隐藏.
+			spec.style.display="none"
+		}else{
+			spec.style.display="block"
+			if(window.good_detail.currentItem.spec1){
+				if(window.good_detail.currentItem.spec2){
+					specarrow.innerHTML="已选择:"+window.good_detail.currentItem.spec1+"/"+window.good_detail.currentItem.spec2
+				}else{
+					specarrow.innerHTML="已选择:"+window.good_detail.currentItem.spec1
+				}
+			}else{
+				if(window.good_detail.currentItem.spec2){
+					specarrow.innerHTML="已选择:"+window.good_detail.currentItem.spec2
+				}else{
+				}
+			}
+		}
+	}
+	
+	function selectSpec(){
+		if(window.good_detail.currentItem.modelId==0&&window.good_detail.currentItem.standardId==0){
+			return;
+		}
+		api.sendEvent({
+	        name:'specListener',
+	        extra:{
+	        	isOpend:true
+	        }
+        });
+		api.openFrame({
+	        name: 'specDialog',
+	        url: 'specDialog.html',
+	        reload:true,
+	        pageParam:{
+	        	good_detail:window.good_detail,
+	        },
+         	animation:{
+			    type:"push",                //动画类型（详见动画类型常量）
+			    subType:"from_bottom",      //动画子类型（详见动画子类型常量）
+			    duration:300                //动画过渡时间，默认300毫秒
+			},
+	        rect: {
+		        x:0,
+		        y:0,
+		        w:api.winWidth,
+		        h:api.winHeight
+	        }
+        });
+	}
+	
+	function addToCart(){
+        var current = window.good_detail.currentItem;
+		console.log("detail == "+JSON.stringify(window.good_detail))
+		console.log("current == "+JSON.stringify(current))
+		
+		if(!current.goodsModelPreview){
+			current.goodsModelPreview=window.good_detail.materialsGoodsImages;
+		}
+       	if(current.goodsSalesQuantity<1){
+       		api.toast({
+               msg:"库存不足,请耐心等待!",
+               location:'middle'
+           });
+           return;
+       	}
+       	//return;
+        var queryResult = db.selectSqlSync({
+	        name:'sinogoTeacher',
+	        sql:"select * from teacher_cart_goods where goodsNo = '"+current.goodsSalesCode+"'"
+        });
+        console.log("queryResult--"+JSON.stringify(queryResult))
+        if(!queryResult.data||queryResult.data.length==0){//不存在则添加
+        	var result1 = db.executeSqlSync({
+		        name:'sinogoTeacher',
+		        sql:"insert into teacher_cart_goods(goodsOrganization,goodsNo,goodsPreview,goodsName,goodsType,goodsPrice,goodsNum,storageNum,freightAmount,couponsAmount,cashBack,sinogoCoin,orderRemark,distributionMode,spec1,spec2) values('"+current.materialsGoodsOrganization+"','"+current.goodsSalesCode+"','"+current.goodsModelPreview+"','"+current.materialsGoodsName+"',1,'"+current.goodsSalesPrice+"','"+current.buyCount+"','"+current.goodsSalesQuantity+"',0,0,0,0,'','"+current.materialsGoodsLogistics+"','"+current.spec1+"','"+current.spec2+"')"
+        	});
+        	console.log("insert---"+JSON.stringify(result1))
+        }else{//已存在,则修改数量即可
+        	var lastCount = parseInt(queryResult.data[0].goodsNum);
+        	var count = lastCount+current.buyCount;
+        	if(count>=queryResult.data[0].storageNum){
+        		count = queryResult.data[0].storageNum
+        	}
+    		//如果已经达到库存,则不添加
+        	var result1 = db.executeSqlSync({
+		        name:'sinogoTeacher',
+		        sql:"update teacher_cart_goods set goodsNum='"+(count)+"' where goodsNo='"+current.goodsSalesCode+"'"
+        	});
+//      	console.log("update---"+JSON.stringify(result1))
+        }
+        
+        api.openWin({
+	        name: 'orderConfirm',
+	        url: 'orderConfirm.html',
+	        reload:true
+        });
+        
+//		var result2 = db.selectSqlSync({
+//	        name:'sinogoTeacher',
+//	        sql:"select * from teacher_cart"
+//      });
+//      console.log(JSON.stringify(result2))
+	}
+	
+</script>
+</html>

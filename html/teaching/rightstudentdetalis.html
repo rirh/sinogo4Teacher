@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+	<style>
+		.h-right {
+			text-align: right;
+			margin-right: 0.23rem;
+			-webkit-flex: 0.3;
+			/* Chrome */
+			-ms-flex: 0.3;
+			/* IE 10 */
+			flex: 0.3;
+			/* NEW, Spec - Opera 12.1, Firefox 20+ */
+			-webkit-box-flex: 0.3;
+			/* OLD - iOS 6-, Safari 3.1-6 */
+			-moz-box-flex: 0.3;
+		}
+
+		.h-left {
+			margin-left: 0.23rem;
+			text-align: left;
+			-webkit-flex: 0.3;
+			/* Chrome */
+			-ms-flex: 0.3;
+			/* IE 10 */
+			flex: 0.3;
+			/* NEW, Spec - Opera 12.1, Firefox 20+ */
+			-webkit-box-flex: 0.3;
+			/* OLD - iOS 6-, Safari 3.1-6 */
+			-moz-box-flex: 0.3;
+		}
+
+		.h-left img {
+			margin-top: 0.215rem;
+			width: 0.25rem;
+			height: 0.45rem;
+			background: url(../../image/setting/icon-back.png);
+			background-size: cover;
+			margin-left: 0;
+		}
+		/****************************************************************************************************************/
+
+		.tab {
+			z-index: 1;
+			width: 100%;
+			height: 0.84rem;
+			background: #f6f6f6;
+			font-size: 0.28rem;
+			line-height: 0.84rem;
+			position: fixed;
+			top: 0;
+		}
+
+		.otab {
+			clear: both;
+			width: 100%;
+			height: 0.84rem;
+			background: #ffffff;
+			font-size: 0.28rem;
+			line-height: 0.84rem;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.mtab {
+			background: #DDDDDD;
+			margin: 0;
+			padding: 0;
+			width: 25%;
+			float: left;
+			text-align: center;
+			font-size: 0.28rem;
+			color: #333333;
+		}
+
+		.line {
+			position: relative;
+		}
+
+		.line:after {
+			border-bottom: 1px solid #d9d9d9;
+			content: "";
+			display: block;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform: scaleY(0.5);
+		}
+
+		.omtab {
+			margin: 0;
+			padding: 0;
+			width: 25%;
+			float: left;
+			text-align: center;
+			font-size: 0.26rem;
+			color: #666666;
+		}
+
+		.hic {}
+
+		.name {}
+
+		.sex {}
+
+		.less {
+			color: #FF8344;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="flex-wrap flex-vertical">
+		<div class="tab">
+			<div class="mtab hic">日期</div>
+			<div class="mtab name">时间</div>
+			<div class="mtab sex">班级</div>
+			<div class="mtab ">出勤</div>
+		</div>
+		<div class="flex-con">
+
+		</div>
+	</div>
+</body>
+<script type="template" id="dotTmpl">
+	<div class="otab"></div>
+	{{for(var i = 0 ; i
+	<it.length;i++){}} <div class="otab">
+		<div class="omtab hic"></div>
+		<div class="omtab name">{{=it[i].date}}</div>
+		<div class="omtab sex">{{=it[i].time}}</div>
+		<div class="omtab ">{{=it[i].inclass}}</div>
+		<div {{if(it[i].num<2){}} class="omtab less" {{}else{}} class="omtab" {{ }}}>{{=it[i].attendance}}</div>
+		</div>
+		<div class="line"></div>
+		{{}}}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript">
+	function date() {
+		console.log(JSON.stringify(hotcities))
+		var stute = ['请假', '旷课', '上课'];
+		var json = [];
+		for (var i = 0; i < hotcities.length; i++) {
+			var a = hotcities[i].attendanceStatus;
+			var list = {};
+			list.num = a;
+			list.date = hotcities[i].signInTime ? hotcities[i].signInTime.substring(0, 10) : (hotcities[i].signOutTime ? hotcities[i].signOutTime.substring(0, 10) : '????-??-??');
+			list.time = (hotcities[i].signInTime ? hotcities[i].signInTime.substring(11, 16) : '??:??') + '-' + (hotcities[i].signOutTime ? hotcities[i].signOutTime.substring(11, 16) : '??:??');
+			list.inclass = hotcities[i].className;
+			list.attendance = stute[a];
+			json.push(list);
+		}
+		var tmpl = doT.template($api.text($api.dom("#dotTmpl")));
+		$api.html($api.dom(".flex-con"), tmpl(json));
+	}
+
+
+	var hotcities;
+
+	function getHotCities(id) {
+		var data = {};
+		// data.method = "studentHistoryAttendance";
+		// data.request = {
+		// 		"studentId": id,
+		// 		"page": "1",
+		// 		"pageSize": "20"
+		// 	}
+			//=======================20170921添加班级id========================
+		data.method = "studentHistoryAttendance";
+		data.request = {
+			"studentId": api.pageParam.id,
+			"classId":api.pageParam.classid,
+			"page": "1",
+			"pageSize": "1000"
+		}
+		console.log(JSON.stringify(data))
+		api.showProgress();
+		ajaxRequest(data, function(ret, err) {
+			api.hideProgress();
+			if (ret) {
+				if (ret.responseBody != null) {
+					hotcities = ret.responseBody.rows;
+					date();
+				} else {
+					alert(ret.responseMsg)
+				}
+			} else {
+				alert(err.msg)
+			}
+		})
+	}
+	imready = function() {
+		$api.fixStatusBar($api.dom('header'));
+		console.log("===========" + JSON.stringify(api.pageParam))
+		getHotCities(JSON.stringify(api.pageParam.id));
+
+	};
+</script>
+
+</html>

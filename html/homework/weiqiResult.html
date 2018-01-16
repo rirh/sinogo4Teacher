@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+     <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+   <title>围棋</title>
+    <link rel="stylesheet" href="../../css/chessstyle.css">
+</head>
+
+<body>
+    <div class="chessboard"></div>
+    <script src="../../script/jquery-3.1.1.js"></script>
+    <script src="../../script/chessboard.js"></script>
+    <script src="../../script/common.js"></script>
+    <script src="../../script/sgfutils.js"></script>
+</body>
+<script type="text/javascript">
+	var boardSize = 13;
+	var first = 2;//黑先
+	var answers = [];
+	var letters = "abcdefghijklmnopqrstuvwxyz";
+	var step = 0;
+	
+	var rAnswer = [];
+	
+	var answerSgf = '';
+	var showRight=false;
+	
+	window.onload=function(){
+		apiready();
+	}
+	
+	apiready=function(){
+		var location = window.location;
+		location = location+"";
+		var splits = location.split("?");
+		var params = splits[1];
+		//sgf=111&boardSize=13&answerIsRight=true&answerSgf=2212
+		var sgf = '';
+		var answerSgf = '';
+		var answerIsRight = false;
+		var paramSplits = params.split("&");
+		for(var i=0;i<paramSplits.length;i++){
+			var ps = paramSplits[i];
+			var pssplits = ps.split("=");
+			if(pssplits[0]=='sgf'){
+				sgf = pssplits[1]
+			}else if(pssplits[0]=='boardSize'){
+				boardSize = parseInt(pssplits[1])
+			}else if(pssplits[0]=='answerIsRight'){
+				answerIsRight=pssplits[1]=='true'?true:false;
+			}else if(pssplits[0]=='answerSgf'){
+				answerSgf = pssplits[1]
+			}else if(pssplits[0]=='showRight'){
+				showRight = pssplits[1]=='true'?true:false;
+			}
+		}
+		
+		console.log("sgf=="+sgf)
+		console.log("answerSgf=="+answerSgf)
+		console.log("answerIsRight=="+answerIsRight)
+		console.log("showRight=="+showRight)
+		console.log("boardSize=="+boardSize)
+		
+		var a = parseSGF(sgf);
+		console.log(JSON.stringify(a))
+		boardSize = a.board_size;
+		first = a.first;
+		answers = a.answer;
+		createBoard(boardSize);
+		initLayout(a.question_layout);
+		
+		answerSgf = "("+answerSgf+")"
+		
+		var myAnswer = getAnswers(answerSgf)
+		console.log(JSON.stringify(myAnswer))
+		
+		//answers = a.answer;
+		
+		
+		
+		autoPlay(myAnswer);
+		
+		
+//		if(!answerIsRight&&showRight){//答案错误。是否显示正确答案
+//			console.log("额呵呵呵呵呵额各个")
+//			autoPlay(answers)
+//		}
+		var w = 580/750*window.screen.width
+//		
+		var itemw = parseInt(w/boardSize);
+		var margin = w-itemw*boardSize;
+		w = itemw*boardSize;
+//		
+		initView(w,itemw,margin);
+	}
+	
+	function autoPlay(myAnswer){
+		//[[{"id":"6-5","name":"gf","color":2}]] 
+		if(myAnswer.length>0){
+			var a = myAnswer[0];
+			if(a.length>0){
+				for(var i=0;i<a.length;i++){
+					pushStones(a[i],(i));
+				}
+			}else{
+				return;
+			}
+		}else{
+			return;
+		}
+		
+	}
+	function pushStones(sub,s){
+		//1白2黑 3+
+		var id = sub.id;
+		if(sub.color==3){
+			var el = $("#"+id);
+			var cls = el.attr("class")
+			if(cls.indexOf('active')>0){
+				el.addClass(' marks ');
+				el.html('<em class="micon marks"></em>');
+			}else{
+				el.addClass(' mark ');	
+			}
+			return;
+		}
+		var color = sub.color==1?'white':'black';
+		var className = 'active '+color;
+		var el = $("#"+id);
+		el.addClass(' active '+color);
+		var splits = id.split("-")
+		var j = splits[0];
+		var i = splits[1];
+		if(s||s==0){
+			var cls = sub.color==1?'black-word':'white-word';
+			el.addClass(cls);
+			el.html(s+1)
+            if (stone[i][j] == 0) {
+				stone[i][j]=sub.color;
+                eatenChesscount(i, j, color, boardSize);
+            };
+		}
+		stone[i][j]=sub.color;
+	}
+	
+	function initView(w,itemw,margin){
+		$(".chessboard").css("margin",margin/2+'px auto');
+		$(".chessboard").css("width",w+"px");
+		$(".chessboard").css("height",w+"px");
+//		
+		$(".chess").css("width",itemw+"px");
+		$(".chess").css("height",itemw+"px");
+		$(".chess").css("line-height",itemw+"px");
+		
+		$(".active").css("width",itemw+"px");
+		$(".active").css("height",itemw+"px");
+		$(".active").css("line-height",itemw+"px");
+		$(".mark").css("width",itemw+"px");
+		$(".mark").css("height",itemw+"px");
+		$(".mark").css("line-height",itemw+"px");
+		$(".mark").css("background-size",itemw+"px,"+itemw+'px');
+//		
+		
+		var half = itemw/2
+		
+		var c1 = '.chess:before {top: '+half+'px;}'
+		var c2 = '.chess:after {left: '+half+'px;}'
+		var c3 = '.chess.left:before {left: '+half+'px;top: '+half+'px;}'
+		var c4 = '.chess.left:after {left: '+half+'px;}'
+		var c5 = '.chess.right:before {right: '+half+'px;top: '+half+'px;}'
+		var c6 = '.chess.right:after {left: '+half+'px;}'
+		var c7 = '.chess.top:before {top: '+half+'px;}'
+		var c8 = '.chess.top:after {top: '+half+'px;left:'+half+'px;}'
+		var c9 = '.chess.bottom:before {top: '+half+'px;}'
+		var c10 = '.chess.bottom:after {left: '+half+'px;bottom: '+half+'px;}'
+		var c11 = '.chess.top.left:before {left: '+half+'px;top: '+half+'px;}'
+		var c12 = '.chess.top.right:after {left: '+half+'px;top: '+half+'px;}'
+		var c13 = '.chess.top.right:before {right: '+half+'px;top: '+half+'px;}'
+		var c14 = '.chess.top.left:after {left: '+half+'px;top: '+half+'px;}'
+		var c15 = '.chess.bottom.left:before {left: '+half+'px;top: '+half+'px;}'
+		var c16 = '.chess.bottom.left:after {left: '+half+'px;bottom: '+half+'px;}'
+		var c17 = '.chess.bottom.right:before {right: '+half+'px;top: '+half+'px;}'
+		var c18 = '.chess.bottom.right:after {left: '+half+'px;bottom: '+half+'px;}'
+		
+		
+		document.styleSheets[0].insertRule(c1, 0);
+		document.styleSheets[0].insertRule(c2, 0);
+		document.styleSheets[0].insertRule(c3, 0);
+		document.styleSheets[0].insertRule(c4, 0);
+		document.styleSheets[0].insertRule(c5, 0);
+		document.styleSheets[0].insertRule(c6, 0);
+		document.styleSheets[0].insertRule(c7, 0);
+		document.styleSheets[0].insertRule(c8, 0);
+		document.styleSheets[0].insertRule(c9, 0);
+		document.styleSheets[0].insertRule(c10, 0);
+		document.styleSheets[0].insertRule(c11, 0);
+		document.styleSheets[0].insertRule(c12, 0);
+		document.styleSheets[0].insertRule(c13, 0);
+		document.styleSheets[0].insertRule(c14, 0);
+		document.styleSheets[0].insertRule(c15, 0);
+		document.styleSheets[0].insertRule(c16, 0);
+		document.styleSheets[0].insertRule(c17, 0);
+		document.styleSheets[0].insertRule(c18, 0);
+	
+	}
+</script>
+</html>

@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>作业列表</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+
+    <style>
+        .h-right {
+            text-align: right;
+            margin-right: .23rem;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left {
+            margin-left: .23rem;
+            text-align: left;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left img {
+            margin-top: .215rem;
+            width: .25rem;
+            height: .45rem;
+            background-size: cover;
+            margin-left: 0;
+        }
+        /*****************************************************************************************/
+
+        [v-cloak] {
+            display: none;
+        }
+
+        html,
+        body {
+            background: #fff;
+        }
+
+        ul li {
+            height: .86rem;
+            float: left;
+            list-style-type: none;
+            width: 50%;
+            text-align: center;
+        }
+
+        ul li strong {
+            font-size: .28rem;
+            line-height: .86rem;
+        }
+
+        .default {
+            color: #666;
+        }
+
+        .active {
+            color: #1ebeb6!important;
+        }
+
+        ul li img {
+            width: .35rem;
+            height: .19rem;
+            margin-left: .35rem;
+        }
+
+        .tapmode {
+            background: #f6f6f6;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        table tr {
+            height: .8rem;
+            line-height: .8rem;
+        }
+
+        table tr td {
+            width: 50%;
+        }
+
+        table tr td em {
+            height: .3rem;
+            width: .4rem;
+            border-radius: .03rem;
+            margin-left: .44rem;
+        }
+
+        table tr:nth-child(1) td:nth-child(1) em {
+            background: #ff8344;
+        }
+
+        table tr:nth-child(1) td:nth-child(2) em {
+            background: #a05050;
+        }
+
+        table tr:nth-child(2) td:nth-child(1) em {
+            background: #1ebeb6;
+        }
+
+        table tr:nth-child(2) td:nth-child(2) em {
+            background: #aaa;
+        }
+
+        table tr td strong {
+            margin-left: .33rem;
+            color: #333;
+            font-size: .28rem;
+        }
+
+        table tr td span {
+            margin-left: .34rem;
+            color: #666;
+            font-size: .26rem;
+        }
+
+        footer {
+            width: 100%;
+            line-height: .6rem;
+        }
+
+        footer button {
+            height: .6rem;
+            width: 1.7rem;
+            border-radius: .1rem;
+            margin-top: 1.55rem;
+            text-align: center;
+            outline: none;
+        }
+
+        footer button:nth-child(1) {
+            border: solid 1px #ff8344;
+            color: #ff8344;
+            font-style: .28rem;
+            margin-left: 1rem;
+        }
+
+        footer button:nth-child(2) {
+            border: solid 1px #a05050;
+            color: #a05050;
+            font-style: .28rem;
+            margin-left: 1.6rem;
+        }
+
+        .empy {
+            font-size: .48rem;
+            color: #666;
+            width: 100%;
+            height: 5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex-wrap flex-vertical" v-cloak id="main">
+        <header>
+            <div class="h-left" onclick="closeWin();"><img tapmode="tapmode" src="../../image/setting/icon-back.png" />
+            </div>
+            <div class="h-conter">
+                知识点掌握
+            </div>
+            <div class="h-right"></div>
+        </header>
+        <div class="flex-con">
+            <ul>
+                <li @click="switchBar(1)" tapmode="tapmode"><strong :class="['default',{'active':classisSwitch}]">{{classname}}</strong> </li>
+                <li @click="switchBar(2)" tapmode="tapmode"><strong :class="['default',{'active':knowsisSwitch}]">{{konwpoint}}</strong> </li>
+            </ul>
+            <div class="empy" v-show="errMessage">
+                {{etmpy}}
+            </div>
+            <div id='canvasDiv' v-if="!errMessage"></div>
+            <table v-if="!errMessage">
+                <tr>
+                    <td><em></em><strong>{{master}}</strong><span>{{masterScore}}</span></td>
+                    <td><em></em><strong>{{skilled}}</strong><span>{{skilledScore}}</span></td>
+                </tr>
+                <tr>
+                    <td><em></em><strong>{{standard}}</strong><span>{{standardScore}}</span></td>
+                    <td><em></em><strong>{{unStandard}}</strong><span>{{unStandardScore}}</span></td>
+                </tr>
+            </table>
+            <footer v-if="!errMessage">
+                <button tapmode="tapmode" type="button" name="button" @click="viewDetail(this)">{{viewDetails}}</button>
+                <button tapmode="tapmode" type="button" name="button" @click="leakFillings(this)">{{leakFilling}}</button>
+            </footer>
+
+        </div>
+
+
+    </div>
+</body>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/ctleryes.js"></script>
+<!-- <script type="text/javascript" src="../../script/alert.js"></script> -->
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script>
+    var knowledge; //全局控制器Controller
+    initVue = function() { //初始化Vue需要的是双向数据绑定 当改变数据以后view会做相应的改变
+        var date = vueDateManager();
+        var methods = vueMethodsManager();
+        knowledge = new Vue({
+            el: '#main', //绑定元素
+            data: date, //本页面的静态动态全部数据
+            methods: methods, //本页面的全部方法
+        })
+    }
+
+    vueDateManager = function() {
+        //初始化Vue数据date为一个json数组
+        var date = {};
+        date.pageParam; //作业详情传入的数据
+        date.errMessage = false; //页面是否隐藏
+        date.etmpy = "数据暂时为空";
+        date.backClassName = []; //班级名字
+        date.classBox = []; //班级全部返回数据
+        date.classNowBox; //当前的班级返回数据
+        date.classid; //班级id
+        date.knowledgeBox = []; //所有的知识点返回的数据
+        date.knowledgeId; //知识点id
+        date.dialogBox; //弹出窗
+        date.classname = "班级";
+        date.konwpoint = "知识点";
+        date.classisSwitch = true;
+        date.knowsisSwitch = true;
+        date.classImage = "../../image/icon_arrow_down.png";
+        date.konwlImage = "../../image/icon_arrow_down.png";
+        date.master = "精通";
+        date.masterScore = "95分以上";
+        date.masterCount = [];
+        date.skilled = "熟练";
+        date.skilledScore = "85~94分";
+        date.skilledCount = [];
+        date.standard = "达标";
+        date.standardScore = "70~84分";
+        date.standardCount = [];
+        date.unStandard = "未达标";
+        date.unStandardScore = "70分以下";
+        date.unStandardCount = [];
+        date.viewDetails = "查看详情";
+        date.leakFilling = "查漏补缺";
+        date.drawRing = {}; //圆环配置参数
+        date.drawRing.align = 'center';
+        date.drawRing.animation = true;
+        // date.drawRing.width = api.frameWidth;
+        date.drawRing.width = api.frameWidth;
+        date.drawRing.height = api.frameHeight * 40 / 100;
+        date.drawRing.background_color = "#fff";
+        date.drawRing.shadow = false;
+        date.drawRing.center = { //圆环中心数字的配置的参数
+            color: "ff8344",
+            fontsize: api.frameWidth * 4 / 100,
+            text: "达标率75%",
+            textAlign: "center",
+        };
+        date.drawRing.donutwidth = api.frameWidth * 6 / 100;
+        date.drawRing.offsetx = api.frameWidth * 2 / 100;
+        date.drawRing2D = [{
+            name: '达标',
+            value: 35,
+            color: '#1ebeb6'
+        }, {
+            name: '未达标',
+            value: 25,
+            color: '#aaaaaa'
+        }, {
+            name: '精通',
+            value: 15,
+            color: '#ff8344'
+        }, {
+            name: '熟练',
+            value: 30,
+            color: '#a05050'
+        }];
+        console.log("数据管理者" + JSON.stringify(date));
+        return date;
+    }
+    vueMethodsManager = function() {
+        //时间管理中心 每个Vue事件的处理都可以在这管理
+        var methods = {};
+        methods.switchBar = function(index) { //确认发布作业
+            //TODO
+            if (index == 1) {
+                knowledge.classisSwitch = true;
+                if (knowledge.classBox.length > 0) {
+                    //为大纲选择界面创建弹出数据
+                    var title = "班级";
+                    var value = [];
+                    for (var i = 0; i < knowledge.classBox.length; i++) {
+                        var valuetext = {};
+                        valuetext.text = knowledge.classBox[i].className;
+                        value.push(valuetext);
+                    };
+                    knowledge.customAlert(title, value, function(ret, err) {
+                        if (ret) {
+                            knowledge.classNowBox = knowledge.classBox[ret.index];
+                            knowledge.classid = knowledge.classBox[ret.index].classId;
+                            knowledge.classname = knowledge.classBox[ret.index].className;
+                            knowledge.refrest();
+                            knowledge.dialogBox.close({
+                                dialogName: 'scene'
+                            });
+
+                        } else {
+                            api.toast({
+                                msg: err,
+                                duration: 2000,
+                                location: 'bottom'
+                            });
+                        }
+                    });
+                }
+            } else if (index == 2) {
+                knowledge.knowsisSwitch = true;
+                if (knowledge.knowledgeBox.length > 0) {
+                    //为大纲选择界面创建弹出数据
+                    var title = "知识点";
+                    var value = [];
+                    for (var i = 0; i < knowledge.knowledgeBox.length; i++) {
+                        var valuetext = {};
+                        valuetext.text = knowledge.knowledgeBox[i].knowledgeName;
+                        value.push(valuetext);
+                    }
+                    knowledge.customAlert(title, value, function(ret, err) {
+                        if (ret) {
+                            knowledge.knowledgeId = knowledge.knowledgeBox[ret.index].id;
+                            knowledge.konwpoint = knowledge.knowledgeBox[ret.index].knowledgeName;
+                            knowledge.refrest();
+                            knowledge.dialogBox.close({
+                                dialogName: 'scene'
+                            });
+
+                        } else {
+
+
+                        }
+
+                    });
+                } else {
+                    alert("请先选择知识点！");
+
+                }
+
+
+            }
+
+        };
+        methods.refrest = function() {
+            var mdata = {};
+            mdata.method = "getClassKnowledges";
+            mdata.request = {
+                "classId": knowledge.classid,
+            };
+            console.log(api.frameName + "getClassKnowledges请求数据：" + JSON.stringify(mdata));
+            api.showProgress();
+            ajaxRequest(mdata, function(ret, err) {
+                api.hideProgress();
+                if (ret) {
+                    console.log(api.frameName + "getClassKnowledges成功返回数据：" + JSON.stringify(ret));
+                    if (ret.responseCode == 0) {
+                        console.log(api.frameName + "getClassKnowledges成功返回数据：" + JSON.stringify(ret));
+                        if (ret.responseBody.length > 0) {
+                            knowledge.knowledgeBox = ret.responseBody;
+                            knowledge.errMessage = false;
+                        } else {
+                            knowledge.knowledgeBox = [];
+                            knowledge.konwpoint = "知识点";
+                            knowledge.errMessage = true;
+                        }
+                        var odate = {}
+
+                        odate.method = "getKnowledgeMastery";
+                        odate.request = {
+                            "knowledgeId": knowledge.knowledgeId,
+                            //0711新增classid修改bug
+                            "classId": knowledge.classid,
+                        };
+                        console.log(api.frameName + "getKnowledgeMastery请求数据：" + JSON.stringify(odate));
+                        api.showProgress();
+                        ajaxRequest(odate, function(ret, err) {
+                            api.hideProgress();
+                            if (ret) {
+                                if (ret.responseCode == 0) {
+                                    console.log(api.frameName + "getKnowledgeMastery成功返回数据：" + JSON.stringify(ret));
+                                    if (ret.responseBody.length > 0) {
+                                        knowledge.pageParam = ret.responseBody;
+                                        knowledge.empty();
+                                        for (var i = 0; i < ret.responseBody.length; i++) {
+                                            switch (ret.responseBody[i].masteryDesc) { //描述[精通、熟练、达标、未达标]
+                                                case "达标":
+                                                    knowledge.standardCount.push(ret.responseBody[i]);
+                                                    break;
+                                                case "未达标":
+                                                    knowledge.unStandardCount.push(ret.responseBody[i]);
+                                                    break;
+                                                case "精通":
+                                                    knowledge.masterCount.push(ret.responseBody[i]);
+                                                    break;
+                                                case "熟练":
+                                                    knowledge.skilledCount.push(ret.responseBody[i]);
+                                                    break;
+                                                default:
+                                            }
+                                        };
+                                        knowledge.drawRing2D[0].value = knowledge.standardCount.length;
+                                        knowledge.drawRing2D[1].value = knowledge.unStandardCount.length;
+                                        knowledge.drawRing2D[2].value = knowledge.masterCount.length;
+                                        knowledge.drawRing2D[3].value = knowledge.skilledCount.length;
+                                        var sun = knowledge.standardCount.length + knowledge.unStandardCount.length + knowledge.masterCount.length + knowledge.skilledCount.length;
+                                        knowledge.drawRing.center.text = "达标率" + Math.floor((sun - knowledge.unStandardCount.length) / sun * 100) + "%"
+                                        drawRing2D();
+                                        c(2, sun);
+                                    } else {
+                                        knowledge.err = true;
+                                    }
+
+                                } else {
+                                    api.toast({
+                                        msg: "请选择知识点！",
+                                        duration: 2000,
+                                        location: 'bottom'
+                                    });
+                                }
+                                console.log(JSON.stringify(ret));
+                            } else {
+                                console.log(JSON.stringify(err));
+
+                            }
+                        });
+                    } else {
+
+                        api.toast({
+                            msg: ret.responseMsg,
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                } else {
+
+                    api.toast({
+                        msg: ret.responseMsg,
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+
+                }
+
+            });
+
+
+        };
+        methods.empty = function() {
+            knowledge.masterCount = [];
+            knowledge.skilledCount = [];
+            knowledge.standardCount = [];
+            knowledge.unStandardCount = [];
+        }
+        methods.init = function() {
+            var data = {};
+            data.method = "homeWorkClass";
+            data.request = {
+                "teacherId": api.getPrefs({
+                    sync: true,
+                    key: 'userid'
+                }), //获取教师id,
+
+            };
+            console.log(api.frameName + "选择班级请求数据：" + JSON.stringify(data));
+            api.showProgress();
+            ajaxRequest(data, function(ret, err) {
+                api.hideProgress();
+                if (ret) {
+                    if (ret.responseCode == 0) {
+                        console.log(api.frameName + "teacherClass成功返回数据");
+                        for (var i = 0; i < ret.responseBody.length; i++) {
+                            knowledge.backClassName.push(ret.responseBody[i].className);
+                        };
+                        knowledge.classBox = ret.responseBody; //放置所有的班级数据
+                        knowledge.classNowBox = ret.responseBody[0];
+                        knowledge.classid = ret.responseBody[0].classId;
+                        knowledge.classname = knowledge.backClassName[0];
+                        var mdata = {};
+                        mdata.method = "getClassKnowledges";
+                        mdata.request = {
+                            "classId": knowledge.classid,
+
+                        };
+                        console.log(api.frameName + "getClassKnowledges请求数据：" + JSON.stringify(mdata));
+                        api.showProgress();
+                        ajaxRequest(mdata, function(ret, err) {
+                            api.hideProgress();
+                            if (ret) {
+                                console.log(api.frameName + "getClassKnowledges成功返回数据：" + JSON.stringify(ret));
+                                if (ret.responseCode == 0) {
+                                  if (ret.responseBody.length > 0) {
+                                      knowledge.knowledgeBox = ret.responseBody;
+                                      knowledge.errMessage = false;
+                                  } else {
+                                      knowledge.knowledgeBox = [];
+                                      knowledge.konwpoint = "知识点";
+                                      knowledge.errMessage = true;
+                                      return;
+                                    };
+                                    console.log(api.frameName + "getClassKnowledges成功返回数据：" + JSON.stringify(ret));
+                                    knowledge.knowledgeBox = ret.responseBody;
+                                    knowledge.konwpoint = ret.responseBody[0].knowledgeName;
+                                    knowledge.knowledgeId = ret.responseBody[0].id;
+                                    var odate = {}
+                                    odate.method = "getKnowledgeMastery";
+                                    odate.request = {
+                                        "knowledgeId": knowledge.knowledgeId,
+                                        "classId": knowledge.classid,
+                                    };
+                                    console.log(api.frameName + "getKnowledgeMastery请求数据：" + JSON.stringify(odate));
+                                    api.showProgress();
+                                    ajaxRequest(odate, function(ret, err) {
+                                        api.hideProgress();
+                                        if (ret) {
+                                            if (ret.responseCode == 0) {
+                                                console.log(api.frameName + "getKnowledgeMastery成功返回数据：" + JSON.stringify(ret));
+                                                if (ret.responseCode == 0) {
+                                                    console.log(api.frameName + "getKnowledgeMastery成功返回数据：" + JSON.stringify(ret));
+                                                    if (ret.responseBody.length > 0) {
+                                                        knowledge.pageParam = ret.responseBody;
+                                                        knowledge.empty();
+                                                        for (var i = 0; i < ret.responseBody.length; i++) {
+                                                            switch (ret.responseBody[i].masteryDesc) { //描述[精通、熟练、达标、未达标]
+                                                                case "达标":
+                                                                    knowledge.standardCount.push(ret.responseBody[i]);
+                                                                    break;
+                                                                case "未达标":
+                                                                    knowledge.unStandardCount.push(ret.responseBody[i]);
+                                                                    break;
+                                                                case "精通":
+                                                                    knowledge.masterCount.push(ret.responseBody[i]);
+                                                                    break;
+                                                                case "熟练":
+                                                                    knowledge.skilledCount.push(ret.responseBody[i]);
+                                                                    break;
+                                                                default:
+                                                            }
+                                                        };
+                                                        knowledge.drawRing2D[0].value = knowledge.standardCount.length;
+                                                        knowledge.drawRing2D[1].value = knowledge.unStandardCount.length;
+                                                        knowledge.drawRing2D[2].value = knowledge.masterCount.length;
+                                                        knowledge.drawRing2D[3].value = knowledge.skilledCount.length;
+                                                        var sun = knowledge.standardCount.length + knowledge.unStandardCount.length + knowledge.masterCount.length + knowledge.skilledCount.length;
+                                                        knowledge.drawRing.center.text = "达标率" + Math.floor((sun - knowledge.unStandardCount.length) / sun * 100) + "%"
+                                                        drawRing2D();
+                                                    } else {
+                                                        knowledge.err = true;
+                                                    }
+
+                                                }
+                                            } else {
+                                                api.toast({
+                                                    msg: ret.responseMsg,
+                                                    duration: 2000,
+                                                    location: 'bottom'
+                                                });
+                                            }
+                                            console.log(JSON.stringify(ret));
+                                        } else {
+                                            console.log(JSON.stringify(err));
+
+                                        }
+                                    });
+                                } else {
+
+                                    api.toast({
+                                        msg: ret.responseMsg,
+                                        duration: 2000,
+                                        location: 'bottom'
+                                    });
+                                }
+                            } else {
+
+                                api.toast({
+                                    msg: ret.responseMsg,
+                                    duration: 2000,
+                                    location: 'bottom'
+                                });
+
+                            }
+
+                        });
+                    } else {
+                        api.toast({
+                            msg: ret.responseMsg,
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                } else {
+                    api.toast({
+                        msg: ret.responseMsg,
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                }
+            });
+
+
+
+
+        };
+        methods.customAlert = function(mtitle, value, callBack) { //自定义弹出框 中间部分的选择教学大纲和选择知识点的公共方法
+          if (value.length > 5) {
+              height = 400;
+          } else {
+              height = (value.length+1) * 48;
+          };
+            console.log("作业弹出框的参数：" + JSON.stringify(value) + "作业弹出框的标题：" + mtitle);
+            knowledge.dialogBox = api.require('dialogBox');
+            knowledge.dialogBox.scene({
+                rect: {
+                    w: 280,
+                    h: height
+                },
+                tapClose: true,
+                corner: 10,
+                texts: {
+                    title: mtitle
+                },
+                styles: {
+                    bg: '#fff',
+                    title: {
+                        bg: '#1ebeb6',
+                        h: 44,
+                        size: 14,
+                        color: '#fff',
+                    },
+                },
+                optionDatas: value
+            }, function(ret, err) {
+                callBack(ret, err);
+            });
+        }
+        methods.viewDetail = function(obj) {
+            api.openWin({
+                name: 'learSituaView_details_win',
+                url: 'learSituaView_details_win.html',
+                pageParam: {
+                    "learSitua": knowledge.pageParam,
+                    "knowledge": knowledge.konwpoint,
+                    "classname": knowledge.classname
+                }
+            });
+        };
+        methods.leakFillings = function() { //查漏补缺跳到错题集锦
+          $api.setStorage('classInfo',knowledge.classNowBox);
+            api.openWin({
+                name: 'chooseClass_errorHighlights_win',
+                url: 'chooseClass_errorHighlights_win.html',
+                pageParam: {
+                    'school': knowledge.classNowBox,
+                    'getKnowledgeId': knowledge.getKnowledgeId,
+                    'islear': true
+                }
+            });
+
+
+        }
+        console.log("事件管理者：" + JSON.stringify(methods));
+        return methods;
+
+    }
+    drawRing2D = function() {
+        $(function() {
+            var chart = new iChart.Donut2D({
+                render: 'canvasDiv', //渲染的Dom目标,canvasDiv为Dom的ID
+                align: knowledge.drawRing.center,
+                animation: knowledge.drawRing.animation,
+                data: knowledge.drawRing2D, //绑定数据
+                width: knowledge.drawRing.width, //设置宽度，默认单位为px
+                height: knowledge.drawRing.height, //设置高度，默认单位为px
+                background_color: knowledge.drawRing.background_color,
+                shadow: knowledge.drawRing.shadow, //激活阴影
+                bound_event: "none",
+                shadow_color: '#c7c7c7', //设置阴影颜色
+                center: knowledge.drawRing.center,
+                donutwidth: knowledge.drawRing.donutwidth,
+                offsetx: knowledge.drawRing.offsetx
+            });
+            //调用绘图方法开始绘图
+            chart.draw();
+            chart.eventOff();
+        });
+    }
+    imready = function() {
+        api.parseTapmode(); //默认页面加载完成后，引擎会对 dom 里面的元素进行 tapmode 属性解析，若是之后用代码创建的 dom 元素，则需要调用该方法后 tapmode 属性才会生效
+        $api.fixStatusBar($api.dom('header'));
+        // openFrame();
+        initVue();
+        knowledge.init();
+
+    };
+</script>
+
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>选择班级</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+
+    <style scoped>
+        /*加载完成显示ui*/
+
+        [v-cloak] {
+            display: none;
+        }
+        dl{
+          background: #f4f4f4;
+        }
+
+        dd {
+            height: 1.44rem;
+            width: 100%;
+            background: #fff;
+            margin-bottom: .3rem;
+            position: relative;
+        }
+
+        dd div {
+            height: .72rem;
+            width: 100%;
+            line-height: .72rem;
+        }
+
+        dd div label {
+            font-size: .3rem;
+            color: #333;
+            margin-left: 0.32rem
+        }
+
+        dd div em {
+            font-size: .28rem;
+            color: #666;
+        }
+
+        dd div em span {
+            color: #1ebeb6;
+        }
+
+        dd img {
+            height: .35rem;
+            width: .19rem;
+            position: absolute;
+            right: .34rem;
+            top: .545rem;
+        }
+
+        .tapmode {
+            background: #f4f4f4;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex-wrap flex-vertical">
+        <div class="flex-con" id="main">
+            <dl v-cloak>
+                <dd tapmode="tapmode" v-for=" (school,index) in schoolInfo" @click="goChooseTask(school)">
+                    <div><label>{{schoolName}}&nbsp:&nbsp</label><em><span>{{school.classInstitutionName}}</span></em></div>
+                    <hr style/>
+                    <div><label>{{className}}&nbsp:&nbsp</label><em>{{school.className}}</em></div>
+                    <img src="../../image/icon_arrow_right_1.png">
+                </dd>
+            </dl>
+        </div>
+
+    </div>
+</body>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+
+<script>
+    var assigment; //全局控制器Controller
+    initVue = function() { //初始化Vue需要的是双向数据绑定 当改变数据以后view会做相应的改变
+        var date = vueDateManager();
+        var methods = vueMethodsManager();
+        assigment = new Vue({
+            el: '#main', //绑定元素
+            data: date, //本页面的静态动态全部数据
+            methods: methods, //本页面的全部方法
+            created: function() {
+
+            }
+        })
+    }
+
+    vueDateManager = function() {
+        //初始化Vue数据date为一个json数组
+        var date = {};
+        date.schoolInfo = [];
+        date.schoolName = "学校";
+        date.className = "班级";
+
+        console.log("数据管理者" + JSON.stringify(date));
+        return date;
+    }
+    vueMethodsManager = function() {
+        //时间管理中心 每个Vue事件的处理都可以在这管理
+        var methods = {};
+        methods.init = function() {
+            var userid = api.getPrefs({
+                sync: true,
+                key: 'userid'
+            }); //获取教师id
+            var data = {};
+            data.method = "homeWorkClass";
+            data.request = {
+                "teacherId": userid,
+            };
+            console.log(api.frameName + "选择班级请求数据：" + JSON.stringify(data));
+            api.showProgress();
+            ajaxRequest(data, function(ret, err) {
+                api.refreshHeaderLoadDone()
+                api.hideProgress();
+                if (ret) {
+                    if (ret.responseCode == 0) {
+                        assigment.schoolInfo = ret.responseBody;
+                    }
+                    console.log(JSON.stringify(ret));
+                } else {
+                    console.log(JSON.stringify(err));
+                }
+            });
+
+
+
+        }
+
+        methods.goChooseTask = function(school) {
+            //TODO
+            api.openWin({
+                name: 'chooseClassTest_testQuestions',
+                url: 'chooseClassTest_testQuestions.html',
+                pageParam: {
+                    "school": school
+                }
+            });
+        }
+        console.log("事件管理者：" + JSON.stringify(methods));
+        return methods;
+    }
+    imready = function() {
+        // api.parseTapmode(); //默认页面加载完成后，引擎会对 dom 里面的元素进行 tapmode 属性解析，若是之后用代码创建的 dom 元素，则需要调用该方法后 tapmode 属性才会生效
+        $api.fixStatusBar($api.dom('header'));
+        initVue();
+        assigment.init();
+
+    };
+</script>
+
+</html>

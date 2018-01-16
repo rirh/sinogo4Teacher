@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <style>
+  .country{
+		  height: 0.8rem;
+		  background: #FFFFFF;
+		  line-height: 0.8rem;
+		  padding-left: 0.23rem;
+		  font-size: 0.28rem;
+		  color: #333;
+		  display: -webkit-flex;  /* 新版本语法: Chrome 21+ */
+		  display: flex;          /* 新版本语法: Opera 12.1, Firefox 22+ */
+		  display: -webkit-box;   /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+		  display: -moz-box;      /* 老版本语法: Firefox (buggy) */
+		  display: -ms-flexbox;   /* 混合版本语法: IE 10 */   
+  }
+  body{
+		  background: url(../../image/teaching/icon-dialogs.png);
+		  background-size: cover;
+		
+  }
+  .touch{
+  
+  
+  }
+    </style>
+</head>
+<body>
+	<div class="flex-wrap flex-vertical">
+	
+		
+	</div>
+</body>
+<script type="template" id="dotTmpl">
+	{{for(var i = 0 ; i<it.length;i++){}}
+
+	<div class="country" tapmode='' onclick="box('{{=i}}')">{{=it[i].value}}</div>
+    <div class="line"></div>
+	{{  } }}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript">
+var date;
+  
+json();
+function json(){
+var kind=['围棋','音乐','美术']
+  date=[];
+ for(var i = 0 ;i<6;i++){
+ var list={};
+ list.value=kind[parseInt( Math.random()*3)];
+ date.push(list);
+ }
+ var tmpl = doT.template($api.text($api.dom("#dotTmpl")));
+ $api.html($api.dom(".flex-wrap"), tmpl(date)); 
+}
+function box(i){
+api.closeFrame({
+});
+api.sendEvent({
+    name: 'checkbox',
+    extra: {
+        key1: date[i],
+    }
+});
+
+
+
+}
+
+
+
+	imready = function(){
+	$api.fixStatusBar($api.dom('header'));
+	json();
+	};
+
+	
+	
+	
+</script>
+</html>

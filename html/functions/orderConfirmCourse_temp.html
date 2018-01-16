@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	<style>
+		html,body {
+			background: #F6F6F6;
+			height:100%;
+		}
+		#header{
+		    background-color: #1EBEB6;
+		    text-align: center; color: #fff;
+		    width: 100%; position: fixed;
+		    height:0.88rem;
+			z-index: 1;
+		}
+		#header .back-icon{
+		    display: inline-block; width: 0.88rem; height: 0.88rem;
+		    background: url(../../image/icon_arrow_left.png) no-repeat center center; 
+		    background-size: 0.24rem 0.42rem;
+		    position: absolute; left: 0; bottom: 0;
+		}
+		#header .back-icon.active{
+			 background: url(../../image/icon_arrow_left.png) no-repeat center center rgba(0,0,0,0.2); 
+			 background-size: 0.24rem 0.42rem;
+		}
+		#header h1{
+		    font-size: 0.34rem;
+		    height: 0.88rem; line-height: 0.88rem; margin: 0 auto; color: #fff;
+		    width:5rem;
+		}
+		#header .btn_right{
+			width: 0.95rem; height: 0.88rem;
+			line-height: 0.88rem;
+			font-size:0.3rem;
+			position: absolute;
+			top: 25px;
+			right:0;
+			text-align: center;
+			background: url(../../image/icon_history.png) no-repeat center center;
+			background-size: 0.31rem 0.31rem;
+		}
+		#header .btn_right.active{
+			background: url(../../image/icon_history.png) no-repeat center center rgba(0,0,0,0.3);
+			background-size: 0.31rem 0.31rem;
+		}
+		#main{
+			position: absolute;
+			top:0.88rem;
+			padding-bottom: 0.98rem;
+			width:100%;
+		}
+		#footer{
+			height:0.98rem;
+			line-height:0.98rem;
+			position: fixed;
+			bottom:0;
+			background: #FFF;
+			z-index: 1;
+			width:100%;
+			text-align: center;
+			font-size:0.32rem;
+			color:#333;
+		}
+		.itemgroup{
+			margin-top: 0.23rem;
+		}
+		.topone{
+			margin-top: 0;
+		}
+		.item{
+			width:100%;
+			height:2.21rem;
+			background: #FFF;
+			position:relative;
+		}
+		.item:after{
+			border-bottom: 1px solid #ccc;
+			position:absolute;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+		}
+		.item > img{
+			width:2.58rem;
+			height:1.61rem;
+			margin-top:0.31rem;margin-left:0.23rem;
+			float: left;
+		}
+		.item .item-right{
+			float: left;
+			height:1.64rem;
+			margin-top:0.3rem;
+			margin-left:0.37rem;
+			width:4.1rem;
+			position: relative;
+		}
+		.item .item-right .item-title{
+			margin-top:0.08rem;
+			font-size:0.28rem;
+			color:#333;
+		}
+		.item .item-right .item-spec{
+			margin-top:0.08rem;
+			font-size:0.26rem;
+			color:#666;
+		}
+		.item .item-right .item-control{
+			margin-top:0.08rem;
+			height: 0.36rem;
+			line-height: 0.36rem;
+			font-size:0.26rem;
+			color:#666;
+		}
+		.item .item-right .item-control img{
+			width:0.31rem;
+			height:0.31rem;
+			float:right;
+			padding:0.02rem 0.02rem;
+			margin-top:0.02rem;
+		}
+		.item .item-right .item-control .control{
+			display: inline-block;
+			position: relative;
+		}
+		.item .item-right .item-control .control .outer{
+			height:0.36rem;
+			line-height:0.36rem;
+			text-align:center;
+			width:0.36rem;
+			background: #f6f6f6;
+			border:1px solid #d9d9d9;
+		}
+		.minus{
+			margin-left:0.2rem;
+		}
+		.item .item-right .item-control .control .count{
+			padding:0 0.1rem;
+			width:0.3rem;
+			text-align: center;
+		}
+		
+		.continueadd{
+			width:100%;
+			font-size:0.28rem;
+			color:#FF8344;
+			text-align: center;
+			height:0.88rem;
+			background: #FFF;
+			line-height:0.88rem;
+			position: relative;
+		}
+		.continueadd:after{
+			border-bottom: 1px solid #ccc;
+			position: absolute;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+		}
+		.continueadd .word{
+			background: url(../../image/icon_add.png) no-repeat right top 0.25rem ;
+			background-size:0.32rem 0.32rem;
+			padding: 0 0.5rem;
+		}
+		.studentinfo{
+			padding-bottom: 0.3rem;
+		}
+		.studentinfo .title{
+			height:0.7rem;
+			line-height:0.7rem;
+			background:#F6F6F6;
+			color:#333;
+			font-size:0.28rem;
+			position:relative;
+			padding-left:0.23rem;
+		}
+		.studentinfo .title:after{
+			position: absolute;
+			border-bottom: 1px solid #CCC;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+		}
+		.studentinfo .studentitem{
+			height:0.88rem;
+			background:#FFF;
+			position:relative;
+			width:100%;
+		}
+		.studentinfo .studentitem:after{
+			border-bottom:1px solid #d9d9d9;
+			position: absolute;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			pointer-events:none;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+		}
+		.studentinfo .studentitem .item-inner{
+			padding:0.2rem 0.23rem;
+		}
+		.studentinfo .studentitem .item-inner img{
+			width:0.32rem;
+			height:0.42rem;
+			float:left;
+			margin-top:0.03rem;
+		}
+		.studentinfo .studentitem .item-inner div{
+			float:left;
+			margin-left:0.2rem;
+			position:relative;
+			width:90%;
+		}
+		.students{
+			display:none;
+			position: relative;
+			background:#FFF;
+			width: 100%;
+			padding:0.4rem 0;
+		}
+		.students .tip-sel{
+			position :absolute;
+			top:0.26rem;
+			background:#FFF;
+			z-index:1;
+			left:0.32rem;
+			color:#666;font-size:0.28rem;
+			padding: 0 0.1rem;
+		}
+		.students .groups{
+			margin:0 0.2rem;
+			position: relative;
+			border: 1px solid #f6f6f6;
+			padding: 0.3rem 0;
+		}
+		.students .groups .sitem{
+			width:33%;
+			float: left;
+			padding: 0.1rem 0;
+			position:relative;
+		}
+		.students .groups .sitem span{
+			background:url(../../image/icon_unchecked.png) no-repeat left center;
+			background-size:0.36rem 0.36rem;
+			width:70%;
+			height:0.4rem;
+			line-height:0.4rem;
+			padding-left: 0.46rem;
+			margin-left:10%;
+		}
+		.studentinfo .studentitem .item-groups{
+			height:0.42rem;
+			padding:0.23rem 0;
+			float: left;
+			width:100%;
+			position:relative;
+		}
+		.studentinfo .studentitem .item-groups div{
+			float:left;
+			position:relative;
+			text-align: center;width:18%;
+			margin-left: 2%;
+		}
+		.studentinfo .studentitem .item-groups div span{
+			margin-left:0.08rem;
+		}
+		.studentinfo .studentitem .item-inner div:after{
+			border-left: 1px solid #AAAAAA;
+			position: absolute;
+			left:0;top:0;bottom:0;
+			content:"";display:block;
+			pointer-events:none;
+			-webkit-transform: scaleX(0.5);
+			-webkit-transform-origin: 0 0;
+		}
+		.studentinfo .studentitem .item-inner input{
+			outline: none;
+			height:0.48rem;
+			font-size:0.28rem;
+			margin-left:0.2rem;
+		}
+		.studentinfo .studentitem .item-inner .inputname{
+			width:100%;
+		}
+		.studentinfo .studentitem .btn-code{
+			position:absolute;
+			top:0.11rem;
+			right:0.23rem;
+			width:2rem;
+			height:0.66rem;
+			line-height:0.66rem;
+			text-align:center;
+			background:#1EBEB6;
+			font-size:0.28rem;
+			color:#FFF;
+			border-radius: 0.05rem;
+		}
+		.studentinfo .studentitem .btn-code.active{
+			background:#1EAAB6;
+		}
+	</style>
+	</head>
+	<body>
+	<div id="wrap" class="flex-wrap flex-vertical">
+		<div id="header">
+			<a class="back-icon" tapmode="active" onclick="backConfirm()" ></a>
+			<h1 id="title">新增课程订单</h1>
+			<a tapmode="active" style="display: none" class="btn_right" onclick="btnRight()" ></a>
+		</div>
+		<div id="main" class="flex-con">
+			<script id="goods_template" type="text/x-dot-template">
+			{{ for(var i=0;i<it.length;i++){ }}
+			<div class="itemgroup {{=i==0?'topone':''}}">
+				<div class="item">
+					<img src="{{=imageUrl+it[i].goodsPreview}}" alt="" />
+					<div class="item-right">
+						<div class="item-title ellipsis-2">{{=it[i].goodsName}}</div>
+						<div class="item-spec ellipsis-1">{{=((it[i].address&&it[i].address!='undefined')?it[i].address:'')}} {{=((it[i].orgname&&it[i].orgname!='undefined')?it[i].orgname:'')}}</div>
+						<div class="item-control">
+							<span>价格: <span class="imp_s">{{=it[i].goodsPrice}}</span>￥</span>
+							<div class="control">
+							</div>
+								<img src="../../image/icon_delete.png" alt="" onclick="del('course',{{=it[i].goodsNo}},'0');" />
+						</div>
+					</div>
+				</div>
+				<div class="item" style="display:{{=it[i].supporting_books_id==0?'none':'block'}}">
+					<img src="{{=imageUrl+it[i].supportingBook.goodsPreview}}" alt="" />
+					<div class="item-right">
+						<div class="item-title ellipsis-2">{{=it[i].supportingBook.goodsName}}</div>
+						<div class="item-spec">型号:{{=((it[i].supportingBook.spec1&&it[i].supportingBook.spec1!='undefined')?it[i].supportingBook.spec1:'')}} {{=((it[i].supportingBook.spec2&&it[i].supportingBook.spec2!='undefined')?it[i].supportingBook.spec2:'')}}</div>
+						<div class="item-control">
+							<span>价格: <span class="imp_s">{{=it[i].supportingBook.goodsPrice}}</span>￥</span>
+							<div class="control">
+							</div>
+								<img src="../../image/icon_delete.png" alt="" onclick="del('good',{{=it[i].goodsNo}},{{=it[i].supportingBook.goodsNo}});" />
+						</div>
+					</div>
+				</div>
+			</div>
+			{{ } }}
+			</script>
+			<div id="goods_content">
+				
+			</div>
+			<div class="continueadd" onclick="continueAdd();">
+				<span class="word">继续添加</span>
+			</div>
+			<div class="studentinfo">
+				<div class="title">学生信息</div>
+				<div class="studentitem">
+					<div class="item-inner">
+						<img src="../../image/icon_order_phone.png" alt="" />
+						<div><input type="tel" placeholder="请输入家长手机号" class="input"  /></div>
+					</div>
+				</div>
+				<div class="studentitem">
+					<div class="item-inner">
+						<img src="../../image/icon_order_code.png" alt="" />
+						<div><input type="number" placeholder="请输入验证码" class="input code"  /></div>
+					</div>
+					<div tapmode="active" onclick="getCode()" class="btn-code" >
+					获取验证码
+					</div>
+				</div>
+				<div class="studentitem">
+					<div class="item-inner">
+						<img src="../../image/icon_order_name.png" alt="" />
+						<div><input type="text" placeholder="请选择学生姓名" class="inputname input" readonly="readonly" /></div>
+					</div>
+				</div>
+				<div class="students haveborder">
+					<script type="text/x-dot-template" id="groups_template">
+					{{ for(var i=0;i<it.length;i++){}}
+					<div class="sitem">
+						<span checked='false' class="ellipsis-1" userid="{{=it[i].id}}">{{=it[i].studentName}}</span>
+					</div>
+					{{ } }}
+					</script>
+					<span class="tip-sel">选择学生</span>
+					<div class="groups" id="groups">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="footer" class="border-t" onclick="goPayMent();">
+			提交订单
+		</div>
+	</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/doT.js"></script>
+	<script type="text/javascript">
+		var inputs;
+		var phoneOk=false;
+		var btnCode ;
+		var db ;
+		var imageUrl;
+		var classId;
+		imready = function() {
+			imageUrl = api.getPrefs({
+		        sync:true,
+		        key:'imageUrl'
+	        });
+	        window.studentsName=[]
+	        window.studentsId=[]
+			db = api.require('db');
+			classId=api.pageParam.classId;
+			$api.fixStatusBar($api.byId("main"));
+			handelVersionBelow4($api.dom(".btn_right").style)
+			inputs = $api.domAll(".input")
+	 		btnCode = $api.dom(".btn-code");
+			inputs[0].onblur=function(){
+				if(!isMobile($api.trimAll(this.value))){
+		            phoneOk=false
+	            }else{
+	            	phoneOk=true
+	            }
+	       	}
+	       	api.addEventListener({
+               name:'keyback'
+            },function(ret,err){
+           		backConfirm();
+            });
+            api.addEventListener({
+			    name:'swiperight'
+			}, function(ret, err){        
+			    console.log("向右滑动")
+			});
+            fillData();
+		};
+		
+		function fillData(){
+			var queryResult = db.selectSqlSync({
+	            name:'sinogoTeacher',
+	            sql:"select * from teacher_cart_courses"
+            });
+			var courseList = queryResult.data;
+			for(var i=0;i<courseList.length;i++){
+				var course = courseList[i];
+				if(course.supporting_books_id!=0){//包含教辅
+					var supportingBook = db.selectSqlSync({
+						 name:'sinogoTeacher',
+	           			 sql:"select * from teacher_cart_goods where goodsNo = '"+course.supporting_books_id+"'" 
+					})
+					if(supportingBook.data.length!=0){//不为空
+						course.supportingBook = supportingBook.data[0]
+					}else{
+						course.supportingBook={goodsPreview:"",goodsName:"",spec1:"",spec2:"",goodsPrice:"",goodsNo:""}
+					}
+				}else{
+					course.supportingBook={goodsPreview:"",goodsName:"",spec1:"",spec2:"",goodsPrice:"",goodsNo:""}
+				}
+			}
+			console.log(JSON.stringify(courseList))
+	       	window.courseList=courseList;
+	       	getInnerByDot("goods_content","goods_template",courseList)
+		}
+		
+		function continueAdd(){
+   			api.openWin({
+                name: "coursesList",
+                url: "coursesList.html"
+            });
+		}
+		
+		function getStudentInfo(){
+			//ajax
+			setTimeout("testinfo()",1500);
+			
+		}
+		
+		function testinfo(){
+			$api.dom(".students").style.display="block"
+			var rbs = $api.domAll(".sname");
+			for(var i=0;i<rbs.length;i++){
+				rbs[i].index=i;
+				rbs[i].onclick=function(){
+					if(this.checked){
+						inputs[2].value=this.parentElement.childNodes[1].innerHTML;
+					}
+				}
+			}
+		}
+		
+		function goPayMent(){
+			if(window.courseList.length==0){
+				alert("没有任何代购物品!")
+				return;
+			}
+			var data=["家长电话","验证码","学生姓名"]
+			if(!phoneOk){
+				return alert("手机号码有误!");
+			}
+			
+			for(var i=0;i<3;i++){
+				if(!inputs[i].value){
+					return alert("请输入"+data[i]+"!");
+				}
+			}
+			if($api.trimAll(inputs[1].value)!=window.currentCode){
+				return alert("验证码有误,请重新确认验证码!")
+			}
+			api.showProgress();
+			var userInfo = []
+			userInfo.push(inputs[0].value);
+			userInfo.push(inputs[2].value);
+			
+			//alert("e")
+			//TODO 组装数据.调用生单接口,传递数据,跳转到支付页面.
+			var body={};
+			body.method="createGoodsOrder"
+			
+			var goodsDetails=[];
+			var orderSum=0;
+			for(var i=0;i<window.courseList.length;i++){
+				var item = window.courseList[i]
+				orderSum+=(item.goodsPrice*window.studentsId.length*item.goodsNum*100)/100
+				if(item.supportingBook.goodsNo){//存在
+					var book = item.supportingBook;
+					orderSum+=(book.goodsPrice*window.studentsId.length*item.goodsNum*100)/100
+					goodsDetails.push(book)
+				}else{//不存在
+					
+				}
+				goodsDetails.push(item)
+			}
+			
+			var students=[];
+			console.log(JSON.stringify(window.studentsId))
+			console.log(JSON.stringify(window.studentsName))
+			for(var i=0;i<window.studentsId.length;i++){
+				var student = {
+					studentId:window.studentsId[i],
+					classId:classId
+				}
+				console.log(window.studentsId[i]+"----"+window.studentsName[i])
+				
+				students.push(student)
+			}
+			console.log(JSON.stringify(students))
+			
+			body.request={
+			    "userId": window.userId,
+			    "totalAmount": orderSum,
+			    "sinogoCoin": 0,//中棋币抵扣
+			    "discountCoupon": "",//优惠券名称
+			    "couponAmount": 0,//优惠券金额
+			    "postFee": 0,//快递费
+			    "clientFrom":"Teacher",//客户端来源,3.1添加参数
+			    "orderFrom": 2,//订单来源:IPHONE(1, "iPhone"), ANDROID(2, "Android"),WEIXIN(3, "微信"),WEIXINWAP(4, "微信公众号");
+			    "invoiceType": 0,//发票类型:1、普通发票2、电子发票3、增值税发票
+			    "invoiceTitle": "",//发票抬头
+			    "invoiceContent": 0,//发票内容:1、明细2、办公用品3、电脑配件4、耗材
+			    "students":students,
+			    "deliveryDetail": {},
+			    "teacherId":api.getPrefs({sync:true,key:'userid'}),
+			    "goodsType":2,
+			    "goodsDetails": goodsDetails
+			}
+			console.log(JSON.stringify(body))
+			ajaxRequest(body,function(ret,err){
+				api.hideProgress();
+				if(ret){
+					if(ret.responseCode==0){
+						if(ret.responseBody&&ret.responseBody.responseCode&&ret.responseBody.responseCode!=0){
+							return alert(ret.responseBody.responseMsg)
+						}
+						userInfo.push(new Date().Format("yyyy.MM.dd hh:mm"));
+						api.openWin({
+				            name: 'orderPaymentCourse',
+				            url: 'orderPaymentCourse.html',
+				            pageParam:{
+				            	userInfo:userInfo,
+				            	orderNo:ret.responseBody.orderNo,
+				            	type:0
+				            }
+			          	});
+			        	setTimeout("closeWin();",1000);
+					}else{
+						alert(ret.responseMsg)
+					}
+				}else{
+					alert(err.responseMsg)
+				}
+			
+			})
+		}
+		
+		
+		function del(type,courseCode,goodCode){
+			if(type=='course'){
+				db.executeSqlSync({
+		            name:'sinogoTeacher',
+		            sql:"delete from teacher_cart_courses where goodsNo='"+courseCode+"'"
+	            });
+            }else{
+            	db.executeSqlSync({
+		            name:'sinogoTeacher',
+		            sql:"delete from teacher_cart_goods where goodsNo='"+goodCode+"' and courseCode='"+courseCode+"'"
+	            });
+	            db.executeSqlSync({
+	                name:'sinogoTeacher',
+		            sql:"update teacher_cart_courses set supporting_books_id='0' where goodsNo='"+courseCode+"'"
+                });
+            }
+            fillData();
+		}
+		
+		function getCode(){//把获取学生信息的接口放在获取验证码的按钮上.这样基本确认了手机号码已经输入完成且正确
+			if(window.timerid){
+				return;
+			}
+			inputs[0].blur();
+			if(!phoneOk){
+				alert("手机号码有误,请重新输入!")
+				return;
+			}
+			//请求学生信息.
+			api.showProgress({
+            });
+            var phoneNum=$api.trimAll(inputs[0].value);
+            var body={
+            	method:"getStudentsByUserPhone",
+            	request:{
+            		"userPhone":phoneNum
+            	}
+            };
+            ajaxRequest(body,function(ret,err){
+            	api.hideProgress();
+            	console.log(JSON.stringify(ret))
+            	if(ret){
+            		if(ret.responseCode==0){
+            			if(!ret.responseBody||ret.responseBody.length==0){
+            				alert("该家长还未注册过学生,请先注册后再进行代购操作!")
+            				return;
+            			}else{
+            				fillStudentInfo(ret.responseBody);
+            				checkRequestIp(function(requestIp){
+            					requestCode(phoneNum,requestIp);
+            				})
+            			}
+            		}else{
+            			alert(ret.responseMsg)
+            		}
+            	}else{
+            		alert(err.msg)
+            	}
+            })
+		}
+		
+		
+		function requestCode(phoneNum,requestIp){
+			//测试
+			api.showProgress({
+	        });
+			var body = {};
+			body.method="sendMessage"
+			body.request={
+			   	"smsTemplate":"StaffInsteadSign",//代报班
+				"phoneNo":phoneNum,
+				"requestIp":requestIp
+			}
+			ajaxRequest(body,function(ret,err){
+				api.hideProgress();
+				if(ret){
+					//已发送后,显示倒计时
+					if(ret.responseCode==0){
+				        btnCode.innerHTML="重新获取("+(60)+")"
+				        window.timerid = setInterval("showCountdown();",1000)
+				        window.currentCode = ret.responseBody.verificationCode;
+					}else{
+						alert(ret.responseMsg)
+					}
+				}else{
+					alert(err.msg)
+				}
+			})
+		}
+		
+		function fillStudentInfo(result){
+			window.userId = result[0].userId
+			$api.dom(".students").style.display="block"
+			getInnerByDot("groups","groups_template",result)
+			$api.dom(".groups").innerHTML+='<div style="clear: both"></div>'
+			var rbs = $api.domAll(".sitem span");
+			for(var i=0;i<rbs.length;i++){
+				rbs[i].onclick=function(){
+					//uncheckedAll();
+					var checked = $api.attr(this, "checked");
+					if(checked&&checked!='false'){//true
+						$api.attr(this, "checked","false");
+						this.style.background="url(../../image/icon_unchecked.png) no-repeat left center"
+						this.style.backgroundSize="0.36rem 0.36rem"
+						setSelectName(this.innerHTML,$api.attr(this,"userid"),false)
+					}else{//false
+						$api.attr(this, "checked","true");
+						this.style.background="url(../../image/icon_checked.png) no-repeat left center"
+						this.style.backgroundSize="0.36rem 0.36rem"
+						setSelectName(this.innerHTML,$api.attr(this,"userid"),true)
+					}
+				}
+			}
+		}
+	
+		
+		function setSelectName(studentName,studentId,checked){
+			if(checked){
+				window.studentsName.push(studentName)
+				window.studentsId.push(studentId)
+			}else{
+				window.tempname=[];
+				window.tempid=[];
+				for(var i=0;i<window.studentsName.length;i++){
+					if(studentName==window.studentsName[i]){
+					
+					}else{
+						window.tempname.push(window.studentsName[i])
+						window.tempid.push(window.studentsId[i])
+					}
+				}
+				window.studentsName=window.tempname
+				window.studentsId=window.tempid
+			}
+			var names = "";
+			for(var i=0;i<window.studentsName.length;i++){
+				names+=","
+				names+=window.studentsName[i]
+			}
+			console.log(JSON.stringify(window.studentsName))
+			console.log(JSON.stringify(window.studentsId))
+			names = names.substr(1)
+			inputs[2].value=names
+		}
+		
+		function uncheckedAll(){
+			var rbs = $api.domAll(".radiochecked");
+			for(var i=0;i<rbs.length;i++){
+				rbs[i].style.background="url(../../image/icon_unchecked.png) no-repeat left center"
+				rbs[i].style.backgroundSize="0.4rem 0.4rem"
+			}
+		}
+	
+		var total=0;
+		function showCountdown(){
+			total+=1000;
+			if(total==60000){
+				clearInterval(window.timerid)
+				btnCode.innerHTML="获取验证码";
+				window.timerid=undefined 
+				total=0;
+				return;
+			}
+			btnCode.innerHTML="重新获取("+(60-total/1000)+")"
+		}
+		
+		
+		function backConfirm(){
+			var queryResult = db.selectSqlSync({
+	            name:'sinogoTeacher',
+	            sql:"select * from teacher_cart_courses"
+            });
+            
+            if(queryResult.data==null||queryResult.length==0){
+            	closeWin();
+                return;
+            }
+            
+            
+			api.confirm({
+			    title: '确认退出吗',
+			    msg: "离开后添加的代购会清空,如需继续选择请点击'继续添加'!是否确认离开?",
+			    buttons: ['确定', '取消']
+			}, function(ret, err) {
+			    var index = ret.buttonIndex;
+			    if(index==1){
+				    //TODO 并且清楚数据库中的数据.异常退出app并且订单未提交,则进入app的时候就删除代购数据
+	       			db.executeSqlSync({
+	                   name:'sinogoTeacher',
+	                   sql:'delete from teacher_cart_courses'
+	                });
+	       			db.executeSqlSync({
+	                   name:'sinogoTeacher',
+	                   sql:'delete from teacher_cart_goods'
+	                });
+	       			closeWin();
+			    }else{
+			    	
+			    }
+			});
+		}
+		
+		function btnRight(){
+			api.openWin({
+	            name: 'coursesHistory',
+	            url: 'coursesHistory.html'
+            });
+		}
+	
+	
+	</script>
+</html>

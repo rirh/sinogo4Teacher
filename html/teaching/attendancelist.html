@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<style>
+			.h-right {
+				text-align: right;
+				margin-right: 0.23rem;
+				-webkit-flex: 0.3; /* Chrome */
+				-ms-flex: 0.3; /* IE 10 */
+				flex: 0.3; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 0.3; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 0.3;
+			}
+			.h-left {
+				margin-left: 0.23rem;
+				text-align: left;
+				-webkit-flex: 0.3; /* Chrome */
+				-ms-flex: 0.3; /* IE 10 */
+				flex: 0.3; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 0.3; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 0.3;
+			}
+			.h-left img {
+				margin-top: 0.215rem;
+				width: 0.25rem;
+				height: 0.45rem;
+				background: url(../../image/setting/icon-back.png);
+				background-size: cover;
+				margin-left: 0;
+			}
+			/****************************************************************************************************************/
+			.tab {
+				z-index: 1;
+				width: 100%;
+				height: 0.84rem;
+				background: #f6f6f6;
+				font-size: 0.28rem;
+				line-height: 0.84rem;
+				position: fixed;
+				top: 0.88rem;
+			}
+			.tabheader {
+				height: 0.88rem;
+				width: 100%;
+				z-index: 1;
+				position: fixed;
+				top: 0;
+			}
+			.otab {
+				clear: both;
+				width: 100%;
+				height: 0.84rem;
+				background: #ffffff;
+				font-size: 0.28rem;
+				line-height: 0.84rem;
+				position: relative;
+				overflow: hidden;
+			}
+			.mtab {
+				background: #DDDDDD;
+				margin: 0;
+				padding: 0;
+				width: 16.666666%;
+				float: left;
+				text-align: center;
+				font-size: 0.28rem;
+				color: #333333;
+			}
+			.line {
+				position: relative;
+			}
+			.line:after {
+				border-bottom: 1px solid #d9d9d9;
+				content: "";
+				display: block;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+
+				right: 0;
+				-webkit-transform-origin: 0 0;
+				-webkit-transform: scaleY(0.5);
+			}
+			.omtab {
+				margin: 0;
+				padding: 0;
+				width: 16.666666%;
+				float: left;
+				text-align: center;
+				font-size: 0.26rem;
+				color: #666666;
+			}
+			.hic {
+			}
+			.name {
+			}
+			.sex {
+			}
+			.less {
+				color: #FF8344;
+			}
+			.box {
+				clear: both;
+				width: 100%;
+
+
+				/*height: 2.6rem!important;*/
+				background: #ffffff;
+				font-size: 0.28rem;
+				line-height: 0.84rem;
+				position: relative;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="flex-wrap flex-vertical">
+
+				<header>
+					<div class="h-left" onclick="closeWin();"><img src="../../image/setting/icon-back.png" />
+					</div>
+					<div class="h-conter">
+						考勤记录
+					</div>
+					<div class="h-right"></div>
+				</header>
+				<div class="tabheader">
+				<div class="tab">
+					<div class="mtab hic">
+						日期
+					</div>
+					<div class="mtab name">
+						考勤时间
+					</div>
+					<div class="mtab ">
+						应到
+					</div>
+					<div class="mtab hic">
+						出勤
+					</div>
+					<div class="mtab hic">
+						请假
+					</div>
+					<div class="mtab sex">
+						旷课
+					</div>
+				</div>
+			</div>
+			<div class="flex-con"></div>
+		</div>
+	</body>
+	<script type="template" id="dotTmpl">
+		<div class="box"></div>
+		{{for(var i = 0 ; i<it.length;i++){}}
+		<div class="otab">
+		<div class="omtab hic"></div>
+		<div class="omtab name">{{=it[i].date}}</div>
+		<div class="omtab sex">{{=it[i].time}}</div>
+		<div class="omtab ">{{=it[i].inclass}}人</div>
+		<div class="omtab less">{{=it[i].attendance}}人</div>
+		<div class="omtab ">{{=it[i].leave}}人</div>
+		<div class="omtab ">{{=it[i].cutting}}人</div>
+		</div>
+		<div class="line"></div>
+		{{}}}
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript">
+		function date() {
+			var json = [];
+			for (var i = 0; i < hotcities.length; i++) {
+				var list = {};
+				/*************************20170919接口修改LHB*****************************************/
+
+				// list.date = hotcities[i].schoolTime.substring(5, 7) + '/' + hotcities[i].schoolTime.substring(8, 10);
+				// list.time = hotcities[i].schoolTime.substring(11, 16);
+				// list.inclass = hotcities[i].studentRegister;
+				// //;
+				// list.attendance = hotcities[i].studentInClass;
+				// list.leave = hotcities[i].studentLeave;
+				// list.cutting = hotcities[i].studentNoLeave;
+				list.date = hotcities[i].attendanceDate.substring(5, 7) + '/' + hotcities[i].attendanceDate.substring(8, 10);
+				list.time = hotcities[i].attendanceDate.substring(11, 16);
+				list.inclass = hotcities[i].expectAmont;
+				list.attendance = hotcities[i].inclassAmont;
+				list.leave = hotcities[i].leaveAmont;
+				list.cutting = hotcities[i].absenteeismAmont;
+				json.push(list);
+			}
+			var tmpl = doT.template($api.text($api.dom("#dotTmpl")));
+			$api.html($api.dom(".flex-con"), tmpl(json));
+			$api.css($api.dom('.box'),'height:'+$api.offset($api.dom('.tab')).h+'px');
+		}
+
+		var hotcities;
+		function getHotCities(id) {
+			var data = {};
+			/*************************20170919接口修改LHB*****************************************/
+			// data.method = "classHistoryAttendance";
+			data.method = "classHistoryAttendanceV1";
+			data.request = {
+				"classId" : id
+			}
+			console.log(JSON.stringify(data));
+			api.showProgress();
+			ajaxRequest(data, function(ret, err) {
+				api.hideProgress();
+				if (ret) {
+					hotcities = ret.responseBody;
+					console.log(JSON.stringify(hotcities))
+					if ((hotcities) != null) {
+						date();
+					}
+				} else {
+					alert(err.msg)
+				}
+			})
+		}
+
+		imready = function() {
+			$api.fixStatusBar($api.dom('header'));
+			getHotCities(api.pageParam.id);
+			$api.css($api.dom('.tab'),'top:'+$api.offset($api.dom('header')).h+'px');
+		};
+	</script>
+</html>

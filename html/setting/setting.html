@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <style>
+		 body{
+		 background-color: #f6f6f6;
+		 }
+		  header{
+    	    height:0.88rem;
+    	    line-height:0.88rem;
+    	    text-align:center;
+    	    background:#1ebeb6;
+	    	display: -webkit-flex;  /* 新版本语法: Chrome 21+ */
+		    display: flex;          /* 新版本语法: Opera 12.1, Firefox 22+ */
+		    display: -webkit-box;   /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+		    display: -moz-box;      /* 老版本语法: Firefox (buggy) */
+		    display: -ms-flexbox;   /* 混合版本语法: IE 10 */   
+    	}
+    	.h-left{
+	    	width: 0.25rem;
+	    	height: 0.45rem;
+	    	background: url(../../image/setting/icon-back.png);
+	    	background-size: cover;
+	    	margin-left: 0.23rem;
+	    	margin-top: 0.215rem;
+	    	}
+    	.h-conter{
+            color:#FFFFFF;
+            font-size:0.34rem;
+    	    -webkit-flex: 1;        /* Chrome */  
+		    -ms-flex: 1 ;            /* IE 10 */  
+		    flex: 1;                /* NEW, Spec - Opera 12.1, Firefox 20+ */
+		    -webkit-box-flex: 1 ;    /* OLD - iOS 6-, Safari 3.1-6 */  
+		    -moz-box-flex: 1;       /* OLD - Firefox 19- */    
+    	}
+    	.h-right{
+    	width: 0.48rem;
+    	}
+    	/****************************************************************************************************************/
+    	.setbox{
+    	    background:#ffffff;
+    	    height:0.88rem;
+    	    line-height:0.88rem;
+    	    width:100%;
+    	    display: -webkit-flex;  /* 新版本语法: Chrome 21+ */
+		    display: flex;          /* 新版本语法: Opera 12.1, Firefox 22+ */
+		    display: -webkit-box;   /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+		    display: -moz-box;      /* 老版本语法: Firefox (buggy) */
+		    display: -ms-flexbox;   /* 混合版本语法: IE 10 */   
+    	}
+    	.setleft{
+    	margin-left: 0.23rem;
+    	margin-top: 0.22rem;
+    	height: 0.45rem;
+    	width: 0.45rem;
+    	}
+    	.setcon{
+    	     margin-left:0.2rem;
+    	     color:#333333;
+             font-size:0.26rem;
+    	    -webkit-flex: 1;        /* Chrome */  
+		    -ms-flex: 1 ;            /* IE 10 */  
+		    flex: 1;                /* NEW, Spec - Opera 12.1, Firefox 20+ */
+		    -webkit-box-flex: 1 ;    /* OLD - iOS 6-, Safari 3.1-6 */  
+		    -moz-box-flex: 1;  
+    	}
+    	.setright{
+    	    width: 0.16rem;
+	    	height: 0.28rem;
+	    	margin-right:0.23rem;
+	    	background: url(../../image/setting/icon-todo.png);
+	    	background-size: cover;
+	    	margin-top: 0.3rem;
+    	}
+    	.line{
+        margin-left:0.23rem;
+    	position: relative;
+    	}
+    	.line:after{
+    		border-bottom: 1px solid #d9d9d9;
+    		content:"";
+    		display:block;
+    		position:absolute;
+    		bottom:0;left:0;right:0;
+    		-webkit-transform-origin: 0 0;
+    		-webkit-transform:scaleY(0.5);
+    	}
+    	.end{
+    	  margin-left:0rem;
+    	}
+    	.person{
+    	background: url(../../image/setting/icon-person.png);
+	    background-size: cover;
+    	}
+    	.general{
+    	background: url(../../image/setting/icon-general.png);
+	    background-size: cover;
+    	}
+    	.about{
+    	background: url(../../image/setting/icon-about.png);
+	    background-size: cover;
+    	}
+    	.exit{
+    	
+    	height: 0.98rem;
+    	width: 7.05rem;
+    	margin: 0 auto;
+    	background: #ff8344;
+    	color: #FFFFFF;
+    	margin-top: 1rem;
+    	font-size: 0.32rem;
+    	border-radius: 0.1rem;
+    	line-height: 0.98rem;
+    	text-align: center;
+    	}
+    	.per{
+    	    display: -webkit-flex;  /* 新版本语法: Chrome 21+ */
+		    display: flex;          /* 新版本语法: Opera 12.1, Firefox 22+ */
+		    display: -webkit-box;   /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+		    display: -moz-box;      /* 老版本语法: Firefox (buggy) */
+		    display: -ms-flexbox;   /* 混合版本语法: IE 10 */   
+    	}
+    	.perleft{
+    	text-align:left;
+        -webkit-flex: 1;        /* Chrome */  
+		    -ms-flex: 1 ;            /* IE 10 */  
+		    flex: 1;                /* NEW, Spec - Opera 12.1, Firefox 20+ */
+		    -webkit-box-flex: 1 ;    /* OLD - iOS 6-, Safari 3.1-6 */  
+		    -moz-box-flex: 1;  
+    	} 
+    	.perright{
+    	    color:#999999;
+    	    margin-right:0.23rem;
+    	    overflow:hidden;
+			text-overflow:ellipsis;
+			white-space:nowrap;
+			word-break:keep-all; 
+	    	text-align:right;
+	        -webkit-flex: 1;        /* Chrome */  
+			-ms-flex: 1 ;            /* IE 10 */  
+			flex: 1;                /* NEW, Spec - Opera 12.1, Firefox 20+ */
+			-webkit-box-flex: 1 ;    /* OLD - iOS 6-, Safari 3.1-6 */  
+			-moz-box-flex: 1;  
+    	} 
+    	.touch{
+    	background: #eeeeee;
+    	} 
+    	.layout{
+    	background: #e2743c;
+    	} 
+    	 	
+    </style>
+</head>
+<body>
+	<div class="flex-wrap flex-vertical">
+		<header>
+			<div class="h-left"  onclick="goback()" tapmode='active'></div>
+			<div class="h-conter">设置</div>
+			<div class="h-right"></div>
+		</header>
+		<div class="flex-con">
+			<div class="setbox" tapmode='touch' onclick="set(1)">
+				<div class="setleft person"></div>
+				<div class="setcon per">
+	                <div class="perleft">个人资料</div>
+	                <div class="perright usernumber"></div>
+	            </div>
+				<div class="setright"></div>
+			</div>
+			<div class="line"></div>
+			<div class="setbox" tapmode='touch' onclick="set(2)">
+			<div class="setleft general"></div>
+			<div class="setcon">通用</div>
+			<div class="setright"></div>
+			</div>
+			<div class="line"></div>
+			<div class="setbox" tapmode='touch' onclick="set(3)">
+			<div class="setleft about"></div>
+			<div class="setcon">关于中棋</div>
+			<div class="setright"></div>
+			</div>
+			
+			<div class="line end"></div>
+			<div class="exit" tapmode='layout' onclick="logout()">退出登录</div>
+			
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+
+<script type="text/javascript">
+    var usernumber='10086100086';
+     function getHotCities(id){
+		var data =  {};
+		data.method="getEmployeeByUserId";
+		data.request={"id":id},
+		ajaxRequest(data,function(ret,err){
+			if(ret){
+			if(ret.responseBody!=null){
+			usernumber=ret.responseBody.employeeAccount;
+			$api.text($api.dom('.usernumber'), usernumber);
+			}
+			
+			
+			}})}
+		
+	imready = function(){
+	
+	$api.fixStatusBar($api.dom('header'));
+	var userid = api.getPrefs({
+            sync:true,
+            key:'userid'
+        });
+	getHotCities(userid);
+	
+	};
+	function goback(){
+	closeWin();
+	}
+	function set(tag){
+	   switch(tag){
+		   case 1:
+		   api.openWin({
+	           name: 'person',
+	           url: 'person.html',
+	           reload:true
+           });
+		   break;
+		   case 2:
+		    api.openWin({
+	           name: 'general',
+	           url: 'general.html'
+           });
+		   break;
+		   case 3:
+		    api.openWin({
+	           name: 'about',
+	           url: 'about.html'
+           });
+		   break;
+		  
+	   }
+	
+	
+	}
+	
+	function logout(){
+		api.setPrefs({
+            key:'userid',
+            value:''
+        });
+        api.setPrefs({
+            key:'organizationid',
+            value:''
+        });
+        api.setPrefs({
+            key:'username',
+            value:''
+        });
+        api.setPrefs({
+            key:'userimage',
+            value:''
+        });
+        api.setPrefs({
+            key:'useraccount',
+            value:''
+        });
+        api.setPrefs({
+            key:'userpass',
+            value:''
+        });
+        api.openWin({
+		    name: 'login',
+		    url: '../login.html'
+	    });
+
+	}
+	
+
+	
+	
+</script>
+</html>

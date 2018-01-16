@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<!-- 此页面Vue工作模板-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>我的收藏</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+
+    <style scoped>
+        /****************************模板导入***********************************************/
+
+        .h-right {
+            text-align: right;
+            margin-right: .23rem;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left {
+            margin-left: .23rem;
+            text-align: left;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left img {
+            margin-top: .215rem;
+            width: .25rem;
+            height: .45rem;
+            background: url(../../image/setting/icon-back.png);
+            background-size: cover;
+            margin-left: 0;
+        }
+        /*****************************************************************************************/
+
+        [v-cloak] {
+            display: none;
+        }
+
+        .classAssigmentbox {
+            height: 3rem;
+            background: #f6f6f6;
+        }
+
+        .classAssigmentbox>p {
+            height: 0.88rem;
+            font-size: .3rem;
+            color: #333;
+            margin-left: .34rem;
+            line-height: 0.88rem;
+        }
+
+        .classAssigmentbox dl {
+            height: 2.22rem;
+            background: #fff;
+            position: relative;
+        }
+
+        .classAssigmentbox dl dd {
+            line-height: .74rem;
+            margin-left: 0.32rem;
+            color: #666;
+            font-size: 0.28rem;
+        }
+
+        .classAssigmentbox dl div {
+            position: absolute;
+            top: .7rem;
+            right: .34rem;
+        }
+
+        .selectEntry {
+            height: .5rem;
+            width: 1.2rem;
+            color: #fff;
+            font-size: 0.3rem;
+            background: #1ebeb6;
+            border-radius: 0.05rem;
+            border: solid 1px #884643;
+            display: block;
+            margin-top: 0.22rem;
+        }
+
+        .entry {
+            background: #a05150!important;
+        }
+
+        .classAssigmentbox dl dd strong {
+            margin-left: 0;
+        }
+
+        .classAssigmentbox dl dd span img {
+            height: 0.28rem;
+            width: 0.29rem;
+            margin: 0.29rem 0 0 0.18rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex-wrap flex-vertical">
+        <div class="flex-con" id="main">
+            <div v-cloak>
+                <class-assigment :collection=collec v-for="collec in favoritesSearch" :class-hour="collec.favoritesName" :star-tips="classAssigment.starTips" :star-number="collec.favoritesDifficulty" :dif-statistical="collec.favoritesCount" :remove-all="classAssigment.removeAll"
+                    :edit-task="classAssigment.editTask"></class-assigment>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<template id="classAssigment" style="display:none">
+  <div class="classAssigmentbox">
+    <dl @click="goCollection(collection)">
+      <dd style="font-size:0.3rem; color:#1ebeb6">
+        {{classHour}}
+      </dd>
+      <dd>
+        <strong >{{starTips}}</strong>
+        <span>
+          <img class='templateStar'  v-for='star in starNumber' src='../../image/homework_img/icon_start.png' />
+        </span>
+      </dd>
+      <dd>
+        共计{{difStatistical}}题
+      </dd>
+      <div>
+         <button id="removeAll" :class="['selectEntry',{'entry':isChoose}]" tapmode="active"@click.stop="goCollection(collection)">{{removeAll}}</button>
+      </div>
+    </dl>
+    </div>
+  </div>
+</template>
+<script>
+    var assigment; //全局控制器Controller
+    initVue = function() { //初始化Vue需要的是双向数据绑定 当改变数据以后view会做相应的改变
+        var date = vueDateManager();
+        var methods = vueMethodsManager();
+        var components = vueComponentsManager()
+        assigment = new Vue({
+            el: '#main', //绑定元素
+            data: date, //本页面的静态动态全部数据
+            methods: methods, //本页面的全部方法
+            components: components,
+        })
+    }
+
+    vueDateManager = function() {
+        //初始化Vue数据date为一个json数组
+        var date = {};
+        date.pagesize = 10;
+        date.pageindex = 1;
+        date.loadEnd = false;
+        date.favoritesSearch = [];
+        date.classAssigment = {};
+        date.classAssigment.classHour = "";
+        date.classAssigment.starTips = "难度";
+        date.classAssigment.difStatistical = "";
+        date.classAssigment.removeAll = "编辑";
+        date.classAssigment.editTask = "";
+        date.classAssigment.isChoose = true;
+        console.log("数据管理者" + JSON.stringify(date));
+        return date;
+    };
+    vueMethodsManager = function() {
+        //时间管理中心 每个Vue事件的处理都可以在这管理
+        var methods = {};
+        methods.init = function() {
+            var classMessage = $api.getStorage('classInfo');
+            var userid = api.getPrefs({
+                sync: true,
+                key: 'userid'
+            }); //获取教师id
+            var data = {};
+            data.method = "favoritesSearch";
+            data.request = {
+                "employeeId": userid,
+                "courseCategoryId": classMessage.courseCategory,
+                "packageType": 2, //0作业类型题包  1成长类型题包2收藏类型
+                "page": assigment.pageindex,
+                "pageSize": assigment.pagesize
+            };
+            console.log(api.frameName + "我的收藏请求数据：" + JSON.stringify(data));
+            api.showProgress();
+            ajaxRequest(data, function(ret, err) {
+                api.refreshHeaderLoadDone()
+                api.hideProgress();
+                if (ret) {
+                    console.log(JSON.stringify(ret));
+                    if (ret.responseCode == 0) {
+                        ret.responseBody.totalPage == ret.responseBody.page ? assigment.loadEnd = true : assigment.loadEnd = false;
+                        if (assigment.pageindex == 1) {
+                            assigment.favoritesSearch = [];
+                            var count = 0,
+                                avg = 0;
+                            for (var i = 0; i < ret.responseBody.rows.length; i++) {
+                                if (ret.responseBody.rows[i]) {
+                                    assigment.favoritesSearch.push(ret.responseBody.rows[i]);
+                                    count += ret.responseBody.rows[i].favoritesCount;
+                                    avg += Number(ret.responseBody.rows[i].favoritesDifficulty);
+                                };
+                            };
+
+                            avg = avg / (ret.responseBody.rows.length);
+                            assigment.lister(count, avg, null);
+                        } else {
+                            for (var i = 0; i < ret.responseBody.rows.length; i++) {
+                                if (ret.responseBody.rows[i]) {
+                                    assigment.schoolInfo.push(ret.responseBody.rows[i]);
+                                }
+                            }
+                        }
+                        assigment.pageindex += 1; //页码加1
+                    } else {
+                        api.toast({
+                            msg: ret.responseMsg,
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                    console.log(JSON.stringify(ret));
+                } else {
+                    console.log(JSON.stringify(err));
+                }
+            });
+
+
+
+        };
+        methods.getcollection = function() {
+
+        }
+
+        methods.lister = function() {
+            api.sendEvent({
+                name: 'collection',
+                extra: {
+                    key1: assigment.job,
+                }
+            });
+        };
+        console.log("事件管理者：" + JSON.stringify(methods));
+        return methods;
+
+
+
+
+    }
+    vueComponentsManager = function() {
+
+        var components = {};
+        components.classAssigment = {}; //星星组件
+        components.classAssigment.template = "#classAssigment";
+        components.classAssigment.props = [];
+        components.classAssigment.props.push("classHour"); //要传入的数据
+        components.classAssigment.props.push("starTips"); //要传入的数据
+        components.classAssigment.props.push("starNumber"); //要传入的数据
+        components.classAssigment.props.push("difStatistical"); //要传入的数据
+        components.classAssigment.props.push("removeAll"); //要传入的数据
+        components.classAssigment.props.push("editTask"); //要传入的数据
+        components.classAssigment.props.push("isChoose"); //要传入的数据
+        components.classAssigment.props.push("collection"); //要传入的数据
+        components.classAssigment.methods = {};
+        //全移除
+        components.classAssigment.methods.removeAlls = function(collection) { //全移除按钮
+            if (!assigment.classAssigment.isChoose) {
+
+                assigment.classAssigment.isChoose = !assigment.classAssigment.isChoose;
+                assigment.classAssigment.removeAll = "全选入";
+
+            } else {
+                assigment.classAssigment.isChoose = !assigment.classAssigment.isChoose;
+                assigment.classAssigment.removeAll = "全移除";
+            }
+
+
+
+
+
+
+
+
+        };
+        components.classAssigment.methods.goCollection = function(collection) {
+            var data = {};
+            data.method = "favoritesQuestions";
+            data.request = {
+                "favoritesId": collection.id,
+            };
+            console.log(api.frameName + "favoritesQuestions请求数据：" + JSON.stringify(data));
+            api.showProgress();
+            ajaxRequest(data, function(ret, err) {
+                api.hideProgress();
+                if (ret) {
+                    //--------------------0714系统错误-----------使用测试数据
+                    // var list = [{
+                    //     "boardSize": 0,
+                    //     "difficultyName": "二星",
+                    //     "difficultyValue": 2,
+                    //     "drawChessBoard": false,
+                    //     "knowledgeId": 23,
+                    //     "knowledgeName": "围棋常识",
+                    //     "programmeId": 27,
+                    //     "programmeName": "启蒙",
+                    //     "questionId": 171,
+                    //     "questionOptionsAttributes": [{
+                    //         "optionId": 375,
+                    //         "optionName": "A",
+                    //         "optionRight": false,
+                    //         "optionValue": 0,
+                    //         "questionId": 171,
+                    //         "questionOptions": [{
+                    //             "optionDetails": "中心",
+                    //             "optionTypeName": "文本",
+                    //             "optionTypeValue": -1
+                    //         }]
+                    //     }, {
+                    //         "optionId": 376,
+                    //         "optionName": "B",
+                    //         "optionRight": true,
+                    //         "optionValue": 1,
+                    //         "questionId": 171,
+                    //         "questionOptions": [{
+                    //             "optionDetails": "天元",
+                    //             "optionTypeName": "文本",
+                    //             "optionTypeValue": -1
+                    //         }]
+                    //     }],
+                    //     "questionTitleAttributes": [{
+                    //         "titleDetails": "中间的星位又叫（   ）",
+                    //         "titleTypeName": "文本",
+                    //         "titleTypeValue": -1
+                    //     }],
+                    //     "questionTypeName": "选择题",
+                    //     "questionTypeValue": 1,
+                    //     "subjectId": 1,
+                    //     "subjectName": ""
+                    // }];
+                    // $api.setStorage('collection', list); //报错获取到的题目
+                    // api.openWin({
+                    //     name: 'chooseClass_collectionDeatils_win',
+                    //     url: 'chooseClass_collectionDeatils_win.html',
+                    // });
+                    //如果没有错误可以用正式数据
+                    if (ret.responseCode == 0) { //获取数据
+                        console.log(api.frameName + "favoritesQuestions成功返回数据：" + JSON.stringify(ret));
+                        $api.setStorage('collection', ret.responseBody); //报错获取到的题目
+                        api.openWin({
+                            name: 'chooseClass_collectionDeatils_win',
+                            url: 'chooseClass_collectionDeatils_win.html',
+                        });
+
+                    } else {
+                        api.toast({
+                            msg: ret.responseMsg,
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                } else {
+                    api.toast({
+                        msg: ret.responseMsg,
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+
+                }
+
+
+            });
+
+
+        };
+        console.log("组件管理者：" + JSON.stringify(components));
+        return components;
+
+    }
+    imready = function() {
+        api.parseTapmode(); //默认页面加载完成后，引擎会对 dom 里面的元素进行 tapmode 属性解析，若是之后用代码创建的 dom 元素，则需要调用该方法后 tapmode 属性才会生效
+        $api.fixStatusBar($api.dom('header'));
+        initVue();
+        assigment.init();
+
+        //下拉刷新
+        api.setRefreshHeaderInfo({
+            visible: true,
+            loadingImg: 'widget://image/refresh.png',
+            bgColor: '#ccc',
+            textColor: '#fff',
+            textDown: '下拉刷新...',
+            textUp: '松开刷新...',
+            showTime: true
+        }, function(ret, err) {
+            //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+            assigment.pageindex = 1;
+            assigment.init();
+        });
+        //上拉加载
+        api.addEventListener({
+            name: 'scrolltobottom',
+            extra: {
+                threshold: 0 //设置距离底部多少距离时触发，默认值为0，数字类型
+            }
+        }, function(ret, err) {
+            if (assigment.loadEnd) {
+                api.toast({
+                    msg: "没有更多的数据了...",
+                    duration: 2000,
+                    location: 'bottom'
+                });
+                return;
+            }
+            assigment.init();
+        });
+
+    };
+</script>
+
+</html>

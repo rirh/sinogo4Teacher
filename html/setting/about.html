@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<style>
+			.h-right {
+				text-align: right;
+				margin-right: 0.23rem;
+				-webkit-flex: 0.3; /* Chrome */
+				-ms-flex: 0.3; /* IE 10 */
+				flex: 0.3; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 0.3; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 0.3;
+			}
+			.h-left {
+				margin-left: 0.23rem;
+				text-align: left;
+				-webkit-flex: 0.3; /* Chrome */
+				-ms-flex: 0.3; /* IE 10 */
+				flex: 0.3; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 0.3; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 0.3;
+			}
+			.h-left img {
+				margin-top: 0.215rem;
+				width: 0.25rem;
+				height: 0.45rem;
+				background: url(../../image/setting/icon-back.png);
+				background-size: cover;
+				margin-left: 0;
+			}
+			/****************************************************************************************************************/
+			.setbox {
+				background: #ffffff;
+				height: 0.88rem;
+				line-height: 0.88rem;
+				width: 100%;
+				display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+				display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+				display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+				display: -moz-box; /* 老版本语法: Firefox (buggy) */
+				display: -ms-flexbox; /* 混合版本语法: IE 10 */
+			}
+			.setleft {
+				display: block;
+				margin-left: 0.23rem;
+				line-height: 0.88rem;
+				text-align: left;
+				color: #333333;
+				font-size: 0.28rem;
+			}
+			.setcon {
+				text-align: right;
+				margin-left: 0.2rem;
+				color: #999999;
+				font-size: 0.26rem;
+				-webkit-flex: 1; /* Chrome */
+				-ms-flex: 1; /* IE 10 */
+				flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 1;
+				margin-right: 0.23rem;
+			}
+			.setright {
+				width: 0.16rem;
+				height: 0.28rem;
+				margin-right: 0.23rem;
+				background: url(../../image/setting/icon-todo.png);
+				background-size: cover;
+				margin-top: 0.3rem;
+			}
+			.sp {
+				height: 0;
+				width: 0;
+			}
+			.dp {
+				margin-top: 0.77rem;
+			}
+			.line {
+				margin-left: 0.23rem;
+				position: relative;
+			}
+			.line:after {
+				border-bottom: 1px solid #d9d9d9;
+				content: "";
+				display: block;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				-webkit-transform-origin: 0 0;
+				-webkit-transform: scaleY(0.5);
+			}
+			.start {
+				position: relative;
+			}
+			.start:after {
+				border-bottom: 1px solid #cccccc;
+				content: "";
+				display: block;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				-webkit-transform-origin: 0 0;
+				-webkit-transform: scaleY(0.5);
+			}
+			.hicp {
+				float: right;
+				height: 0.90rem;
+				width: 0.9rem;
+				border-radius: 50%;
+				background-color: #333333;
+				margin-top: 0.46rem;
+			}
+			.school {
+				color: #666666;
+				font-size: 0.26rem;
+				margin-left: 0.23rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="flex-wrap flex-vertical">
+			<header>
+				<div class="h-left" onclick="closeWin();"><img src="../../image/setting/icon-back.png" />
+				</div>
+				<div class="h-conter">
+					关于中棋
+				</div>
+				<div class="h-right"></div>
+			</header>
+			<div class="flex-con"></div>
+		</div>
+	</body>
+	<script type="template" id="dotTmpl">
+		<div class="setbox" id="update" onclick="set(1)">
+		<div class="setleft general">检查更新</div>
+		<div class="setcon">{{=it[0].update}}</div>
+		<div class="setright sp"></div>
+		</div>
+		<div class="line"></div>
+		<div class="setbox" onclick="set(2)">
+		<div class="setleft about">客服电话</div>
+		<div class="setcon tel">{{=it[0].admintel}}</div>
+		<div class="setright sp"></div>
+		</div>
+		<div class="line"></div>
+		<div class="setbox" onclick="set(3)">
+		<div class="setleft about">用户协议</div>
+		<div class="setcon"></div>
+		<div class="setright"></div>
+		</div>
+		<div class="line"></div>
+		<div class="setbox" onclick="set(4)">
+		<div class="setleft about">公司简介</div>
+		<div class="setcon"></div>
+		<div class="setright"></div>
+		</div>
+		<div class="line"></div>
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/doT.js"></script>
+	<script type="text/javascript">
+		function json() {
+			var json = [];
+			var list = {};
+			list.update = '当前是最新版本';
+			list.admintel = '微信搜索公众号“中棋教育”';
+			json.push(list);
+			var tmpl = doT.template($api.text($api.dom("#dotTmpl")));
+			$api.html($api.dom(".flex-con"), tmpl(json));
+		}
+
+		function set(type) {
+			switch(type) {
+				case 1:
+					var mam = api.require('mam');
+					mam.checkUpdate(function(ret, err) {
+						if (ret) {
+							var result = ret.result;
+							if (result.update == true && result.closed == false) {
+								var str = '新版本型号:' + result.version + ';更新提示语:' + result.updateTip + ';下载地址:' + result.source + ';发布时间:' + result.time;
+								api.confirm({
+									title : '有新的版本,是否下载并安装 ',
+									msg : str,
+									buttons : ['确定', '取消']
+								}, function(ret, err) {
+									if (ret.buttonIndex == 1) {
+										if (api.systemType == "android") {
+											api.download({
+												url : result.source,
+												report : true
+											}, function(ret, err) {
+												if (ret && 0 == ret.state) {/* 下载进度 */
+													api.toast({
+														msg : "正在下载应用" + ret.percent + "%",
+														duration : 2000
+													});
+												}
+												if (ret && 1 == ret.state) {/* 下载完成 */
+													var savePath = ret.savePath;
+													api.installApp({
+														appUri : savePath
+													});
+												}
+											});
+										}
+										if (api.systemType == "ios") {
+											api.installApp({
+												appUri : result.source
+											});
+										}
+									}
+								});
+							} else {
+								api.alert({
+									msg : "已经是最新版本"
+								});
+							}
+						} else {
+							api.alert({
+								msg : err.msg
+							});
+						}
+					});
+					break;
+				case 2:
+					var number = $api.text($api.dom('.tel'));
+					//拨打电话
+					//		api.call({
+					//		    type: 'tel_prompt',
+					//		    number: number
+					//		});
+					break;
+				case 3:
+				//用户协议
+					api.openWin({
+						name : 'userAgreementTitle',
+						url : 'userAgreementTitle.html'
+					});
+					break;
+				case 4:
+				//公司简介
+					api.openWin({
+						name : 'companyProfileTitle',
+						url : 'companyProfileTitle.html'
+					});
+					break;
+			}
+		}
+
+		imready = function() {
+			$api.fixStatusBar($api.dom('header'));
+			json();
+			if (api.systemType == 'ios') {
+				$api.byId("update").style.display = "none"
+			} else {
+			}
+		};
+	</script>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    	<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	<style>
+		html,body {
+			background: #F6F6F6;
+			height:100%;
+		}
+		#header{
+		    background-color: #1EBEB6;
+		    text-align: center; color: #fff;
+		    width: 100%; position: fixed;
+		    height:0.88rem;
+			z-index: 1;
+		}
+		#header .back-icon{
+		    display: inline-block; width: 0.88rem; height: 0.88rem;
+		    background: url(../../image/icon_arrow_left.png) no-repeat center center; 
+		    background-size: 0.24rem 0.42rem;
+		    position: absolute; left: 0; bottom: 0;
+		}
+		#header .back-icon.active{
+			 background: url(../../image/icon_arrow_left.png) no-repeat center center rgba(0,0,0,0.2); 
+			 background-size: 0.24rem 0.42rem;
+		}
+		#header h1{
+		    font-size: 0.34rem;
+		    height: 0.88rem; line-height: 0.88rem; margin: 0 auto; color: #fff;
+		    width:5rem;
+		}
+		#header .btn_right{
+			width: 0.95rem; height: 0.88rem;
+			line-height: 0.88rem;
+			font-size:0.3rem;
+			position: absolute;
+			top: 25px;
+			right:0;
+			text-align: center;
+			background: url(../../image/icon_history.png) no-repeat center center;
+			background-size: 0.31rem 0.31rem;
+		}
+		#header .btn_right.active{
+			background: url(../../image/icon_history.png) no-repeat center center rgba(0,0,0,0.3);
+			background-size: 0.31rem 0.31rem;
+		}
+		#main{
+			position: absolute;
+			top:0.88rem;
+			padding-bottom: 0.98rem;
+			width:100%;
+		}
+		#footer{
+			height:0.98rem;
+			line-height:0.98rem;
+			position: fixed;
+			bottom:0;
+			z-index: 1;
+			width:100%;
+			text-align: center;
+			font-size:0.32rem;
+			color:#FFF;
+		}
+		.itemgroup{
+			margin-top: 0.23rem;
+		}
+		.topone{
+			margin-top: 0;
+		}
+		.item{
+			width:100%;
+			height:2.21rem;
+			background: #FFF;
+			position:relative;
+		}
+		.item:after{
+			border-bottom: 1px solid #ccc;
+			position:absolute;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+		}
+		.item > img{
+			width:2.58rem;
+			height:1.61rem;
+			margin-top:0.31rem;margin-left:0.23rem;
+			float: left;
+		}
+		.item .item-right{
+			float: left;
+			height:1.64rem;
+			margin-top:0.3rem;
+			margin-left:0.37rem;
+			width:4.1rem;
+			position: relative;
+		}
+		.item .item-right .item-title{
+			margin-top:0.08rem;
+			font-size:0.28rem;
+			color:#333;
+		}
+		.item .item-right .item-spec{
+			margin-top:0.08rem;
+			font-size:0.26rem;
+			color:#666;
+		}
+		.item .item-right .item-control{
+			margin-top:0.08rem;
+			height: 0.36rem;
+			line-height: 0.36rem;
+			font-size:0.26rem;
+			color:#666;
+		}
+		.item .item-right .item-control .count{
+			float:right;
+			color: #999;
+		}
+		#studentinfo{
+			margin-top: 0.5rem;
+			position:relative;
+		}
+		#studentinfo:before{
+			border-top:1px solid #ccc;
+			position:absolute;
+			top:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+		}
+		#studentinfo:after{
+			border-bottom:1px solid #ccc;
+			position:absolute;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+		}
+		#studentinfo .studentitem{
+			height:0.88rem;
+			line-height:0.88rem;
+			background: #FFFFFF;
+		}
+		#studentinfo .studentitem .studentitem-inner{
+			margin-left: 0.23rem;
+			font-size:0.28rem;
+			color:#333;
+		}
+		#studentinfo .studentitem .studentitem-inner span{
+			font-size:0.26rem;
+			color:#666;
+		}
+		#studentinfo .studentitem .haveborder{
+			position: relative;
+		}
+		#studentinfo .studentitem .haveborder:after{
+			border-bottom:1px solid #d9d9d9;
+			position:absolute;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+		}
+		.footer-empty{
+			height:0.98rem;
+			line-height:0.98rem;
+			float:left;
+			width:21.3%;
+			background: #FFF;
+		}
+		.footer-sum{
+			height:0.98rem;
+			line-height:0.98rem;
+			float:left;
+			width:36%;
+			background: #FFF;
+			font-size:0.3rem;
+			color:#666;
+		}
+		.footer-pay{
+			height:0.98rem;
+			line-height:0.98rem;
+			float:left;
+			width:42.7%;
+			background: #FF8828;
+			font-size:0.32rem;
+			color:#FFF;
+		}
+		#order_summary{
+			height:0.9rem;
+			line-height:0.9rem;
+			background: #FFF;
+			position:relative;
+		}
+		#order_summary:after{
+			position:absolute;
+			border-bottom:1px solid #CCCCCC;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform:scaleY(0.5);
+			pointer-events:none;
+		}
+	</style>
+	</head>
+	<body>
+	<div id="wrap" class="flex-wrap flex-vertical">
+		<div id="header">
+			<a class="back-icon" tapmode="active" onclick="backConfirm()" ></a>
+			<h1 id="title">代办订单详情</h1>
+		</div>
+		<div id="main" class="flex-con">
+			<script id="order_template" type="text/x-dot-template">
+			{{ for(var i=0;i<it.length;i++){ }}
+			<div class="itemgroup {{=i==0?'topone':''}}">
+				<div class="item">
+					<img src="{{=imageUrl+it[i].goodsPreview}}" alt="" />
+					<div class="item-right">
+						<div class="item-title ellipsis-2">{{=it[i].goodsName}}</div>
+						<div class="item-spec">{{=it[i].goodsExpand?it[i].goodsExpand:""}}</div>
+						<div class="item-control">
+							<span>价格: <span class="imp_s">{{=it[i].goodsPrice}}</span>￥</span>
+							<div class="count">x{{=it[i].goodsNum}}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{{ } }}
+			</script>
+			<div id="order_content">
+				<!-- <div class="item" style="display:{{=it[i].supporting_books_id==0?'none':'block'}}">
+					<img src="{{=imageUrl+it[i].supportingBook.goodsPreview}}" alt="" />
+					<div class="item-right">
+						<div class="item-title ellipsis-2">{{=it[i].supportingBook.goodsName}}</div>
+						<div class="item-spec">型号:{{=(it[i].supportingBook.spec1?it[i].supportingBook.spec1:'')}} {{=(it[i].supportingBook.spec2?it[i].supportingBook.spec2:'')}}</div>
+						<div class="item-control">
+							<span>价格: <span class="imp_s">{{=it[i].supportingBook.goodsPrice}}</span>￥</span>
+							<div class="count">x{{=it[i].supportingBook.goodsNum}}</div>
+						</div>
+					</div>
+				</div> -->
+			</div>
+			<div id="order_summary" style="display: none">
+				<span style="float:right; margin-right: 0.23rem;" class="goodsaccount imp_s">￥200</span>
+				<span style="font-size:0.26rem;color:#999;float:right;" class="goodscount">共2件教辅  :  </span>
+			</div>
+			<div id="studentinfo">
+				<div class="studentitem"><div class="studentitem-inner haveborder">家长电话: <span>15287384712</span></div></div>
+				<div class="studentitem"><div class="studentitem-inner haveborder">学生姓名: <span >张一山</span></div></div>
+				<div class="studentitem"><div class="studentitem-inner haveborder">下单时间: <span>2016.11.12 16:24</span></div></div>
+				<div class="studentitem paytime" style="display: none"><div class="studentitem-inner">支付时间: <span>2016.11.12 16:24</span></div></div>
+			</div>
+		</div>
+		
+		<div id="footer" style="display: none" class="border-t">
+			<div class="footer-empty"></div>
+			<div class="footer-sum">合计: <span class="imp_s">￥200</span></div>
+			<div class="footer-pay" onclick="goPay();">立即支付</div>
+		</div>
+	</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/doT.js"></script>
+	<script type="text/javascript">
+	var userInfo;
+	var spanSum;
+	var spans ;
+	var orderNo;
+	var imageUrl;
+	imready = function(){
+		$api.fixStatusBar($api.byId("main"));
+		var type = api.pageParam.type; 
+		imageUrl = api.getPrefs({
+	        sync:true,
+	        key:'imageUrl'
+        });
+		orderNo = api.pageParam.orderNo;//
+		userInfo = api.pageParam.userInfo;
+		
+		spanSum = $api.dom(".footer-sum span")
+		spans = $api.domAll("#studentinfo div div span")
+		if(type==0){//待支付
+			$api.byId("order_summary").style.display="none";
+			$api.dom(".paytime").style.display="none";
+			$api.byId("footer").style.display="block";
+			
+		}else if(type==2){//已支付
+			$api.byId("order_summary").style.display="block";
+			$api.dom(".paytime").style.display="block";
+			$api.byId("footer").style.display="none";
+		}else{//已取消
+			$api.byId("order_summary").style.display="none";
+			$api.dom(".paytime").style.display="block";
+			$api.byId("footer").style.display="none";
+			userInfo[3]='订单已经取消'
+		}
+		for(var i=0;i<spans.length;i++){
+			spans[i].innerHTML=userInfo[i]
+		}
+		api.addEventListener({
+	        name:'keyback'
+        },function(ret,err){
+        	backConfirm()
+        });
+        requestOrderInfo();
+	};
+	
+	function requestOrderInfo(){
+		var body = {};
+		body.method="goodsDetailSearch";
+		body.request={
+			"orderNo":orderNo
+		}
+		ajaxRequest(body,function(ret,err){
+			if(ret){
+				if(ret.responseCode==0){
+					fillData(ret.responseBody);
+//					var sName = "";
+//					for(var i=0;i<ret.responseBody.orderStudentDetails.length;i++){
+//						sName+=","
+//						sName+=ret.responseBody.orderStudentDetails[i].studentName
+//					}
+//					sName=sName.substr(1)
+//					spans[1].innerHTML=sName
+				}else{
+					alert(ret.responseMsg)
+				}
+			}else{
+				alert(err.msg)
+			}
+		})
+	}
+	function fillData(ret){
+		spanSum.innerHTML="￥"+ret.totalAmount;
+		window.userId = ret.userId;
+		$api.dom(".goodsaccount").innerHTML="￥"+ret.totalAmount;
+		$api.dom(".goodscount").innerHTML="共"+ret.goodsOrderDetails.length+"门课程或教辅";
+		getInnerByDot("order_content","order_template",ret.goodsOrderDetails)
+	}
+	
+	function goPay(){
+		api.showProgress();
+		var body = {};
+		body.method="orderPay"
+		body.request = {
+			"firstPay":true,
+			"orderNo":orderNo,
+			"userId":api.getPrefs({sync:true,key:'userid'}),
+			"tradingBussiness":"ORDER"
+		}
+		console.log(JSON.stringify(body))
+		ajaxRequest(body,function(ret,err){
+			api.hideProgress();
+			console.log(JSON.stringify(ret))
+			if(ret){
+				if(ret.responseCode==0){
+					api.openWin({
+	                    name: 'payment',
+	                    url: 'payment.html',
+	                    pageParam:{
+	                    	response:ret.responseBody,
+	                    	orderType:2,
+	                    	userInfo:userInfo,
+	                    	userId:window.userId
+	                    }
+                    });
+				}else{
+					alert(ret.responseMsg)
+				}
+			}else{
+				alert(err.msg)
+			}
+		})
+	}
+	
+	function backConfirm(){
+		if(api.pageParam.comeFrom=='paysuccess'){
+			api.closeToWin({
+	            name: 'root'
+            });
+		}else{
+			closeWin();		
+		}
+	}
+	</script>
+</html>

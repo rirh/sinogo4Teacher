@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <style>
+    	html,body{
+    		background:#F6F6F6;
+    		height:100%;
+    	}
+    	#header{
+		    background-color: #1EBEB6;
+		    text-align: center; color: #fff;
+		    width: 100%; position: fixed;
+		    height:0.88rem;
+			z-index: 1;
+		}
+		#header .back-icon{
+		    display: inline-block; width: 0.88rem; height: 0.88rem;
+		    background: url(../../image/icon_arrow_left.png) no-repeat center center; 
+		    background-size: 0.24rem 0.42rem;
+		    position: absolute; left: 0; bottom: 0;
+		}
+		#header .back-icon.active{
+			 background: url(../../image/icon_arrow_left.png) no-repeat center center rgba(0,0,0,0.2); 
+			 background-size: 0.24rem 0.42rem;
+		}
+		
+		#header h1{
+		    font-size: 0.34rem;
+		    height: 0.88rem; line-height: 0.88rem; margin: 0 auto; color: #fff;
+		    width:5rem;
+		}
+		#main{
+			position: absolute;
+			top:0.88rem;
+			width: 100%;
+		}
+		.teaching-title{
+			height: 1.68rem;
+			position:relative;	
+		}
+		.teaching-title:after{
+			position: absolute;
+			border-bottom: 1px solid #cccccc;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+		}
+		.teaching-month{
+			height: 0.84rem;
+			line-height: 0.84rem;
+			padding-left: 0.23rem;
+			position:relative;	
+			color:#333;
+			font-size:0.3rem;
+		}
+		.teaching-month:after{
+			position: absolute;
+			border-bottom: 1px solid #cccccc;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+		}
+		.teaching-th{
+			width: 100%;
+			background: #FFF;
+			height: 0.84rem;
+		}
+		span{
+			margin: 0;padding: 0;
+		}
+		.imp_28{
+			font-size: 0.28rem;
+			color: #1EBEB6;
+		}
+		.imp_o{
+			font-size: 0.26rem;
+			color: #FF8344;
+			overflow:hidden;
+			text-overflow:ellipsis;
+			white-space:nowrap;
+			word-break:keep-all; 
+		}
+		.imp_g{
+			font-size: 0.26rem;
+			color: #1CB75B;
+		}
+		.first-th{
+			width:36%;
+			height:0.84rem;
+			line-height:0.84rem;
+			text-align: center;
+			float: left;
+		}
+		.other-th{
+			width:21.3%;
+			height:0.84rem;
+			line-height:0.84rem;
+			text-align: center;
+			float: left;
+		}
+		.teaching-content{
+			background: #FFF;
+			width: 100%;
+			position: relative;
+		}
+		.teaching-content:after{
+			position: absolute;
+			border-bottom:1px solid #ccc;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+		}
+		.teaching-content .teaching-item{
+			margin-left:0.23rem;
+			height:0.84rem;
+			line-height:0.84rem;
+			position: relative;
+		}
+			.teaching-content1{
+			background: #FFF;
+			width: 100%;
+			position: relative;
+		}
+		
+		.teaching-content1:after{
+			position: absolute;
+			border-bottom:1px solid #ccc;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+		}
+		.teaching-content1 .teaching-item{
+			margin-left:0.23rem;
+			height:0.84rem;
+			line-height:0.84rem;
+			position: relative;
+		}
+		.con{
+			font-size:0.26rem;
+			color:#666;
+			overflow:hidden;
+			text-overflow:ellipsis;
+			white-space:nowrap;
+			word-break:keep-all; 
+		}
+		.teaching-content .teaching-item:after{
+			position: absolute;
+			border-bottom:1px solid #ccc;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+		}
+			.teaching-content1 .teaching-item:after{
+			position: absolute;
+			border-bottom:1px solid #ccc;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+		}
+		.first-th-c{
+			width:35.7%;
+			height:0.84rem;
+			line-height:0.84rem;
+			text-align: center;
+			float: left;
+		}
+		.teaching-content .teaching-item{
+		margin: 0;
+		}
+		.rightarrow{
+			margin-right:0.24rem;
+			background: url(../../image/icon_arrow_right_1.png) no-repeat center right ;
+			background-size:0.19rem 0.35rem;
+		}
+    </style>
+</head>
+<body>
+	<div id="wrap" class="flex-wrap flex-vertical">
+		<div id="header">
+			<a class="back-icon" tapmode="active" onclick="closeWin()" ></a>
+			<h1 id="title">业务统计</h1>
+		</div>
+		<div id="main" class="flex-con">
+			<div class="teaching-title">
+				<div class="teaching-month"><div class="rightarrow">进课堂情况</div></div>
+				<div class="teaching-th">
+					<div class="first-th imp_28">班级</div>
+					<div class="other-th imp_28">注册人数</div>
+					<div class="other-th imp_28">购买人数</div>
+					<div class="other-th imp_28">报班人数</div>
+				</div>
+			</div>
+			<div class="teaching-content1">
+				
+			</div>
+			<div class="teaching-title">
+				<div class="teaching-month">业务详情</div>
+				<div class="teaching-th">
+					<div class="first-th imp_28">日期</div>
+					<div class="other-th imp_28">教辅</div>
+					<div class="other-th imp_28">课程</div>
+					<div class="other-th imp_28">总价</div>
+				</div>
+			</div>
+			<div class="teaching-content">
+				
+				
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="template" id="dotTmpl">
+  {{for(var i = 0 ; i<it.length;i++){}}
+    <div class="teaching-item">
+	<div class="first-th-c con">{{=it[i].className}}</div>
+	<div class="other-th con">{{=it[i].regNum}}</div>
+	<div class="other-th con">{{=it[i].payNum}}</div>
+	<div class="other-th imp_o">
+	                            {{?(it[i].studentNum===null)}}
+	                                {{=''}}
+	                            {{??}}
+	                             {{=it[i].studentNum}}
+	                            {{?}}
+	                            </div>
+  </div>
+  {{}}}
+</script>
+<script type="template" id="dotTmpl2">
+  {{for(var i = 0 ; i<it.length;i++){}}
+   	<div class="teaching-item">
+					<div class="first-th-c con">{{=it[i].reportDate}}</div>
+					<div class="other-th con">{{=it[i].materialsTotal}}</div>
+					<div class="other-th con">{{=it[i].courseTotal}}</div>
+					<div class="other-th imp_o">{{=it[i].allTotal}}</div>
+	</div>
+  {{}}}
+</script>
+<script type="text/javascript">
+	imready = function(){
+		$api.fixStatusBar($api.byId("main"));
+		httpcit();
+		$api.dom(".rightarrow").onclick=function(){
+			openWin("backOrders")
+		}
+		
+		
+	};
+	
+	function httpcit(){
+  	var userid = api.getPrefs({
+            sync:true,
+            key:'userid'
+        });
+        var date = new Date();
+        var year = date.getFullYear();
+		var month = date.getMonth() + 1;
+		if (month < 10) {  
+                month = '0' + month;  
+            }  
+		var thismonth =  year + '-' + month + '-' + '01';
+		var nextmonth = getNextMonth(thismonth);
+        var data =  {};
+		data.method="businessClassTotal";
+		data.request={"teacherId":userid,"startDate":thismonth,"endDate":nextmonth};
+		console.log("业务统计businessClassTotal请求数据"+JSON.stringify(data));
+		api.showProgress();
+//		ajaxRequestWithUrl
+		ajaxRequest(data,function(ret,err){
+		api.hideProgress();
+		if(ret){
+		if(ret.responseBody!=null){
+		 var json = ret.responseBody;
+		 console.log("业务统计businessClassTotal返回数据"+JSON.stringify(json)); 
+		 var tmpl = doT.template($api.text($api.dom("#dotTmpl")));
+         $api.html($api.dom(".teaching-content1"), tmpl(json)); 
+		}
+		}else{
+			
+		}
+		});
+        var list={};
+        list.method="dayTotal";
+        list.request={
+        "teacherId":userid,
+        "startDate":thismonth,
+        "endDate":nextmonth
+          }
+        console.log("业务统计dayTotal请求数据"+JSON.stringify(list));
+		ajaxRequest(list,function(ret,err){
+		console.log(JSON.stringify(ret))
+		api.hideProgress();
+		if(ret){
+		if(ret.responseBody!=null){
+		 var json = ret.responseBody;
+		 console.log("业务统计dayTotal返回数据"+JSON.stringify(json));
+		 var tmpl = doT.template($api.text($api.dom("#dotTmpl2")));
+         $api.html($api.dom(".teaching-content"), tmpl(json)); 
+		}
+		}else{
+			alert(err.msg)
+		}
+		});
+		
+		
+		
+		
+}
+//获取下一个月
+  function getNextMonth(date) {  
+            var arr = date.split('-');  
+            var year = arr[0]; //获取当前日期的年份  
+            var month = arr[1]; //获取当前日期的月份  
+            var day = arr[2]; //获取当前日期的日  
+            var days = new Date(year, month, 0);  
+            days = days.getDate(); //获取当前日期中的月的天数  
+            var year2 = year;  
+            var month2 = parseInt(month) + 1;  
+            if (month2 == 13) {  
+                year2 = parseInt(year2) + 1;  
+                month2 = 1;  
+            }  
+            var day2 = day;  
+            var days2 = new Date(year2, month2, 0);  
+            days2 = days2.getDate();  
+            if (day2 > days2) {  
+                day2 = days2;  
+            }  
+            if (month2 < 10) {  
+                month2 = '0' + month2;  
+            }  
+          
+            var t2 = year2 + '-' + month2 + '-' + day2;  
+            return t2;  
+        } 
+	
+</script>
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <style>
+    	html,body{
+    		background:#F6F6F6;
+    		height:100%;
+    	}
+    	#header{
+		    background-color: #1EBEB6;
+		    text-align: center; color: #fff;
+		    width: 100%; position: fixed;
+		    height:0.88rem;
+			z-index: 1;
+		}
+		#header .back-icon{
+		    display: inline-block; width: 0.88rem; height: 0.88rem;
+		    background: url(../../image/icon_arrow_left.png) no-repeat center center; 
+		    background-size: 0.24rem 0.42rem;
+		    position: absolute; left: 0; bottom: 0;
+		}
+		#header .back-icon.active{
+			 background: url(../../image/icon_arrow_left.png) no-repeat center center rgba(0,0,0,0.2); 
+			 background-size: 0.24rem 0.42rem;
+		}
+		#header h1{
+		    font-size: 0.34rem;
+		    height: 0.88rem; line-height: 0.88rem; margin: 0 auto; color: #fff;
+		    width:5rem;
+		}
+		#main{
+			position: absolute;
+			top:0.88rem;
+			padding-bottom:0.98rem;
+			width: 100%;
+		}
+		#pic{
+			height:4.38rem;
+		}
+		#pic img{
+			width:100%;
+			height:4.38rem;
+		}
+		#detail{
+			min-height:2.58rem;
+			padding: 0.38rem 0;
+			background:#FFF;
+			line-height: 1;
+			font-size:0.26rem;
+			color:#666666;
+			position:relative;
+		}
+		#detail:before{
+			border-bottom: 1px solid #aaaaaa;
+			position:absolute;
+			content:"";
+			display:block;
+			bottom:0;left:0;right:0;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform:scaleY(0.5);
+		}
+		#detail h2{
+			font-size:0.28rem;
+			color:#333333;
+			margin-left: 0.24rem;
+		}
+		#detail .tpr{
+			margin-top:0.2rem;
+			position: relative;
+			height:0.64rem;
+			line-height:0.64rem;
+		}
+		#detail .tpr:before{
+			border-top: 1px solid #d9d9d9;
+			position:absolute;
+			top:0;left:0;right:0;
+			content:"";
+			display:block;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform:scaleY(0.5);
+		}
+		#detail .tpr:after{
+			border-bottom: 1px solid #d9d9d9;
+			position:absolute;
+			bottom:0;left:0;right:0;
+			content:"";
+			display:block;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform:scaleY(0.5);
+		}
+		#detail .tpr .tpr-inner{
+			margin-left:0.26rem;
+		}
+		#detail .tpr .tpr-item{
+			width:32%;
+			height:0.4rem;
+			line-height:0.4rem;
+			margin-top:0.1rem;
+		}
+		#detail .tpr .atc{
+			text-align: center;
+		}
+		#detail .tpr .rb{
+			position: relative;
+		}
+		#detail .tpr .rb:before{
+			border-right: 1px solid #d9d9d9;
+			position:absolute;
+			bottom:0;top:0;right:0;
+			content:"";
+			display:block;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform:scaleX(0.5);
+		}
+		#detail .item_left{
+			width:40%;
+		}
+		#detail .item_right{
+		}
+		#detail .item_right .star{
+			width:0.24rem;
+			height:0.24rem;
+			margin-right:0.1rem;
+		}
+		#desc {
+			margin-top:0.3rem;
+			padding: 0 0.24rem;
+			background: #FFF;
+		}
+		#desc .desc-title{
+			height:0.84rem;
+			line-height:0.84rem;
+			position: relative;
+		}
+		#desc .desc-title:before{
+			border-bottom: 1px solid #eeeeee;
+			position:absolute;
+			content:"";
+			display:block;
+			bottom:0;left:0;right:0;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform:scaleY(0.5);
+		}
+		#desc .desc-title span{
+			padding-left: 0.3rem;
+			height: 0.42rem;
+			line-height: 0.42rem;
+			margin-top:0.21rem;
+			font-size:0.28rem;
+			color:#333;
+			position: relative;
+		}
+		#desc .desc-title span:after{
+			border-left: 4px solid #1EBEB6;
+			position:absolute;
+			content:"";
+			display:block;
+			bottom:0;left:0;top:0;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform:scaleX(0.5);
+		}
+		#desc .desc-con{
+			padding: 0.3rem 0;
+			font-size:0.26rem;
+			color:#666;
+		}
+		#intro{
+			background:#FFF;
+			padding: 0 0.24rem;
+			margin-top: 0.3rem;
+			position: relative;
+		}
+		#intro:after{
+			position: absolute;
+			border-top: 1px solid #CCCCCC;
+			content:"";
+			display:block;
+			top:0;left:0;right:0;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform:scaleY(0.5);
+		}
+		#intro .intro-title{
+			height:0.84rem;
+			line-height:0.84rem;
+			position: relative;
+		}
+		#intro .intro-title:before{
+			border-bottom: 1px solid #eeeeee;
+			position:absolute;
+			content:"";
+			display:block;
+			bottom:0;left:0;right:0;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform:scaleY(0.5);
+		}
+		#intro .intro-title span{
+			padding-left: 0.3rem;
+			height: 0.42rem;
+			line-height: 0.42rem;
+			margin-top:0.21rem;
+			font-size:0.28rem;
+			color:#333;
+			position: relative;
+		}
+		#intro .intro-title span:after{
+			border-left: 4px solid #1EBEB6;
+			position:absolute;
+			content:"";
+			display:block;
+			bottom:0;left:0;top:0;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform:scaleX(0.5);
+		}
+		#intro #courseIntro{
+			padding-top: 0.28rem;
+			padding-bottom: 0.28rem;
+		}
+		#intro #courseIntro img{
+			max-width:100%;
+		}
+		#footer{
+    		height:0.98rem;
+    		line-height:0.98rem;
+    		position: fixed;
+    		bottom:0;
+    		width:100%;
+    		background: #FFF;
+    		color:#333;
+    		font-size:0.32rem;
+    		text-align: center;
+    		z-index: 1;
+    	}
+    </style>
+</head>
+<body>
+	<div id="wrap" class="flex-wrap flex-vertical">
+		<div id="header">
+			<a class="back-icon" tapmode="active" onclick="closeWin()" ></a>
+			<h1 id="title">课程详情</h1>
+		</div>
+		<script type="text/x-dot-template" id="main-template">
+			<div id="pic">
+				<img src="{{=(it.courseImg?(imageUrl+it.courseImg):'../../image/eg_course_detail.png')}}" alt="" />
+			</div>
+			<div id="detail">
+				<h2>{{=it.courseName}}</h2>
+				<div style="margin-top:0.3rem;margin-left: 0.24rem;"  class="imp_s">￥{{=it.coursePrice}}</div>
+				<div class="tpr" >
+					<div class="tpr-inner">
+						<span class="tpr-item rb">老师： <span class="imp_s">{{=it.teacherName}}</span> </span>
+						<span class="tpr-item rb atc ">课时：<span class="imp_s">{{=it.coursePeriod}}</span> </span>
+						<span class="tpr-item atc">已有<span class="imp_s">{{=it.registeredPeopers}}</span>人报名</span>
+					</div>
+				</div>
+				<div style="margin-top:0.23rem;margin-left:0.24rem;">上课地址：{{=it.address}}</div>
+				<div style="margin-top:0.23rem;margin-left:0.24rem;">上课日期：{{=it.startDate}}  -  {{=it.endDate}}</div>
+				<div style="display:none;margin-top:0.23rem;margin-left:0.24rem;">上课时间：{{=it.startTime}}  -  {{=it.endTime}}</div>
+			</div>
+			<div id="desc">
+				<div class="desc-title"><span>课程简介</span></div>
+				<div class="desc-con" >简介：{{=it.courseDescription}}</div>
+			</div>
+			<div id="intro">
+				<div class="intro-title"><span>课程详情</span></div>
+				<div id="courseIntro">
+				{{=it.courseIntro}}
+				</div>
+			</div>
+		</script>
+		<div id="main" class="flex-con">
+			
+		</div>
+		<div id="footer" class="border-t" onclick="addToCart();">
+			加入代购
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript">
+	var db ;
+	var booksLoading=false;
+	
+	var imageUrl;
+
+	imready = function(){
+		db = api.require('db');
+		imageUrl = api.getPrefs({
+	        sync:true,
+	        key:'imageUrl'
+        });
+		var courseId = api.pageParam.courseId;
+		var classId = api.pageParam.classid;
+		requestCourseDetail(courseId,classId);		
+	};
+	
+	function requestCourseDetail(id,classId){
+		api.showProgress();
+		var body={};
+		body.method="getCourseInfo";
+		body.request={
+			"courseId":id,
+			"classId":classId
+		}
+		ajaxRequest(body,function(ret,err){
+			api.hideProgress();
+			if(ret){
+				if(ret.responseCode==0){
+					window.course_detail=ret.responseBody;
+					var startdate = new Date(ret.responseBody.startingDate.replace(/-/g,"/"));
+					var enddate = new Date(ret.responseBody.endingDate.replace(/-/g,"/"));
+					window.course_detail.startDate=startdate.Format("yyyy.MM.dd")
+					window.course_detail.endDate=enddate.Format("yyyy.MM.dd")
+					fillData(window.course_detail);
+				}else{
+					alert(ret.responseMsg)
+				}
+			}else{
+				alert(err.msg)
+			}
+		
+		});
+	}
+	
+	function fillData(ret){
+		getInnerByDot("main","main-template",ret)
+		//获取配套教辅
+		var body = {};
+		body.method="searchCm"
+		body.request={
+			courseId:ret.courseId
+		}
+		console.log(JSON.stringify(body))
+		booksLoading=true;
+		ajaxRequest(body,function(ret,err){
+			if(ret){
+				if(ret.responseCode==0){
+					if(ret.responseBody.length==0){
+						booksLoading=false;
+						console.log(JSON.stringify(ret))
+					}else{
+						window.good_code = ret.responseBody[0].materialsCode
+						requestSupportingBook();
+					}
+				}else{
+					booksLoading=false;
+					//alert(ret.responseMsg)
+				}
+			}else{
+				booksLoading=false;
+				//alert(err.msg)
+			}
+		})
+	}
+	
+	function requestSupportingBook(){
+		var body = {}
+		body.method="materialsGoodsDetail"
+		body.request={
+			materialsGoodsCode:window.good_code
+		}
+		ajaxRequest(body,function(ret,err){
+			if(ret){
+				if(ret.responseCode==0){
+					window.good_detail=ret.responseBody;
+					console.log(JSON.stringify(ret))
+					initBooks();
+					booksLoading=false;
+				}else{
+					booksLoading=false;
+					//alert(ret.responseMsg)
+				}
+			}else{
+				booksLoading=false;
+				//alert(err.msg)
+			}
+		})
+		
+	}
+	
+	function initBooks(){
+		var models = window.good_detail.materialsGoodsModelDetail
+		var standards = window.good_detail.materialsGoodsStandardDetail
+		for(var i=0;i<window.good_detail.materialsGoodsSalesDetails.length;i++){
+			var item = window.good_detail.materialsGoodsSalesDetails[i];
+			if(item.isChecked==true){
+				window.good_detail.currentItem=item;
+			}else{
+			}
+			item.materialsGoodsOrganization=window.good_detail.materialsGoodsOrganization;
+			item.materialsGoodsName=window.good_detail.materialsGoodsName;
+			item.materialsGoodsIntro=window.good_detail.materialsGoodsIntro;
+			item.materialsGoodsLogistics=window.good_detail.materialsGoodsLogistics;
+			
+			item.buyCount = 1;//默认购买一件,在规格选择和代购订单确认页面可以修改
+			
+			var modelId = item.goodsSalesModelId;
+			var standardId = item.goodsSalesStandardId;
+			if(modelId!=0){
+				for(var j=0;j<models.teachingMaterialsModels.length;j++){
+					if(modelId==models.teachingMaterialsModels[j].id){
+						item.spec1=models.teachingMaterialsModels[j].goodsModelName
+						item.goodsModelPreview=models.teachingMaterialsModels[j].goodsModelPreview
+					}
+				}
+			}
+			if(standardId!=0){
+				for(var j=0;j<standards.teachingMaterialsStandards.length;j++){
+					if(standardId==standards.teachingMaterialsStandards[j].id){
+						item.spec2=standards.teachingMaterialsStandards[j].goodsStandardName
+					}
+				}
+			}
+		}
+		
+	}
+	
+	function addToCart(){
+		if(booksLoading){
+			api.showProgress({
+				text:"正在加入代购,请稍后!"
+            });
+            setTimeout("addToCart();",100)
+            return;
+		}
+		api.hideProgress();
+		var course_detail = window.course_detail
+		var queryResult = db.selectSqlSync({
+	        name:'sinogoTeacher',
+	        sql:"select * from teacher_cart_courses where goodsNo = '"+course_detail.classId+"'"
+        });
+        console.log("queryResult--"+JSON.stringify(queryResult))
+		if(queryResult.data.length==0){//不存在则添加
+			var goodCode = window.good_detail?window.good_detail.currentItem.goodsSalesCode:0
+			var sql = "insert into teacher_cart_courses(goodsOrganization,goodsNo,goodsPreview,goodsName,goodsType,goodsPrice,goodsNum,freightAmount,couponsAmount,cashBack,sinogoCoin,orderRemark,distributionMode,orgname,address,supporting_books_id) values('"+course_detail.teachingInstitutionId+"','"+course_detail.classId+"','"+course_detail.courseImg+"','"+course_detail.courseName+"',2,'"+course_detail.coursePrice+"',1,0,0,0,0,'',4,'"+course_detail.teachingInstitutionName+"','"+course_detail.address+"','"+goodCode+"')"
+        	var result1 = db.executeSqlSync({
+		        name:'sinogoTeacher',
+		        sql:sql
+        	});
+        	console.log("insert---"+JSON.stringify(result1))
+        }else{//已存在,不修改(即不能改为报多次课)
+        	
+        }
+		if(window.good_detail){//存在教辅
+			var current = window.good_detail.currentItem;
+	
+	        var queryResult_goods = db.selectSqlSync({
+		        name:'sinogoTeacher',
+		        sql:"select * from teacher_cart_goods where goodsNo = '"+current.goodsSalesCode+"' and courseCode = '"+course_detail.id+"'"
+	        });
+	        console.log("queryResult--"+JSON.stringify(queryResult_goods))
+	        if(queryResult_goods.data.length==0){//不存在则添加
+	        	var result1 = db.executeSqlSync({
+			        name:'sinogoTeacher',
+			        sql:"insert into teacher_cart_goods(goodsOrganization,goodsNo,goodsPreview,goodsName,goodsType,goodsPrice,goodsNum,freightAmount,couponsAmount,cashBack,sinogoCoin,orderRemark,distributionMode,spec1,spec2,courseCode) values('"+current.materialsGoodsOrganization+"','"+current.goodsSalesCode+"','"+current.goodsModelPreview+"','"+current.materialsGoodsName+"',1,'"+current.goodsSalesPrice+"','"+current.buyCount+"',0,0,0,0,'','"+current.materialsGoodsLogistics+"','"+current.spec1+"','"+current.spec2+"','"+course_detail.id+"')"
+	        	});
+	        	console.log("insert---"+JSON.stringify(result1))
+	        }else{//已存在,和课程保持一致,扔不修改
+	        }
+		}else{//不存在教辅不处理
+			
+		}
+		
+		api.openWin({
+	        name: 'orderConfirmCourse',
+	        url: 'orderConfirmCourse.html',
+	        reload:true,
+	        pageParam:{
+	        	classId:course_detail.classId
+	        }
+        });
+	}
+</script>
+</html>

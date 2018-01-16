@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<!-- 此页面Vue工作模板-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>studentCompletion</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+
+    <style scoped>
+        /****************************模板导入***********************************************/
+
+        .h-right {
+            text-align: right;
+            margin-right: .23rem;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left {
+            margin-left: .23rem;
+            text-align: left;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left img {
+            margin-top: .215rem;
+            width: .25rem;
+            height: .45rem;
+            background: url(../../image/setting/icon-back.png);
+            background-size: cover;
+            margin-left: 0;
+        }
+        /*****************************************************************************************/
+
+        html,
+        body {
+            position: relative;
+            height: 100%;
+            background: #f4f4f4;
+        }
+
+        body {
+            background: #eee;
+            background-color: transparent !important;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+
+        .container {
+            width: 100%;
+            min-height: 3rem;
+            margin-bottom: .32rem;
+        }
+
+        .content {
+            width: 100%;
+            margin-bottom: .32rem;
+        }
+
+        .content .q-title {
+            margin-top: .29rem;
+            color: #1ebeb6;
+            font-size: .3rem;
+            margin-left: .32rem;
+            max-height: 5rem;
+        }
+
+        .content div img {
+            width: 5.1rem;
+            max-width: 5.1rem;
+            margin-left: 1.2rem;
+        }
+
+        ul {
+            margin-top: .32rem;
+        }
+
+        ul li {
+            height: auto;
+            min-height: .98rem;
+            width: 6.5rem;
+            background: #eee;
+            color: #333;
+            margin-top: .08rem;
+            margin-left: .5rem;
+            border-radius: .05rem;
+            position: relative;
+        }
+
+        ul li span {
+            margin-left: .23rem;
+            width: auto;
+            position: absolute;
+            left: .1rem;
+            top: .4rem;
+        }
+
+        ul li .icon_right {
+            width: .36rem;
+            height: .26rem;
+            position: absolute;
+            top: .5rem;
+            left: .23rem;
+        }
+
+        ul li dl {
+            width: auto;
+            display: inline-block;
+        }
+
+        ul li dl dd {
+            margin: .35rem .23rem .1rem .23rem;
+            font-size: .28rem;
+            text-indent: .5rem;
+        }
+
+        ul li dl dd img {
+            margin-top: .23rem;
+            margin-left: .43rem;
+            max-width: 5rem;
+            max-height: 3rem;
+        }
+
+        .result {
+            background: #ff8344!important;
+            color: #fff;
+        }
+
+        .isChoose {
+            background: #1ebeb6!important;
+            color: #fff;
+        }
+
+        .q-sgf {
+            width: 5.8rem;
+            height: 5.8rem;
+            margin-left: 0.85rem;
+            border-radius: 0.1rem;
+            margin-top: 0.56rem;
+        }
+ .q-sgf iframe{
+            width: 5.8rem;
+            height: 5.8rem;
+		 }
+        .box_table {
+            background: #fff;
+            margin-top: .32rem;
+        }
+
+        table tr {
+            width: 100%;
+            height: .88rem;
+            line-height: .88rem;
+            text-align: center;
+        }
+
+        table tr td {
+            width: 33%;
+            vertical-align: middle;
+            margin: 0 auto;
+            ;
+        }
+
+        table tr td img {
+            height: .42rem;
+            width: .42rem;
+            margin-left: .4rem;
+            vertical-align: middle;
+        }
+
+        table tr td span {
+            vertical-align: middle;
+            margin-left: .23rem;
+            font-size: .26rem;
+            color: #666;
+        }
+
+        .box_textarea {
+            background: #fff;
+            width: 100%;
+            position: relative;
+        }
+
+        textarea {
+            background: #f4f4f4;
+            padding: 2%;
+            margin: 6%;
+            width: 84%;
+            min-height: 2.4rem;
+            outline: none;
+            color: #666;
+            font-size: .26rem;
+        }
+
+        .box_textarea span {
+            position: absolute;
+            right: 9%;
+            bottom: 17%;
+            color: #666;
+            font-size: .26rem;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            height: .98rem;
+            line-height: .98rem;
+            color: #666;
+            background: #eee;
+            text-align: center;
+            font-size: .32rem;
+            width: 100%;
+        }
+
+        .ischoose {
+            background: #1ebeb6!important;
+            color: #fff;
+        }
+
+        .empty {
+            height: .98rem;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex-wrap flex-vertical">
+        <div class="flex-con" id="main">
+            <div v-for="(job,index) in schoolInfo" v-cloak class="container">
+                <div class="content" v-for="item in job.job.questionTitleAttributes">
+                    <div class="q-audio" v-if="item.titleTypeValue==-2">
+                        <!--文本-->
+                        <audio :src="item.titleDetails"></audio>
+                    </div>
+                    <div class="q-title" v-if="item.titleTypeValue==-1">
+                        <!--文本-->
+                        {{index+1}}.{{item.titleDetails}}
+                    </div>
+                    <div class="q-img" v-else-if="item.titleTypeValue==0">
+                        <!--图片-->
+                        <img :src="item.titleDetails" alt="">
+                    </div>
+                    <div class="q-audio" v-else-if="item.titleTypeValue==1">
+                        <!--音频-->
+                        <audio :src="item.titleDetails"></audio>
+                    </div>
+                    <div class="q-video" v-else-if="item.titleTypeValue==2">
+                        <!--视频-->
+                        <video :src="item.titleDetails" autoplay poster="posterimage.jpg" controls="controls">
+                  </div>
+                  <div class="q-sgf" v-else-if="item.titleTypeValue==3">
+                      <!--sgf文件-->
+                      <iframe  frameborder="0" :sgf="item.titleDetails" :loaded="false"  @load="iframeLoaded"></iframe>
+                 </div>
+              </div>
+              <ul v-if="job.job.questionTypeValue==1">
+                  <li :class="{'isChoose':option.optionRight}" v-for="(option,index) in job.job.questionOptionsAttributes">
+                      <span>{{option.optionName}}</span>
+                      <dl v-for="(optionQuest,index) in  option.questionOptions">
+                          <dd v-show="optionQuest.optionTypeValue==-1">
+                              {{optionQuest.optionDetails}}
+                          </dd>
+                          <dd v-show="optionQuest.optionTypeValue==0">
+                              <img :src="optionQuest.optionDetails" />
+                          </dd>
+                          <!-- <span v-show="optionQuest.optionTypeValue==1">
+                              {{optionQuest.optionDetails}}
+                            </span>
+                          <span v-show="optionQuest.optionTypeValue==2">
+                                {{optionQuest.optionDetails}}
+                              </span> -->
+                      </dl>
+                      <img class="icon_right" v-show="option.optionRight" src="../../image/homework_img/icon_true.png" alt="">
+                  </li>
+              </ul>
+              <!--选项-->
+          </div>
+
+        <div class="box_table">
+          <table>
+            <tr>
+              <td><img :src="joberror?'../../image/icon_checked.png':'../../image/icon_unchecked.png'" @click="switchBar('joberror',joberror)" alt=""><span>题目错误</span></td>
+              <td><img  :src="knowerror?'../../image/icon_checked.png':'../../image/icon_unchecked.png'" @click="switchBar('knowerror',knowerror)"  alt=""><span>知识点不符</span></td>
+              <td><img  :src="worierror?'../../image/icon_checked.png':'../../image/icon_unchecked.png'" @click="switchBar('worierror',worierror)"  alt=""><span>答案错误</span></td>
+            </tr>
+          </table>
+        </div>
+        <div class="box_textarea">
+          <textarea name="name" @input="textchange(event)" rows="8" cols="80" v-model="areavalue" placeholder="请对错误进行描述" >
+          </textarea>
+          <span>剩余{{maxlength}}字</span>
+        </div>
+        <footer @click="submiterror()"  :class="{'ischoose':ischoose}">提交</footer>
+        <div class="empty">
+
+        </div>        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript" src="../../script/jquery-3.1.1.js"></script>
+<script>
+    var assigment; //全局控制器Controller
+    initVue = function() { //初始化Vue需要的是双向数据绑定 当改变数据以后view会做相应的改变
+        var date = vueDateManager();
+        var methods = vueMethodsManager();
+        assigment = new Vue({
+            el: '#main', //绑定元素
+            data: date, //本页面的静态动态全部数据
+            methods: methods, //本页面的全部方法
+            created:function(){
+              Vue.config.silent = true;
+            },
+            updated:function(){
+            	if(api.systemType=='ios'){
+					var sgfs = $api.domAll("iframe");
+					for(var i=0;i<sgfs.length;i++){
+						methods.iframeLoaded(sgfs[i])
+					}
+				}
+            }
+        })
+    }
+
+    vueDateManager = function() {
+        //初始化Vue数据date为一个json数组
+        var date = {};
+        date.joberror=false;
+        date.knowerror=false;
+        date.worierror=false;
+        date.areavalue="";//文本输入框文字
+        date.maxlength=100;
+        date.ischoose = false;
+        date.request;
+        date.schoolInfo=[{"job":{"questionTypeName":"选择题","questionId":169,"questionOptionsAttributes":[{"optionId":371,"optionName":"A","questionId":169,"optionRight":true,"questionOptions":[{"optionTypeValue":-1,"optionTypeName":"文本","optionDetails":"保持安静，认真听讲"}],"optionValue":0},{"optionId":372,"optionName":"B","questionId":169,"optionRight":false,"questionOptions":[{"optionTypeValue":-1,"optionTypeName":"文本","optionDetails":"交头接耳，与同学打闹"}],"optionValue":1}],"drawChessBoard":false,"knowledgeId":23,"difficultyValue":1,"questionTypeValue":1,"subjectName":"","subjectId":1,"difficultyName":"一星","knowledgeName":"围棋常识","boardSize":0,"programmeId":27,"questionTitleAttributes":[{"titleTypeValue":-1,"titleTypeName":"文本","titleDetails":"上课时，小朋友们正确的做法是（ ）。"}],"programmeName":"启蒙"},"buttonName":true,"ischoose":false}];
+        console.log("数据管理者" + JSON.stringify(date));
+        return date;
+    }
+    vueMethodsManager = function() {
+        //时间管理中心 每个Vue事件的处理都可以在这管理
+        var methods = {};
+        methods.init=function(){
+        assigment.schoolInfo=[];
+        assigment.schoolInfo.push(api.pageParam.job);
+        };
+        methods.textchange=function(event){
+          assigment.maxlength=100-event.target.value.length;
+          if(assigment.maxlength<0){
+            assigment.maxlength=0;
+            assigment.areavalue=event.target.value.substr(0,100);
+            }
+        };
+        methods.sendEvent=function(){
+          var list={}
+          if(assigment.joberror){
+            list.errorType=1;//1题目错误2知识点错误3答案错误
+          }else if (assigment.knowerror) {
+            list.errorType=2;//1题目错误2知识点错误3答案错误
+          }else if ( assigment.worierror) {
+            list.errorType=3;//1题目错误2知识点错误3答案错误
+          }
+          list.errorDesc=assigment.areavalue;
+              assigment.request =list;
+          if (list.errorType!=""||list.errorType!=null) {
+                  assigment.ischoose = true;
+              } else {
+                  assigment.ischoose = false;
+              }
+
+
+        };
+        methods.submiterror = function() {//提交错误
+            if (assigment.ischoose) {
+                api.getPrefs({
+                    sync: true,
+                    key: 'userid'
+                });
+
+                var body = {
+                    method: "errorCorrectionSubmit",
+                    request: {
+                        "questionId": api.pageParam.job.job.questionId,
+                        "errorType": assigment.request.errorType,
+                        "errorDesc": assigment.areavalue,
+                        "createTeacher": api.getPrefs({
+                            sync: true,
+                            key: 'userid'
+                        }),
+                        "createrName": api.getPrefs({
+                            sync: true,
+                            key: 'username'
+                        }),
+                    }
+                };
+                console.log("errorCorrectionSubmit请求数据" + JSON.stringify(body))
+                ajaxRequest(body, function(ret, err) {
+                    console.log("errorCorrectionSubmit成功返回数据" + JSON.stringify(ret))
+                    if (ret) {
+                        if (ret.responseCode == 0) {
+                            if (ret.responseBody) { //有
+                                api.alert({
+                                    title: '提示',
+                                    msg: '提交成功',
+                                }, function(ret, err) {
+                                    if (ret) {
+                                        api.closeWin();
+                                    } else {}
+                                });
+                            } else { //无
+                                alert("提交失败");
+                            }
+                        } else {
+                            api.toast({
+                                msg: ret.responseMsg,
+                                duration: 2000,
+                                location: 'bottom'
+                            });
+
+                        }
+                    } else {
+                        api.toast({
+                            msg: err.responseMsg,
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                })
+
+
+
+            }
+
+
+
+        };
+        methods.switchBar=function(name){
+         switch (name) {
+           case 'joberror':
+              assigment.joberror=!assigment.joberror;
+              if(assigment.joberror){
+               assigment.knowerror=false;
+                 assigment.worierror=false;
+              }
+             break;
+          case 'knowerror':
+             assigment.knowerror=!assigment.knowerror;
+             if(assigment.knowerror){
+              assigment.joberror=false;
+                assigment.worierror=false;
+             }
+             break;
+         case 'worierror':
+              assigment.worierror=!assigment.worierror;
+              if(assigment.worierror){
+                 assigment.joberror=false;
+                 assigment.knowerror=false;
+              }
+             break;
+           default:
+            break;
+         }
+         assigment.sendEvent();
+
+        }
+        methods.iframeLoaded = function (e){
+        	var el = e.target;//当前控件
+        	if(!el){
+        		el=e;
+        	}
+			var loaded =  $(el).attr("loaded");
+				console.log(loaded)
+			if(loaded=='true'){ 
+				console.log("加载完了吧")
+				return;
+			}
+			//获取属性，即可使用
+			var src = "weiqiResult.html"; 
+			
+			var sgf = $(el).attr("sgf");
+			var boardSize = $(el).attr("boardSize");
+			var answerIsRight = false;
+			var answerSgf = "";
+			var showRight = false;
+			
+			console.log("sgf==="+sgf)
+			
+			var loaded =  $(el).attr("boardSize");
+			
+			src+="?sgf="+sgf+"&boardSize="+boardSize+"&answerIsRight="+answerIsRight+"&answerSgf="+answerSgf+"&showRight="+showRight;
+			$(el).attr("src",src);
+			$(el).attr("loaded","true");
+		}
+        console.log("事件管理者：" + JSON.stringify(methods));
+        return methods;
+
+
+
+
+    }
+    imready = function() {
+        // api.parseTapmode(); //默认页面加载完成后，引擎会对 dom 里面的元素进行 tapmode 属性解析，若是之后用代码创建的 dom 元素，则需要调用该方法后 tapmode 属性才会生效
+        // $api.fixStatusBar($api.dom('header'));
+        initVue();
+        assigment.init();
+
+
+
+
+    };
+</script>
+
+</html>

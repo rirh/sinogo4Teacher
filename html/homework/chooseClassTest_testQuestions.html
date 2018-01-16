@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>选择班级</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+
+    <style>
+        .h-right {
+            text-align: right;
+            margin-right: .23rem;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left {
+            margin-left: .23rem;
+            text-align: left;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left img {
+            margin-top: .215rem;
+            width: .25rem;
+            height: .45rem;
+            background: url(../../image/setting/icon-back.png);
+            background-size: cover;
+            margin-left: 0;
+        }
+        /***************
+
+
+        **************************************************************************/
+
+        #main {
+            padding-top: 1.17rem;
+        }
+
+        #main dl dd {
+            width: 6.07rem;
+            height: 2.01rem;
+            border: solid 1px #d9d9d9;
+            background: #eee;
+            line-height: 2.01rem;
+            font-size: .32rem;
+            margin-top: .62rem;
+            margin-left: 0.715rem;
+        }
+
+        #main dl dd img {
+            margin-left: 1.32rem;
+        }
+
+        #main dl dd:nth-child(1) img {
+            width: .89rem;
+            height: .61rem;
+            margin-top: .7rem;
+        }
+
+        #main dl dd:nth-child(2) img {
+            width: .79rem;
+            height: .79rem;
+            margin-top: .61rem;
+        }
+
+        #main dl dd span {
+            font-size: .32rem;
+            color: #333;
+            float: right;
+            line-height: 2.01rem;
+            margin-right: 1.32rem;
+        }
+
+        .active {
+            color: #ff9a00!important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex-wrap flex-vertical">
+        <header>
+            <div class="h-left" onclick="closeWin();"><img src="../../image/setting/icon-back.png" />
+            </div>
+            <div class="h-conter">
+                出题方式
+            </div>
+            <div class="h-right"></div>
+        </header>
+        <div class="flex-con" id="main">
+            <dl>
+                <dd @click="switchBar(1)"><img :src="testQuestions.iproImg" alt=""><span :class="{'active':iproImg}">{{testQuestions.iprotext}}</span></dd>
+                <dd @click="switchBar(2)"><img :src="testQuestions.rasImg" alt=""><span :class="{'active':rasImg}">{{testQuestions.rastest}}</span></dd>
+            </dl>
+        </div>
+
+    </div>
+</body>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script>
+    var testQuestions; //全局控制器Controller
+    initVue = function() { //初始化Vue需要的是双向数据绑定 当改变数据以后view会做相应的改变
+        var date = vueDateManager();
+        var methods = vueMethodsManager();
+        testQuestions = new Vue({
+            el: '#main', //绑定元素
+            data: date, //本页面的静态动态全部数据
+            methods: methods //本页面的全部方法
+        });
+      console.log(api.frameName + "pageParm数据" + JSON.stringify(api.pageParam.school));
+    }
+
+    vueDateManager = function() {
+        //初始化Vue数据date为一个json数组
+        var date = {};
+        date.testQuestions = {};
+        date.iproImg = false;
+        date.rasImg = false;
+        date.testQuestions.iproImg = "../../image/homework_img/icon_ipo_f.png";
+        date.testQuestions.rasImg = "../../image/homework_img/icon_ras_f.png";
+        date.testQuestions.iprotext = "选择自主命题";
+        date.testQuestions.rastest = "选择系统随机";
+        console.log("数据管理者" + JSON.stringify(date));
+        return date;
+
+    }
+    vueMethodsManager = function() {
+        //时间管理中心 每个Vue事件的处理都可以在这管理
+        var methods = {};
+
+        methods.switchBar = function(index) { //确认发布作业
+            //TODO
+
+            if (index == 1) {
+                testQuestions.iproImg = true;
+                api.openWin({
+                    name: 'chooseClassTest',
+                    url: 'chooseClassTest.html',
+                    pageParam: {
+                        "school": api.pageParam.school
+                    }
+                });
+
+            } else if (index == 2) {
+                testQuestions.iproImg = false;
+                api.openWin({
+                    name: 'chooseClassTest_tQ_ranDomSystem_win',
+                    url: 'chooseClassTest_tQ_ranDomSystem_win.html',
+                    pageParam: {
+                        "school": api.pageParam.school
+                    }
+                });
+
+            }
+
+            if (testQuestions.iproImg) {
+                testQuestions.testQuestions.iproImg = "../../image/homework_img/icon_ipo_t.png";
+                testQuestions.testQuestions.rasImg = "../../image/homework_img/icon_ras_f.png";
+            } else {
+                testQuestions.testQuestions.iproImg = "../../image/homework_img/icon_ipo_f.png";
+                testQuestions.testQuestions.rasImg = "../../image/homework_img/icon_ras_t.png";
+            }
+
+            testQuestions.rasImg = !testQuestions.iproImg;
+            console.log(testQuestions.iproImg + "---" + testQuestions.rasImg);
+
+
+        }
+        console.log("事件管理者：" + JSON.stringify(methods));
+        return methods;
+
+
+
+
+    }
+    imready = function() {
+        api.parseTapmode(); //默认页面加载完成后，引擎会对 dom 里面的元素进行 tapmode 属性解析，若是之后用代码创建的 dom 元素，则需要调用该方法后 tapmode 属性才会生效
+        $api.fixStatusBar($api.dom('header'));
+        initVue();
+
+    };
+</script>
+
+</html>

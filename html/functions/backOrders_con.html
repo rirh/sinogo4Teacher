@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <style>
+    	html,body{
+    		background: #F6F6F6;
+    		height:100%;
+    	}
+    	#order_content{
+    		position: relative;
+    		margin-bottom: 0.4rem;
+    	}
+    	#order_content:after{
+    		position: absolute;
+			border-bottom: 1px solid #d9d9d9;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+    	}
+    	.parentitem{
+    		height:0.8rem;
+    		line-height:0.8rem;
+    		padding-left: 0.23rem;
+    		font-size: 0.28rem;
+    		background: #FFF;
+    		position: relative;
+    	}
+    	.parentitem .classicon{
+    		background: url(../../image/icon_class_name.png) no-repeat center left;
+    		background-size:0.4rem 0.4rem;
+    		padding-left: 0.5rem;
+    	}
+    	.parentitem:before{
+    		position: absolute;
+			border-bottom: 1px solid #eeeeee;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+    	}
+    	.arrowdown{
+    		margin-right:0.3rem;
+    		background:url(../../image/icon_order_down.png) no-repeat right center;
+    		background-size:0.28rem 0.16rem;
+    		color:#333;
+    	}
+    	.current{
+    		margin-right:0.3rem;
+    		background:url(../../image/icon_order_up.png) no-repeat right center;
+    		background-size:0.28rem 0.16rem;
+    		color:#FF8344;
+    	}
+    	#item_content{
+    		background: #FFF;
+    	}
+    	.goods-summary{
+    		
+    		padding:0.5rem 0.3rem;
+    	}
+    	.goods-summary .summary{
+    		text-align: center;
+    		width:100%;
+    	}
+    	.goods-summary{
+    		padding:0.5rem 0.3rem;
+    	}
+    	.goods-summary .summary{
+    		width:100%;
+    		text-align: center;
+    	}
+    	.goods-summary .summary tr{
+    		height:0.7rem;
+    	}
+    	.goods-summary .summary tr th{
+    		background: #fffcf0;
+    		font-size:0.28rem;
+    		color:#333;
+    	}
+    	.goods-summary .summary tr td{
+    		font-size:0.26rem;
+    		color:#666;
+    	}
+    	.goods-detail{
+    		padding:0 0.3rem;
+    	}
+    	.goods-detail .detail{
+    		text-align: center;
+    		width:100%;
+    	}
+    	.goods-detail .detail td{
+    		position: relative;
+    		height:0.8rem;
+    		line-height:0.8rem;
+    	}
+    	.goods-detail .detail td:before{
+    		position: absolute;
+			border-top: 1px solid #d9d9d9;
+			top:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+    	}
+    	.goods-detail .detail th{
+    		position: relative;
+    		height:0.8rem;
+    		line-height:0.8rem;
+    	}
+    	.goods-detail .detail th:before{
+    		position: absolute;
+			border-top: 1px solid #d9d9d9;
+			top:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+    	}
+    	.sendGoods{
+    		height:0.43rem;
+    		line-height:0.43rem;
+    		text-align: center;
+    		width:1.02rem;
+    		border: 1px #ccc dashed;
+    		border-radius: 0.1rem;
+    		color:#FF8344;
+    		font-size:0.26rem;
+    	}
+    	.sendGoods-already{
+    		height:0.43rem;
+    		line-height:0.43rem;
+    		text-align: center;
+    		width:1.02rem;
+    		color:#1EBEB6;
+    		font-size:0.26rem;
+    	}
+    	.goods-summary .summary tr{
+    	
+    	}
+    	#empty{
+			width:100%;
+			height:100%;
+			text-align: center;
+		}
+		#empty .errnet{
+			height:30%;
+			background:url(../../image/icon_net_err.png) no-repeat center bottom ;
+			background-size:2.5rem 2.5rem;
+		}
+		#empty label{
+			margin-top:0.5rem;
+			color:#666666;
+			font-size:0.34rem;
+		}
+		#empty .try{
+			margin:0.3rem auto;
+			width:1.8rem;
+			height:0.6rem;
+			color: #1A9973;
+			font-size:0.34rem;
+			line-height:0.6rem;
+		}
+		.pd{
+			padding: 0 0.2rem;
+		}
+		#classes_content .schoolname{
+			color:#333;
+			font-size:0.32rem;
+			text-align:left;
+			height:0.88rem;
+			line-height:0.88rem;
+			background:#FFFCF0;
+			padding: 0.1rem 0;
+			position: relative;
+		}
+		#classes_content .schoolname:before{
+			position: absolute;
+			border-bottom: 1px solid #d9d9d9;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+		}
+		#classes_content .schoolname:after{
+			position: absolute;
+			border-top: 1px solid #d9d9d9;
+			top:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+		}
+		#classes_content .schoolname strong{
+			margin-left:0.23rem;
+		}
+    </style>
+</head>
+<body>
+	<div id="main">
+		<script id="classes_template" type="text/x-dot-template">
+		{{ for(var k=0;k<it.length;k++){ }}
+			<div class="schoolname"><strong>{{=it[k].schoolName}}</strong></div>
+			{{ for(var i=0,cls=it[k].materialsList;i<cls.length;i++){ }}
+				<div id="order_content">
+					<div  class="parentitem" onclick="requestClassDetail({{=cls[i].classId}},{{=i}},{{=k}})">
+						<div class="classicon">
+							<div class="{{=(k==currentKIndex&&i==currentIndex)?'current':'arrowdown'}}">
+							{{=cls[i].className}}
+							</div>
+						</div>
+					</div>
+					{{ if(k==currentKIndex&&i==currentIndex){ }}
+						<div id="item_content" style="display:{{=i==currentIndex?'block':'none'}}">
+						<div class="goods-summary item" >
+							<table class="summary" border="1" bordercolor="#d9d9d9" >
+								<tr>
+									<th width="25%">教辅</th>
+									<th width="25%">型号</th>
+									<th width="25%">规格</th>
+									<th width="25%">数量</th>
+								</tr>
+								{{ for(var j=0,detail=cls[i].goodDetail;j<detail.countMaterialsList.length;j++){ }}
+								<tr>
+									<td>{{=detail.countMaterialsList[j].goodsName}}</td>
+									<td>{{=detail.countMaterialsList[j].materialsModelName}}</td>
+									<td>{{=detail.countMaterialsList[j].materialsStandardName}}</td>
+									<td>{{=detail.countMaterialsList[j].countNum}}</td>
+								</tr>
+								{{ } }}
+							</table>
+						</div>
+						<div class="goods-detail">
+							<table class="detail">
+								<tr class="item" >
+									<th width="20%">学生姓名</th>
+									<th width="50%">教辅清单</th>
+									<th width="10%">数量</th>
+									<th width="20%">订单状态</th>
+								</tr>
+								{{ for(var j=0,detail=cls[i].goodDetail;j<detail.studentMaterialsList.length;j++){ }}
+								<tr class="item">
+									<td>{{=detail.studentMaterialsList[j].studentName}}</td>
+									<td class="ellipsis-1" onclick="goOrderDetail({{=detail.studentMaterialsList[j].orderNo}},'{{=detail.studentMaterialsList[j].studentName}}')">{{=detail.studentMaterialsList[j].goodsOrderDetails[0]?detail.studentMaterialsList[j].goodsOrderDetails[0].goodsName:''}}</td>
+									<td>{{=detail.studentMaterialsList[j].buyCount}}</td>
+									<td><div onclick="confirmSend({{=i}},{{=j}},{{=detail.studentMaterialsList[j].materialsStatus}},{{=detail.studentMaterialsList[j].orderNo}})" class="{{=detail.studentMaterialsList[j].materialsStatus==0?'sendGoods':'sendGoods-already'}}">{{=detail.studentMaterialsList[j].materialsStatus==0?'发货':(detail.studentMaterialsList[j].materialsStatus==1?'已发货':'售后')}}</div></td>
+								</tr>
+								{{ } }}
+							</table>
+						</div>
+					</div>
+					{{ }else{ }}
+					<div id="item_content" style="display:{{=i==currentIndex?'block':'none'}}">
+					</div>
+					{{ } }}
+				</div>
+			{{ } }}
+		{{ } }}
+		</script>
+		<div id="classes_content" style="display: block">
+		</div>
+	</div>
+	<div id="empty" style="display:none">
+		<div class="errnet"></div>
+		<label class="errmsg">网络连接异常</label>
+		<div class="try" onclick="tryAgain()">再试一次</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript">
+	var currentClassid=0;
+	imready = function(){
+		requestClassesData();
+	};
+	
+	function requestClassesData(){
+		var body = {
+			"method":"getTeacherMaterialsByTeacherId",
+			"request":{
+				"teacherId":api.getPrefs({sync:true,key:'userid'})
+			}
+		}
+		api.showProgress();
+		//WithUrl("http://192.168.1.78:8086/gateway",
+		ajaxRequest(body,function(ret,err){
+			api.hideProgress();
+			console.log(JSON.stringify(ret))
+			if(ret){
+				if(ret.responseCode==0){
+					if(!ret.responseBody||ret.responseBody.length==0){
+						showEmpty("您没有待发货教辅!",0);
+					}else{
+						window.result=ret.responseBody;
+						$api.byId("empty").style.display="none"
+						$api.byId("main").style.display="block"
+						fillData()
+					}
+				}else{
+					showEmpty(ret.responseMsg);
+				}
+			}else{
+				showEmpty(err.msg);
+			}
+		})
+	}
+	
+	function fillData(){
+		//如果小区内没有班级,就不显示这个校区.
+		console.log(JSON.stringify(window.result))
+		getInnerByDot("classes_content","classes_template",window.result);
+		console.log(currentIndex)
+//		if(currentIndex==-1){
+//			//=-1不用判断
+//		}else{
+//			var currentClass=$api.domAll(".parentitem")[currentIndex]
+//			console.log(currentClass)
+//			$(window).scroll(function(event){
+//				var top = currentClass.getBoundingClientRect().top
+//				top=parseInt(top)
+//			    console.log(top)
+//			    
+//			    
+//			});
+//			
+//		}
+	}
+	
+	var currentIndex=-1;
+	var currentKIndex = -1;
+	function requestClassDetail(classid,iIndex,kIndex){
+		if(currentKIndex==kIndex){//同一学校下
+			if(currentIndex==iIndex){
+				//点击当前条目,则收起.
+				currentIndex=-1;
+				fillData();
+				return;
+			}else{
+				currentIndex = iIndex
+				requestDetail(classid,kIndex,iIndex);
+			}
+		}else{//不同学校下的点击
+			//先合闭
+			currentIndex=-1;
+			fillData();
+			
+			//再请求
+			currentKIndex=kIndex;
+			currentIndex = iIndex;
+			requestDetail(classid,kIndex,iIndex);
+		}
+	}
+	
+	function requestDetail(classid,kIndex,iIndex){
+		api.showProgress();
+		var body = {
+			"method":"getStudentGoodsByClassId",
+			"request":{
+				"classId":classid
+			}
+		}
+		ajaxRequest(body,function(ret,err){
+			api.hideProgress();
+			console.log(JSON.stringify(ret))
+			if(ret){
+				if(ret.responseCode==0){
+					var result = ret.responseBody;
+					for(var i=0;i<result.studentMaterialsList.length;i++){
+						var item = result.studentMaterialsList[i]
+						var count = 0;
+						for(var j=0;j<item.goodsOrderDetails.length;j++){
+							count+=item.goodsOrderDetails[j].goodsNum
+						}
+						item.buyCount=count;
+						var studentName=item.orderStudentDetails.length==1?item.orderStudentDetails[0].studentName:(item.orderStudentDetails[0].studentName+"等");
+						item.studentName=studentName;
+					}
+					window.result[kIndex].materialsList[iIndex].goodDetail=result;
+					
+					fillData();
+				}else{
+					alert(ret.responseMsg)
+				}
+			}else{
+				alert(err.msg)
+			}
+		})
+	}
+	
+	function confirmSend(parentIndex,childIndex,status,orderNo){
+		if(status!=0){
+			return ;
+		}
+		api.showProgress();
+		var body = {
+			method:'updateTeacherMaterialsByOrderNo',
+			request:{
+				"orderNo":orderNo
+			}
+		}
+		console.log(JSON.stringify(body))
+		ajaxRequest(body,function(ret,err){
+			console.log(JSON.stringify(ret))
+			api.hideProgress();
+			if(ret){
+				if(ret.responseBody==true||ret.responseBody=='true'){
+					window.result[currentKIndex].materialsList[parentIndex].goodDetail.studentMaterialsList[childIndex].materialsStatus=1
+					fillData();
+				}else{
+					api.toast({
+	                    msg:'发货失败,'+ret.responseMsg
+                    });
+				}
+			}else{
+				api.toast({
+                    msg:'发货失败,'+err.msg
+                });
+			}
+		})
+	}
+	
+	function showEmpty(msg,type){
+		$api.byId("empty").style.display="block"
+		$api.byId("main").style.display="none"
+		$api.dom(".errmsg").innerHTML=msg;
+		if(type==0){
+			$api.dom(".errnet").style.background="url(../../image/icon_empty.png) no-repeat center bottom "
+			$api.dom(".errnet").style.backgroundSize="2.18rem 2.18rem";
+		}else{
+			$api.dom(".errnet").style.background="url(../../image/icon_net_err.png) no-repeat center bottom "
+			$api.dom(".errnet").style.backgroundSize="2.5rem 2.5rem";
+		}
+	}
+	
+	function tryAgain(){
+		requestClassesData();
+	}
+	
+	function goOrderDetail(orderNo,studentName){
+		var pageParam = {
+			type : 4,//区别于其他,4为待发货订单的请求
+			orderNo:orderNo,
+			studentName:studentName
+		}
+//		var type = api.pageParam.type; //待支付还是已支付
+//		orderNo = api.pageParam.orderNo;//
+//		userInfo = api.pageParam.userInfo;
+		api.openWin({
+	        name: 'orderPayment',
+	        url: 'orderPayment.html',
+	        pageParam:pageParam
+        });
+
+	}
+	
+	
+</script>
+</html>

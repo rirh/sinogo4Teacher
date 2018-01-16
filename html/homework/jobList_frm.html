@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<!-- 此页面Vue工作模板-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>studentCompletion</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+
+    <style scoped>
+        /****************************模板导入***********************************************/
+
+        .h-right {
+            text-align: right;
+            margin-right: .23rem;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left {
+            margin-left: .23rem;
+            text-align: left;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left img {
+            margin-top: .215rem;
+            width: .25rem;
+            height: .45rem;
+            background: url(../../image/setting/icon-back.png);
+            background-size: cover;
+            margin-left: 0;
+        }
+        /*****************************************************************************************/
+
+        [v-cloak] {
+            display: none;
+        }
+        /*dl dd:nth-child(1) {
+            height: .84rem;
+            background: #f6f6f6;
+            line-height: .84rem;
+            margin-left: .23rem;
+            font-size: .26rem;
+        }*/
+
+        dl dd {
+            background: #fff;
+            border-bottom: solid 1px #cecece;
+            position: relative;
+        }
+
+        dl dd p {
+            height: .55rem;
+            line-height: .55rem;
+            font-size: .28rem;
+        }
+
+        dl dd p strong {
+            color: #1ebeb6;
+            margin-left: .23rem;
+            font-size: .28rem;
+        }
+
+        dl dd p span {
+            margin-left: .23rem;
+            color: #666;
+        }
+
+        dl dd p span h5 {
+            font-size: .3rem;
+        }
+
+        dd .ring {
+            position: absolute;
+            top: .2rem;
+            right: .2rem;
+        }
+
+        @keyframes rot_left {
+            0% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(180deg);
+            }
+        }
+
+        @keyframes rot_right {
+            0% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(180deg);
+            }
+            100% {
+                transform: rotate(180deg);
+            }
+        }
+
+        @-webkit-keyframes rot_left {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            50% {
+                -webkit-transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(180deg);
+            }
+        }
+
+        @-webkit-keyframes rot_right {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            50% {
+                -webkit-transform: rotate(180deg);
+            }
+            100% {
+                -webkit-transform: rotate(180deg);
+            }
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+
+        #outer {
+            width: 1.12rem;
+            height: 1.12rem;
+            background: #ff8344;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            border: solid 1px #cecece;
+        }
+
+        #inner {
+            width: .85rem;
+            height: .85rem;
+            background: #ffffff;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -0.445rem;
+            margin-top: -0.445rem;
+            text-align: center;
+            line-height: .85rem;
+            font-size: .26rem;
+            color: #666;
+            border: solid 1px #cecece;
+        }
+
+        #load_left,
+        #load_right {
+            width: .56rem;
+            height: 1.12rem;
+            /*background: rgb(249, 199, 149);*/
+            position: absolute;
+            overflow: hidden;
+        }
+
+        #load_left {
+            top: 0;
+            left: 0;
+            border-top-left-radius: 100% 50%;
+            border-bottom-left-radius: 100% 50%;
+            transform-origin: 100% 50%;
+            /*-webkit-animation: rot_left 10s linear infinite;*/
+        }
+
+        #load_right {
+            top: 0;
+            left: 50%;
+            border-top-right-radius: 100% 50%;
+            border-bottom-right-radius: 100% 50%;
+            transform-origin: 0 50%;
+        }
+
+        #load_left span,
+        #load_right span {
+            display: inline-block;
+            width: .56rem;
+            height: 1.12rem;
+            background: #f9f9f9;
+            position: absolute;
+        }
+
+        #load_left span {
+            border-top-left-radius: 100% 50%;
+            border-bottom-left-radius: 100% 50%;
+            -webkit-transform-origin: 100% 50%;
+            -webkit-animation: rot_left 3s linear 1;
+            animation: rot_left 3s linear 1;
+        }
+
+        #load_right span {
+            top: 0;
+            right: 0%;
+            border-top-right-radius: 100% 50%;
+            border-bottom-right-radius: 100% 50%;
+            -webkit-transform-origin: 0 50%;
+            -webkit-animation: rot_right 3s linear 1;
+            animation: rot_right 3s linear 1;
+        }
+
+        .empy {
+            font-size: .48rem;
+            color: #666;
+            width: 100%;
+            height: 5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex-wrap flex-vertical">
+
+        <div  class="flex-con" id="main" v-cloak>
+          <div class="empy" v-show="noData">
+            {{etmpy}}
+          </div>
+            <dl  v-show="!noData">
+                <!-- <dd>{{job.time}}</dd> -->
+                <dd v-for="jobValue in cache" @click="openHomewin(jobValue)">
+                    <p><span style="font-size:.3rem;color:#333;">{{jobValue.homeWorkClassName}}</span><strong>{{jobValue.publishStatus==0?states[0]:states[1]}}</strong></p>
+                    <p><span>{{valuetips}}</span><span>{{jobValue.homeWorkTitle}}</span></p>
+                    <p><span>{{stopName}}</span><span>{{jobValue.homeWorkLimit}}</span></p>
+                    <!-- <div class="ring" v-show="jobValue.publishStatus==0?true:false">
+                        <div id="outer">
+                            <div id="load_left"><span></span></div>
+                            <div id="load_right"><span></span></div>
+                            <div id="inner"><strong>{{jobValue.ring}}</strong>%</div>
+                        </div>
+                    </div> -->
+                </dd>
+            </dl>
+        </div>
+
+    </div>
+</body>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+
+<script>
+    var jobList; //全局控制器Controller
+    initVue = function() { //初始化Vue需要的是双向数据绑定 当改变数据以后view会做相应的改变
+        var date = vueDateManager();
+        var methods = vueMethodsManager();
+        jobList = new Vue({
+            el: '#main', //绑定元素
+            data: date, //本页面的静态动态全部数据
+            methods: methods, //本页面的全部方法
+            created: function() {
+                setTimeout(function() {
+                    // var leftRot = $api.domAll('#load_left');
+                    // rightRot = $api.domAll('#load_right');
+                    // showVal = $api.domAll('#inner strong');
+                    // for (var i = 0; i < jobList.cache.length; i++) {
+                    //     var left = leftRot[i].children[0];
+                    //     var right = rightRot[i].children[0];
+                    //     var val = parseInt($api.text(showVal[i])) * 360 / 100;
+                    //     jobList.rotControl(left, right, val);
+                    // }
+                }, 3000);
+
+            }
+
+        })
+    }
+
+    vueDateManager = function() {
+        //初始化Vue数据date为一个json数组
+        var date = {};
+        date.cache = [];
+        date.jobList = [];
+        date.states = ["待检查", "已检查"];
+        date.homeWorkClass = ""; //班级id
+        date.homeWorkCourse = ""; //班级科目
+        date.courseCategoryId = ""; //班级
+        date.checked = "";
+        date.pagesize = 10;
+        date.pageindex = 1;
+        date.loadEnd = false;
+        date.className = "一年级一班";
+        date.classStat = "待检查"
+        date.valuetips = "内容:";
+        date.value = "打吃";
+        date.stopName = "截止时间";
+        date.stopTime = "06-02 16:17";
+        date.ring = "33/35";
+        date.noData = false;
+        date.etmpy = "数据暂时为空";
+        console.log("数据管理者" + JSON.stringify(date));
+        return date;
+    };
+    vueMethodsManager = function() {
+        //时间管理中心 每个Vue事件的处理都可以在这管理
+        var methods = {};
+        methods.init = function() {
+            var userid = api.getPrefs({
+                sync: true,
+                key: 'userid'
+            }); //获取教师id
+            var data = {};
+            data.method = "homeWorkSearch";
+            data.request = {
+                "createUser": userid, //老师ID
+                "homeWorkClass": jobList.homeWorkClass, //班级
+                "publishStatus": jobList.checked, // 状态(0未检查1已检查)
+                "page": jobList.pageindex,
+                "pageSize": jobList.pagesize
+            };
+            console.log(api.frameName + "选择班级请求数据：" + JSON.stringify(data));
+            api.showProgress();
+            ajaxRequest(data, function(ret, err) {
+                api.refreshHeaderLoadDone()
+                api.hideProgress();
+                if (ret) {
+                    if (ret.responseCode == 0) {
+                        ret.responseBody.totalPage == ret.responseBody.page ? jobList.loadEnd = true : jobList.loadEnd = false;
+                        if (jobList.pageindex == 1) {
+                            jobList.cache = [];
+                            ret.responseBody.rows.length == 0?jobList.noData=true:jobList.noData=false;
+                            for (var i = 0; i < ret.responseBody.rows.length; i++) {
+
+                                if (ret.responseBody.rows[i]) {
+                                    jobList.cache.push(ret.responseBody.rows[i]);
+                                }
+                            }
+                        } else {
+                            for (var i = 0; i < ret.responseBody.rows.length; i++) {
+                                if (ret.responseBody.rows[i]) {
+                                    jobList.cache.push(ret.responseBody.rows[i]);
+                                }
+                            }
+                        }
+                        jobList.pageindex += 1; //页码加1
+                    } else {
+                        api.toast({
+                            msg: ret.responseMsg,
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                    console.log(JSON.stringify(ret));
+                } else {
+                    console.log(JSON.stringify(err));
+                }
+            });
+        };
+        methods.rotControl = function(leftRot, rightRot, val) { //确认发布作业
+            //TODO
+            console.log(val);
+            if (val <= 180) {
+                rightRot.style.transform = 'rotate(' + val + 'deg)';
+                leftRot.style.transform = 'rotate(0deg)';
+                rightRot.style.webkitTransform = 'rotate(' + val + 'deg)';
+                leftRot.style.webkitTransform = 'rotate(0deg)';
+            }
+            if (val > 180) {
+                leftRot.style.transform = 'rotate(' + (val - 180) + 'deg)';
+                rightRot.style.transform = 'rotate(180deg)';
+                leftRot.style.webkitTransform = 'rotate(' + (val - 180) + 'deg)';
+                rightRot.style.webkitTransform = 'rotate(180deg)';
+            }
+
+
+        };
+        methods.lister = function() {
+            api.addEventListener({
+                name: 'joblist'
+            }, function(ret, err) {
+                if (ret) {
+                    if (ret.value.key2==0) { //1代表已检查0代表未检查
+                        jobList.checked = "";
+                    } else if(ret.value.key2==1){
+                        jobList.checked = 0;
+                    } else if(ret.value.key2==2){
+                        jobList.checked = 1;
+                    };
+                    console.log("事件监听者" + JSON.stringify(ret));
+                    jobList.homeWorkClass = ret.value.key1.classId; //班级id
+                    jobList.homeWorkCourse = ret.value.key1.courseCategory; //班级科目
+                    jobList.courseCategoryId = ret.value.key1.courseId; //课程id
+                    jobList.cache = [];
+                    jobList.pageindex = 1;
+                    jobList.init();
+                } else {
+                    alert(JSON.stringify(err));
+                }
+            });
+        };
+        methods.openHomewin = function(value) {
+            if (value.publishStatus == 0) { //判断作业状态是否为检查如果未检查调用接口改为检查如果已检查打开详情界面
+                var data = {};
+                data.method = "updateHomeWorkStatus";
+                data.request = {
+                    "homeWorkId": value.id, //作业id
+                    "status": 1 //没检查作业的状态改为检查
+                };
+                console.log(api.frameName + "选择班级请求数据：" + JSON.stringify(data));
+                api.showProgress();
+                ajaxRequest(data, function(ret, err) {
+                    api.hideProgress();
+                    if (ret) {
+                        console.log(api.frameName + "选择班级返回数据：" + JSON.stringify(ret));
+                        if (ret.responseBody) {
+                            api.openWin({
+                                name: 'homeworkTitle',
+                                url: 'homeworkTitle.html',
+                                pageParam: {
+                                    "jobDetails": value
+                                }
+                            });
+                        }
+                    } else {
+                        alert(ret.responseMsg)
+                    }
+                })
+            } else {
+                api.openWin({
+                    name: 'homeworkTitle',
+                    url: 'homeworkTitle.html',
+                    pageParam: {
+                        "jobDetails": value
+                    }
+                });
+
+            }
+
+
+        }
+        methods.confirmationRelease = function() { //确认发布作业
+            //TODO
+
+
+
+        }
+        console.log("事件管理者：" + JSON.stringify(methods));
+        return methods;
+
+    }
+    vuefiltersManager = function() {
+        var filters = {};
+
+        filters.conditions = function(items) { //确认发布作业
+            //TODO
+            var searchRegex = new RegExp(jobList.jobList.job, 'i');
+            var arr = [];
+            for (var i = 0, j = items.length; i < j; i++) {
+                arr[i] = {};
+                arr[i].contacters = [];
+                for (var item = 0, len = items[i].job.length; item < len; item++) {
+                    if (searchRegex.test(items[i].job[item].classStat) || searchRegex.test(items[i].job[item].classStat) || searchRegex.test(items[i].job[item].classStat) || searchRegex.test(items[i].job[item].classStat)) {
+                        arr[i].firstLetter = items[i].firstLetter;
+                        arr[i].contacters.push(items[i].contacters[item]);
+                    }
+                }
+            }
+            return arr;
+
+
+
+        }
+        console.log("事件管理者：" + JSON.stringify(filters));
+        return filters;
+
+
+    }
+    imready = function() {
+        api.parseTapmode(); //默认页面加载完成后，引擎会对 dom 里面的元素进行 tapmode 属性解析，若是之后用代码创建的 dom 元素，则需要调用该方法后 tapmode 属性才会生效
+        $api.fixStatusBar($api.dom('header'));
+        initVue();
+        jobList.homeWorkClass = api.pageParam.job.classId;
+        jobList.homeWorkCourse = api.pageParam.job.courseCategory;
+        jobList.courseCategoryId = api.pageParam.job.courseId;
+        jobList.init();
+        jobList.lister();
+        api.setRefreshHeaderInfo({
+            visible: true,
+            loadingImg: 'widget://image/refresh.png',
+            bgColor: '#ccc',
+            textColor: '#fff',
+            textDown: '下拉刷新...',
+            textUp: '松开刷新...',
+            showTime: true
+        }, function(ret, err) {
+            //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+            jobList.pageindex = 1;
+            jobList.init(api.pageParam.job);
+        });
+        //上拉加载
+        api.addEventListener({
+            name: 'scrolltobottom',
+            extra: {
+                threshold: 0 //设置距离底部多少距离时触发，默认值为0，数字类型
+            }
+        }, function(ret, err) {
+            if (jobList.loadEnd) {
+                api.toast({
+                    msg: "没有更多的数据了...",
+                    duration: 2000,
+                    location: 'bottom'
+                });
+                return;
+            }
+        });
+
+    };
+</script>
+
+</html>

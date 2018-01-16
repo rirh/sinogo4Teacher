@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <style>
+    	html,body{
+    		background:#F6F6F6;
+    		height:100%;
+    	}
+    	#header{
+		    background-color: #1EBEB6;
+		    text-align: center; color: #fff;
+		    width: 100%; position: fixed;
+		    height:0.88rem;
+			z-index: 1;
+		}
+		#header .back-icon{
+		    display: inline-block; width: 0.88rem; height: 0.88rem;
+		    background: url(../../image/icon_arrow_left.png) no-repeat center center; 
+		    background-size: 0.24rem 0.42rem;
+		    position: absolute; left: 0; bottom: 0;
+		}
+		#header .back-icon.active{
+			 background: url(../../image/icon_arrow_left.png) no-repeat center center rgba(0,0,0,0.2); 
+			 background-size: 0.24rem 0.42rem;
+		}
+		#header h1{
+		    font-size: 0.34rem;
+		    height: 0.88rem; line-height: 0.88rem; margin: 0 auto; color: #fff;
+		    width:5rem;
+		}
+		.wrap{
+			height:100%;
+		}
+		#main{
+			position: absolute;
+			top:0.88rem;
+			width: 100%;
+		}
+		.teaching-title{
+			height: 1.68rem;
+			position:relative;	
+		}
+		.teaching-title:after{
+			position: absolute;
+			border-bottom: 1px solid #cccccc;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+		}
+		.teaching-month{
+			height: 0.84rem;
+			line-height: 0.84rem;
+			padding-left: 0.23rem;
+			position:relative;	
+			color:#333;
+			font-size:0.3rem;
+		}
+		.teaching-month:after{
+			position: absolute;
+			border-bottom: 1px solid #cccccc;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+		}
+		.teaching-th{
+			width: 100%;
+			background: #FFF;
+			height: 0.84rem;
+		}
+		span{
+			margin: 0;padding: 0;
+		}
+		.imp_28{
+			font-size: 0.28rem;
+			color: #1EBEB6;
+		}
+		.imp_o{
+			font-size: 0.26rem;
+			color: #FF8344;
+		}
+		.imp_g{
+			font-size: 0.26rem;
+			color: #1CB75B;
+		}
+		.first-th{
+			width:36%;
+			height:0.84rem;
+			line-height:0.84rem;
+			text-align: center;
+			float: left;
+		}
+		.other-th{
+			width:21.3%;
+			height:0.84rem;
+			line-height:0.84rem;
+			text-align: center;
+			float: left;
+		}
+		.teaching-content{
+			background: #FFF;
+			width: 100%;
+			position: relative;
+		}
+		.teaching-content:after{
+			position: absolute;
+			border-bottom:1px solid #ccc;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+		}
+		.teaching-content .teaching-item{
+			margin-left:0.23rem;
+			height:0.84rem;
+			line-height:0.84rem;
+			position: relative;
+		}
+		.con{
+			font-size:0.26rem;
+			color:#666;
+		}
+		.teaching-content .teaching-item:after{
+			position: absolute;
+			border-bottom:1px solid #ccc;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+			pointer-events:none;
+		}
+		.first-th-c{
+			width:35.7%;
+			height:0.84rem;
+			line-height:0.84rem;
+			text-align: center;
+			float: left;
+		}
+		#empty{
+			width:100%;
+			height:100%;
+			text-align: center;
+		}
+		#empty .errnet{
+			height:30%;
+			background:url(../../image/icon_net_err.png) no-repeat center bottom ;
+			background-size:2.5rem 2.5rem;
+		}
+		#empty label{
+			margin-top:0.5rem;
+			color:#666666;
+			font-size:0.34rem;
+		}
+		#empty .try{
+			margin:0.3rem auto;
+			width:1.8rem;
+			height:0.6rem;
+			color: #1A9973;
+			font-size:0.34rem;
+			line-height:0.6rem;
+		}
+    </style>
+</head>
+<body>
+	<div id="wrap" class="flex-wrap flex-vertical">
+		<div id="header">
+			<a class="back-icon" tapmode="active" onclick="closeWin()" ></a>
+			<h1 id="title">课时统计</h1>
+		</div>
+		<div id="main" class="flex-con">
+			<div class="teaching-title">
+				<div class="teaching-month">本月课时  :  <span class="imp_s">2016年6月</span></div>
+				<div class="teaching-th">
+					<div class="first-th imp_28">班级</div>
+					<div class="other-th imp_28">基础课时</div>
+					<div class="other-th imp_28">助教课时</div>
+					<div class="other-th imp_28">总课时</div>
+				</div>
+			</div>
+			<script id="teaching_template" type="text/x-dot-template">
+				{{ for(var i=0;i<it.length;i++){ }}
+				<div class="teaching-item">
+					<div class="first-th-c con ellipsis-1">{{=it[i].className}}</div>
+					<div class="other-th con ellipsis-1">{{=it[i].mainTeacherTotal}}</div>
+					<div class="other-th con ellipsis-1">{{=it[i].assistantTeacherTotal}}</div>
+					<div class="other-th imp_o ellipsis-1">{{=it[i].total}}</div>
+				</div>
+				{{ } }}
+			</script>
+			<div class="teaching-content" id="teaching_content">
+			</div>
+			<div class="teaching-title">
+				<div class="teaching-month">课程详情</div>
+				<div class="teaching-th">
+					<div class="first-th imp_28">班级</div>
+					<div class="other-th imp_28">日期</div>
+					<div class="other-th imp_28">时间</div>
+					<div class="other-th imp_28">类型</div>
+				</div>
+			</div>
+			<script id="courses_template" type="text/x-dot-template">
+				{{ for(var i=0;i<it.length;i++){ }}
+				<div class="teaching-item">
+					<div class="first-th-c con ellipsis-1">{{=it[i].className}}</div>
+					<div class="other-th con ellipsis-1">{{=it[i].date}}</div>
+					<div class="other-th con ellipsis-1">{{=it[i].time}}</div>
+					<div class="other-th imp_o ellipsis-1">{{=it[i].teachType==1?'主讲':'助教'}}</div>
+				</div>
+				{{ } }}
+			</script>
+			<div class="teaching-content" id="courses_content">
+			</div>
+		</div>
+		
+		<div id="empty" style="display:none">
+			<div class="errnet"></div>
+			<label class="errmsg">网络连接异常</label>
+			<div class="try" onclick="tryAgain()">再试一次</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript">
+	imready = function(){
+		$api.fixStatusBar($api.byId("main"));
+		var dateSpan = $api.dom(".teaching-month span")
+		dateSpan.innerHTML=new Date().Format("yyyy年MM月")
+		
+		
+		requestTeachingStatistics();
+	};
+	
+	function requestTeachingStatistics(){
+		api.showProgress();
+		var date = new Date();
+		date.setMonth((date.getMonth()+1))
+		date.setDate("0");
+		var endDate = date.Format("yyyy-MM-dd")
+		date.setDate("1");
+		var startDate = date.Format("yyyy-MM-dd")
+		var body = {
+			"method":"teachingTimeTotal",
+			"request":{
+				"teacherId":api.getPrefs({sync:true,key:'userid'}),
+				"startDate":startDate,
+				"endDate":endDate
+			}
+		}
+		console.log(JSON.stringify(body))
+		ajaxRequest(body,function(ret,err){
+		api.hideProgress();
+			if(ret){
+				$api.byId("empty").style.display="none"
+				$api.byId("main").style.display="block"
+				requestCoursesStatistics();
+				if(ret.responseCode==0){
+					if(ret.responseBody.length!=0){
+						fillData(ret.responseBody)
+					}else{
+						//alert("本月无统计数据!")
+					}
+				}else{
+					alert(ret.responseMsg)
+				}
+			}else{
+				//alert(JSON.stringify(err))
+				showEmpty(err.msg)
+			}
+		})
+		
+	}
+	
+	function fillData(result){
+		getInnerByDot("teaching_content","teaching_template",result)
+		//requestCoursesStatistics();
+	}
+	
+	function requestCoursesStatistics(){
+		var date = new Date();
+		date.setMonth((date.getMonth()+1))
+		date.setDate("0");
+		var endDate = date.Format("yyyy-MM-dd")
+		date.setDate("1");
+		var startDate = date.Format("yyyy-MM-dd")
+		
+		var body = {
+			"method":"teachingTimeDetail",
+			"request":{
+				"teacherId":api.getPrefs({sync:true,key:'userid'}),
+				"startDate":startDate,
+				"endDate":endDate
+			}
+		}
+		console.log(JSON.stringify(body))
+		ajaxRequest(body,function(ret,err){
+			api.hideProgress();
+			if(ret){
+				if(ret.responseCode==0){
+					if(ret.responseBody.rows.length!=0){
+						fillDetailData(ret.responseBody.rows)
+					}else{
+						//alert("本月无统计数据!")
+					}
+				}else{
+					alert(ret.responseMsg)
+				}
+			}else{
+				alert(err.msg)
+			}
+		})
+	}
+	
+	
+	function showEmpty(msg,type){
+		$api.byId("empty").style.display="block"
+		$api.byId("main").style.display="none"
+		$api.dom(".errmsg").innerHTML=msg;
+	}
+	
+	function tryAgain(){
+		requestTeachingStatistics();
+	}
+	
+	function fillDetailData(result){
+		for(var i=0;i<result.length;i++){
+			var item = result[i]
+			var date = new Date(item.reportDate.replace(/-/g,"/"));
+			item.date=date.Format("yyyy-MM-dd")
+			item.time=date.Format("hh:mm:ss")
+		}
+		getInnerByDot("courses_content","courses_template",result)
+	}
+	
+</script>
+</html>

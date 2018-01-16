@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<!-- 此页面Vue工作模板-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>studentCompletion</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+
+    <style scoped>
+        /****************************模板导入***********************************************/
+
+        #main {
+            background: #fff;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+
+        .job {
+            width: 100%;
+            min-height: 5rem;
+            border-bottom: #eee solid 1px;
+            margin-bottom: .32rem;
+        }
+
+        .content {
+            background: #fff;
+            width: 100%;
+            margin-bottom: .32rem;
+        }
+
+        .content .q-title {
+            margin-top: .29rem;
+            color: #1ebeb6;
+            font-size: .3rem;
+            margin-left: .32rem;
+            max-height: 5rem;
+        }
+
+        .content div img {
+            width: 5.1rem;
+            max-width: 5.1rem;
+            margin-left: 1.2rem;
+        }
+
+        ul {
+            margin-top: .32rem;
+            margin-bottom: .23rem;
+        }
+
+        ul li {
+            height: auto;
+            min-height: .98rem;
+            width: 6.5rem;
+            background: #eee;
+            color: #333;
+            margin-top: .08rem;
+            margin-left: .5rem;
+            border-radius: .05rem;
+            position: relative;
+        }
+
+        ul li span {
+            margin-left: .23rem;
+            width: auto;
+            position: absolute;
+            left: .1rem;
+            top: .38rem;
+        }
+
+        ul li .icon_right {
+            width: .36rem;
+            height: .26rem;
+            position: absolute;
+            top: .33rem;
+            right: .32rem;
+        }
+
+        ul li dl {
+            width: auto;
+            display: inline-block;
+        }
+
+        ul li dl dd {
+            margin: .35rem .23rem .1rem .23rem;
+            font-size: .28rem;
+            text-indent: .32rem;
+        }
+
+        ul li dl dd img {
+            margin-top: .23rem;
+            margin-left: .43rem;
+            max-width: 5rem;
+            max-height: 3rem;
+        }
+
+
+
+         .result{
+           background: #ff8344!important;
+           color: #fff;
+         }
+         .isChoose {
+             background: #1ebeb6!important;
+             color: #fff;
+         }
+        .q-sgf {
+            background: #FFF;
+            width: 5.8rem;
+            height: 5.8rem;
+            margin-left: 0.85rem;
+            border-radius: 0.1rem;
+            margin-top: 0.56rem;
+        }
+		 .q-sgf iframe{
+            width: 5.8rem;
+            height: 5.8rem;
+		 }
+		 
+        /*****************************************************************************************/
+    </style>
+</head>
+
+<body>
+    <div class="flex-wrap flex-vertical">
+        <div class="flex-con" id="main">
+            <div v-for="(job,jobindex) in joblist" v-cloak class="job">
+                <div class="content" v-for="item in job.questionTitleAttributes">
+                    <div class="q-title" v-if="item.titleTypeValue==-2">
+                        <!--音频-->
+                        <audio :src="item.titleDetails"></audio>
+                    </div>
+                    <div class="q-title" v-if="item.titleTypeValue==-1">
+                        <!--文本-->
+                        {{jobindex+1}}.{{item.titleDetails}}
+                    </div>
+                    <div class="q-img" v-else-if="item.titleTypeValue==0">
+                        <!--图片-->
+                        <img :src="item.titleDetails" alt="">
+                    </div>
+                    <div class="q-audio" v-else-if="item.titleTypeValue==1">
+                        <!--音频-->
+                        <audio src="item.titleDetails"></audio>
+                    </div>
+                    <div class="q-video" v-else-if="item.titleTypeValue==2">
+                        <!--视频-->
+                        <video src="item.titleDetails" autoplay poster="posterimage.jpg">
+                    </video>
+                    </div>
+                    <div class="q-sgf" v-else-if="item.titleTypeValue==3">
+                        <!--sgf文件-->
+                         <iframe frameborder="0"  :sgf="item.titleDetails" :answerIsRight="resultlist[jobindex].answerIsRight" :answerSgf="resultlist[jobindex].answerSgfText" :loaded="false"  @load="iframeLoaded"></iframe>
+                     </div>
+					 
+                </div>
+                <ul v-if="job.questionTypeValue==1">
+                    <li :class="[{'result':optionindex==resultlist[jobindex].choiceOptionSequence},{'isChoose':option.optionRight}]" v-for="(option,optionindex) in job.questionOptionsAttributes">
+                        <span>{{option.optionName}}</span>
+                        <dl v-for="optionQuest in  option.questionOptions">
+                            <dd v-show="optionQuest.optionTypeValue==-1">
+                                {{optionQuest.optionDetails}}
+                            </dd>
+                            <dd v-show="optionQuest.optionTypeValue==0">
+                                <img :src="optionQuest.optionDetails" />
+                            </dd>
+
+                            <!-- <span v-show="optionQuest.optionTypeValue==1">
+                              {{optionQuest.optionDetails}}
+                            </span>
+                          <span v-show="optionQuest.optionTypeValue==2">
+                                {{optionQuest.optionDetails}}
+                              </span> -->
+                        </dl>
+                        <!-- <img class="icon_right" v-show="option.optionRight" src="../../image/homework_img/icon_true.png" alt=""> -->
+                    </li>
+                </ul>
+                <!--选项-->
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript" src="../../script/jquery-3.1.1.js"></script>
+<script>
+    var assigment; //全局控制器Controller
+    initVue = function() { //初始化Vue需要的是双向数据绑定 当改变数据以后view会做相应的改变
+        var date = vueDateManager();
+        var methods = vueMethodsManager();
+        assigment = new Vue({
+            el: '#main', //绑定元素
+            data: date, //本页面的静态动态全部数据
+            methods: methods, //本页面的全部方法
+            created: function() {
+                Vue.config.silent = true;
+            },
+            updated:function(){
+            	if(api.systemType=='ios'){
+					var sgfs = $api.domAll("iframe");
+					for(var i=0;i<sgfs.length;i++){
+						methods.iframeLoaded(sgfs[i])
+					}
+				}
+            }
+        })
+    }
+
+    vueDateManager = function() {
+        //初始化Vue数据date为一个json数组
+        var date = {};
+        date.joblist = [{
+            "questionTypeName": "",
+            "questionId": 0,
+            "questionOptionsAttributes": [{
+                "optionId": 0,
+                "optionName": "",
+                "questionId": 0,
+                "optionRight": 0,
+                "questionOptions": [{
+                    "optionTypeValue": 0,
+                    "optionTypeName": "",
+                    "optionDetails": ""
+                }],
+                "optionValue": 0
+            }, {
+                "optionId": 0,
+                "optionName": "",
+                "questionId": 0,
+                "optionRight": 0,
+                "questionOptions": [{
+                    "optionTypeValue": 0,
+                    "optionTypeName": "",
+                    "optionDetails": ""
+                }],
+                "optionValue": 0
+            }, {
+                "optionId": 0,
+                "optionName": "",
+                "questionId": 0,
+                "optionRight": 0,
+                "questionOptions": [{
+                    "optionTypeValue": 0,
+                    "optionTypeName": "",
+                    "optionDetails": ""
+                }],
+                "optionValue": 0
+            }, {
+                "optionId": 0,
+                "optionName": "",
+                "questionId": 0,
+                "optionRight": 0,
+                "questionOptions": [{
+                    "optionTypeValue": 0,
+                    "optionTypeName": "",
+                    "optionDetails": ""
+                }],
+                "optionValue": 0
+            }],
+            "drawChessBoard": 0,
+            "knowledgeId": 0,
+            "difficultyValue": 0,
+            "questionTypeValue": 0,
+            "subjectName": "",
+            "subjectId": 0,
+            "difficultyName": "",
+            "knowledgeName": "",
+            "boardSize": 0,
+            "programmeId": 0,
+            "questionTitleAttributes": [{
+                "titleTypeValue": 0,
+                "titleTypeName": "",
+                "titleDetails": ""
+            }, {
+                "titleTypeValue": 0,
+                "titleTypeName": "",
+                "titleDetails": ""
+            }],
+            "programmeName": ""
+        }];
+        date.resultlist=[];
+        console.log("数据管理者" + JSON.stringify(date));
+        return date;
+
+    }
+    vueMethodsManager = function() {
+        //时间管理中心 每个Vue事件的处理都可以在这管理
+        var methods = {};
+        methods.init = function() {
+          c(api.frameName+"作业详情查看数据展示",api.pageParam);
+            assigment.joblist = api.pageParam.joblist;
+            assigment.resultlist=api.pageParam.resultlist;
+            // api.showProgress();
+        };
+        methods.confirmationRelease = function() { //确认发布作业
+            //TODO
+
+        }
+        methods.iframeLoaded = function (e){
+        	var el = e.target;//当前控件
+        	if(!el){
+        		el=e;
+        	}
+			var loaded =  $(el).attr("loaded");
+				console.log(loaded)
+			if(loaded=='true'){ 
+				console.log("加载完了吧")
+				return;
+			}
+			//获取属性，即可使用
+			var src = "weiqiResult.html"; 
+			
+			var sgf = $(el).attr("sgf");
+			var boardSize = $(el).attr("boardSize");
+			var answerIsRight = $(el).attr("answerIsRight");
+			var answerSgf = $(el).attr("answerSgf");
+			var showRight = false;
+			
+			console.log("sgf==="+sgf)
+			
+			var loaded =  $(el).attr("boardSize");
+			
+			src+="?sgf="+sgf+"&boardSize="+boardSize+"&answerIsRight="+answerIsRight+"&answerSgf="+answerSgf+"&showRight="+showRight;
+			$(el).attr("src",src);
+			$(el).attr("loaded","true");
+		}
+        console.log("事件管理者：" + JSON.stringify(methods));
+        return methods;
+
+
+
+
+    }
+    imready = function() {
+        // api.parseTapmode(); //默认页面加载完成后，引擎会对 dom 里面的元素进行 tapmode 属性解析，若是之后用代码创建的 dom 元素，则需要调用该方法后 tapmode 属性才会生效
+        // $api.fixStatusBar($api.dom('header'));
+        initVue();
+        assigment.init();
+    };
+</script>
+
+</html>

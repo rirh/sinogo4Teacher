@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<!-- 此页面Vue工作模板-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>系统题库</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+
+    <style scoped>
+        html,
+        body {
+            position: relative;
+            height: 100%;
+        }
+
+        body {
+            background: #eee;
+            background-color: transparent !important;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+
+        .container {
+            width: 100%;
+            min-height: 3rem;
+            margin-bottom: .32rem;
+        }
+
+        .content {
+            background: #fff;
+            width: 100%;
+            margin-bottom: .32rem;
+        }
+
+        .content .q-title {
+            margin-top: .29rem;
+            color: #1ebeb6;
+            font-size: .3rem;
+            margin-left: .32rem;
+            max-height: 5rem;
+        }
+
+        .content div img {
+            width: 5.1rem;
+            max-width: 5.1rem;
+            margin-left: 1.2rem;
+        }
+
+        ul {
+            margin-top: .32rem;
+        }
+
+        ul li {
+            height: auto;
+            min-height: .98rem;
+            width: 6.5rem;
+            background: #eee;
+            color: #333;
+            margin-top: .08rem;
+            margin-left: .5rem;
+            border-radius: .05rem;
+            position: relative;
+        }
+
+        ul li span {
+            margin-left: .23rem;
+            width: auto;
+            position: absolute;
+            left: .1rem;
+            top: .4rem;
+        }
+
+        ul li .icon_right {
+            width: .36rem;
+            height: .26rem;
+            position: absolute;
+            top: .5rem;
+            left: .23rem;
+        }
+
+        ul li dl {
+            width: auto;
+            display: inline-block;
+        }
+
+        ul li dl dd {
+            margin: .35rem .23rem .1rem .23rem;
+            font-size: .28rem;
+            text-indent: .5rem;
+        }
+
+        ul li dl dd img {
+            margin-top: .23rem;
+            margin-left: .43rem;
+            max-width: 5rem;
+            max-height: 3rem;
+        }
+
+        .result {
+            background: #ff8344!important;
+            color: #fff;
+        }
+
+        .isChoose {
+            background: #1ebeb6!important;
+            color: #fff;
+        }
+
+        .q-sgf {
+            background: #FFF;
+            width: 5.8rem;
+            height: 5.8rem;
+            margin-left: 0.85rem;
+            border-radius: 0.1rem;
+            margin-top: 0.56rem;
+        }
+
+        .q-sgf iframe {
+            width: 5.8rem;
+            height: 5.8rem;
+        }
+
+        .templateStarBox {
+            height: 0.86rem;
+            width: auto;
+            background: #f6f6f6;
+            border-left: solid 0.06rem #a05150;
+            border-radius: 0.05rem;
+        }
+
+        .templateStar {
+            float: left;
+            height: 0.28rem;
+            width: 0.29rem;
+            margin: 0.29rem 0 0 0.23rem;
+        }
+
+        .leave {
+            margin-left: 0.28rem;
+            font-size: 0.28rem;
+            line-height: 0.86rem;
+        }
+
+        .templateStarBox button {
+            margin: 0.23rem 0.23rem 0.23rem auto;
+            width: 1rem;
+            height: 0.5rem;
+            color: #fff;
+            font-size: 0.32rem;
+            background: #1ebeb6;
+            border-radius: 0.05rem;
+            border: solid 1px #884643;
+            float: right;
+        }
+
+        .changeBg {
+            background: #a05150!important;
+        }
+
+        .taskbox .task-con {
+            height: 5rem;
+            width: 100%;
+            border-bottom: 1px solid #f4f4f4;
+        }
+        empty{
+          display: block;
+          font-size: .48rem;
+          color: #666;
+          width: 100%;
+          height: 5rem;
+          text-align: center;
+          margin-top: 3rem;
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Swiper -->
+    <div class="swiper-container" >
+        <div class="swiper-wrapper" v-if="schoolInfo.length<=0">
+            <div v-for="(job,index) in schoolInfo" v-cloak class="container">
+                <task-star :button-name="job.buttonName?'添加':'移除'" :is-choose="job.ischoose" :cust-star-number="job.job.difficultyValue" :starbuttonindex="index"></task-star>
+                <div class="content" v-for="item in job.job.questionTitleAttributes">
+                    <div class="q-title" v-if="item.titleTypeValue==-2">
+                        <!--音频-->
+                        <audio :src="item.titleDetails"></audio>
+                    </div>
+                    <div class="q-title" v-if="item.titleTypeValue==-1">
+                        <!--文本-->
+                        {{index+1}}.{{item.titleDetails}}
+                    </div>
+                    <div class="q-img" v-else-if="item.titleTypeValue==0">
+                        <!--图片-->
+                        <img :src="item.titleDetails" alt="">
+                    </div>
+                    <div class="q-audio" v-else-if="item.titleTypeValue==1">
+                        <!--音频-->
+                        <audio src="item.titleDetails"></audio>
+                    </div>
+                    <div class="q-video" v-else-if="item.titleTypeValue==2">
+                        <!--视频-->
+                        <video src="item.titleDetails" autoplay poster="posterimage.jpg">
+                      </video>
+                    </div>
+                    <div class="q-sgf" v-else-if="item.titleTypeValue==3">
+                        <!--sgf文件-->
+                        <iframe frameborder="0" :sgf="item.titleDetails" :loaded="false" @load="iframeLoaded"></iframe>
+                    </div>
+                </div>
+                <ul v-if="job.job.questionTypeValue==1">
+                    <li :class="{'isChoose':option.optionRight}" v-for="(option,index) in job.job.questionOptionsAttributes">
+                        <span>{{option.optionName}}</span>
+                        <dl v-for="(optionQuest,index) in  option.questionOptions">
+                            <dd v-show="optionQuest.optionTypeValue==-1">
+                                {{optionQuest.optionDetails}}
+                            </dd>
+                            <dd v-show="optionQuest.optionTypeValue==0">
+                                <img :src="optionQuest.optionDetails" />
+                            </dd>
+
+                            <!-- <span v-show="optionQuest.optionTypeValue==1">
+                                {{optionQuest.optionDetails}}
+                              </span>
+                            <span v-show="optionQuest.optionTypeValue==2">
+                                  {{optionQuest.optionDetails}}
+                                </span> -->
+                        </dl>
+                        <img class="icon_right" v-show="option.optionRight" src="../../image/homework_img/icon_true.png" alt="">
+                    </li>
+                </ul>
+                <!--选项-->
+            </div>
+        </div>
+        <!-- Add Pagination -->
+      <empty>
+
+      </empty>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript" src="../../script/swiper.min.js"></script>
+
+<script type="text/javascript" src="../../script/jquery-3.1.1.js"></script>
+<template id='taskStar' style="display:none">
+<div class="templateStarBox" >
+  <span class="leave">难度</span>
+  <span>
+    <img class='templateStar'  v-for='star in custStarNumber' src='../../image/homework_img/icon_start.png' />
+  </span>
+   <button  :class="{'changeBg':ischoose}" @click="removeTask(starbuttonindex)" >{{buttonName}}</button>
+</div>
+</template>
+<script>
+    var assigment; //全局控制器Controller
+    initVue = function() { //初始化Vue需要的是双向数据绑定 当改变数据以后view会做相应的改变
+        var date = vueDateManager();
+        var methods = vueMethodsManager();
+        var components = vueComponentsManager()
+        assigment = new Vue({
+            el: '.swiper-container', //绑定元素
+            data: date, //本页面的静态动态全部数据
+            methods: methods, //本页面的全部方法
+            components: components,
+            updated: function() {
+                if (api.systemType == 'ios') {
+                    var sgfs = $api.domAll("iframe");
+                    for (var i = 0; i < sgfs.length; i++) {
+                        methods.iframeLoaded(sgfs[i])
+                    }
+                }
+            }
+        })
+    }
+
+    vueDateManager = function() {
+        //初始化Vue数据date为一个json数组
+        var date = {};
+        date.schoolInfo = [];
+        date.joblist = [];
+        date.empty="请到管理后台添加作业题目";
+        console.log("数据管理者" + JSON.stringify(date));
+        return date;
+
+    }
+    vueMethodsManager = function() {
+        //时间管理中心 每个Vue事件的处理都可以在这管理
+        var methods = {};
+        methods.init = function() {
+            var joblist = $api.getStorage('collection');
+            assigment.joblist = joblist;
+            for (var i = 0; i < joblist.length; i++) {
+                var list = {};
+                list.job = joblist[i];
+                list.buttonName = false;
+                list.ischoose = true;
+                assigment.schoolInfo.push(list);
+            }
+
+
+        };
+        methods.initswipt = function() {
+            var swiper = new Swiper('.swiper-container', {
+                paginationClickable: true,
+                direction: 'vertical',
+                onSlideChangeEnd: function(swiper) {
+                    console.log(swiper.activeIndex); //切换结束时，告诉我现在是第几个slide
+                }
+            });
+        };
+        methods.lister = function() {
+            api.sendEvent({
+                name: 'collection',
+                extra: {
+                    key1: assigment.job,
+                }
+            });
+        };
+        methods.iframeLoaded = function(e) {
+            var el = e.target; //当前控件
+            if (!el) {
+                el = e;
+            }
+            var loaded = $(el).attr("loaded");
+            console.log(loaded)
+            if (loaded == 'true') {
+                console.log("加载完了吧")
+                return;
+            }
+            //获取属性，即可使用
+            var src = "weiqiResult.html";
+
+            var sgf = $(el).attr("sgf");
+            var boardSize = $(el).attr("boardSize");
+            var answerIsRight = false;
+            var answerSgf = "";
+            var showRight = false;
+
+            console.log("sgf===" + sgf)
+
+            var loaded = $(el).attr("boardSize");
+
+            src += "?sgf=" + sgf + "&boardSize=" + boardSize + "&answerIsRight=" + answerIsRight + "&answerSgf=" + answerSgf + "&showRight=" + showRight;
+            $(el).attr("src", src);
+            $(el).attr("loaded", "true");
+        }
+        console.log("事件管理者：" + JSON.stringify(methods));
+        return methods;
+
+    }
+    vueComponentsManager = function() {
+        var components = {};
+        components.taskStar = {}; //星星组件
+        components.taskStar.template = "#taskStar";
+        components.taskStar.props = [];
+        components.taskStar.props.push("custStarNumber"); //要传入的数据
+        components.taskStar.props.push("leave"); //要传入的数据
+        components.taskStar.props.push("starbutton"); //要传入的数据
+        components.taskStar.props.push("starbuttonindex"); //要传入的数据
+        components.taskStar.props.push("buttonName"); //要传入的数据
+        components.taskStar.props.push("ischoose"); //要传入的数据
+        components.taskStar.methods = {};
+        components.taskStar.methods.removeTask = function(index) { //添加和移除事件
+            assigment.schoolInfo[index].buttonName = !assigment.schoolInfo[index].buttonName
+            assigment.schoolInfo[index].ischoose = !assigment.schoolInfo[index].ischoose;
+            assigment.joblist = [];
+            for (var i = 0; i < assigment.schoolInfo.length; i++) {
+                if (!assigment.schoolInfo[i].buttonName) {
+                    assigment.joblist.push(assigment.schoolInfo[i].job);
+                }
+            }
+            $api.rmStorage('collection'); //清楚缓存里的数据
+            $api.setStorage('collection', assigment.joblist); //设置新的缓存数据courseQuestions为随堂作业
+            api.sendEvent({ //发送广播事件让他得到的值更新
+                name: 'collection',
+                extra: {
+                    key1: '',
+                }
+            });
+
+
+        };
+        console.log("组件管理者：" + JSON.stringify(components));
+        return components;
+
+    }
+    imready = function() {
+        api.parseTapmode(); //默认页面加载完成后，引擎会对 dom 里面的元素进行 tapmode 属性解析，若是之后用代码创建的 dom 元素，则需要调用该方法后 tapmode 属性才会生效
+        $api.fixStatusBar($api.dom('header'));
+        initVue();
+        assigment.init();
+
+
+    };
+</script>
+
+</html>

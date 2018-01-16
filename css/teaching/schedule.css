@@ -1,0 +1,257 @@
+html,body{
+	height:100%;
+	background:#F6F6F6;
+}
+#main{
+	width: 100%;
+}
+#schedule-title{
+	height:0.94rem;
+	line-height:0.94rem;
+	width:100%;
+	position: fixed;
+	background: #F6F6F6;
+	z-index: 2;
+	top:0;
+	text-align: center;
+}
+#schedule-title:before{
+	border-top:1px solid #CCCCCC;
+	position: absolute;
+	top:0;left:0;right:0;
+	content:"";
+	display: block;
+	-webkit-transform-origin: 0 0 ;
+	-webkit-transform:scaleY(0.5) ;
+}
+#schedule-title:after{
+	border-bottom:1px solid #CCCCCC;
+	position: absolute;
+	bottom:0;left:0;right:0;
+	content:"";
+	display: block;
+	-webkit-transform-origin: 0 0 ;
+	-webkit-transform:scaleY(0.5) ;
+}
+.pre-week{
+	background: url(../../image/icon_arrow_pre.png) no-repeat center center;
+	background-size:0.22rem 0.37rem;
+	height:0.7rem;
+	width:0.7rem;
+	margin-top:0.12rem;
+	margin-left: 0.12rem;
+	float: left;
+}
+.pre-week.active{
+	background: url(../../image/icon_arrow_pre.png) no-repeat center center rgba(0,0,0,0.2);
+	background-size:0.22rem 0.37rem;
+}
+.next-week{
+	background: url(../../image/icon_arrow_next.png) no-repeat center center;
+	background-size:0.22rem 0.37rem;
+	height:0.7rem;
+	width:0.7rem;
+	margin-top:0.12rem;
+	margin-right: 0.12rem;
+	float: right;
+}
+.next-week.active{
+	background: url(../../image/icon_arrow_next.png) no-repeat center center rgba(0,0,0,0.2);
+	background-size:0.22rem 0.37rem;
+}
+.curweek{
+	display: inline-block;
+	height:100%;
+}
+.curweek .back{
+	font-size:0.32rem;
+	color:#333333;
+	float: left;
+}
+.curweek .other{
+	color:#76CF54;
+}
+.curweek .date{
+	font-size:0.3rem;
+	color:#666666;
+	float: left;
+	margin-left: 0.12rem;
+}
+.curweek div{
+	width:0.5rem;
+	height:0.5rem;
+	position: relative;
+	float:left;
+	margin-top:0.2rem;
+	margin-left:0.1rem;
+}
+.curweek div img{
+	position:absolute;
+	top:0.08rem;left:0.08rem;
+	width:0.34rem;
+	height:0.34rem;
+}
+#schedule-time{
+	height:0.89rem;
+	background:#FFF;
+	position: fixed;
+	top:0.94rem;
+	z-index: 2;
+	width:100%;
+}
+/*#schedule-time:before{
+	position: absolute;
+	border-top: 1px solid #cccccc;
+	top:0;left:0;right:0;
+	content:"";display:block;
+	-webkit-transform:scaleY(0.5);
+	-webkit-transform-origin: 0 0;
+	pointer-events:none;
+}*/
+/*#schedule-time:after{
+	position: absolute;
+	border-bottom: 1px solid #cccccc;
+	bottom:0;left:0;right:0;
+	content:"";display:block;
+	-webkit-transform:scaleY(0.5);
+	-webkit-transform-origin: 0 0;
+}*/
+table,table tr{
+	width:100%;
+	text-align: center;
+}
+.table-title{
+	height:0.89rem;
+}
+.table-title th{
+	font-size:0.28rem;
+	color:#666666;
+}    	
+.table-title th.current-duration{
+	color:#FC7876;
+}    	
+.table-data{
+	height:2.55rem;
+	position:relative;
+}
+.table-data td{
+	height:2.55rem;
+}
+.table-data .week-info{
+	padding:0;
+}
+.table-data td > div{
+	font-size:0.22rem;
+	color:#333;
+	position:relative;
+	padding: 0 0.1rem;
+	text-align:left;
+}
+.table-data td > div:before{
+	border-top:1px solid #dcdcdc;
+	position: absolute;
+	top:0;left:0;right:0;
+	content:"";
+	display: block;
+	-webkit-transform-origin: 0 0 ;
+	-webkit-transform:scaleY(0.5) ;
+}
+.table-data td.over{
+	background: url(../../image/bg_schedule_item_over.png);
+	background-size: 100% 100%;
+}
+.table-data td.cur,.table-data td.fut{
+	background: url(../../image/bg_schedule_item.png);
+	background-size: 100% 100%;
+}
+.table-data td div.over{
+	background:#FFF;
+}
+.table-data td div.cur{
+	color:#FFF;
+	background:url(../../image/bg_schedule_current.png) no-repeat center bottom;
+	background-size: 100% 100%;
+}
+.table-data td div.cur-1{
+	color:#FFF;
+	background:url(../../image/bg_schedule_current_1.png) no-repeat center bottom;
+	background-size: 100% 100%;
+}
+.table-data td div.cur-2{
+	color:#FFF;
+	background:url(../../image/bg_schedule_current_2.png) no-repeat center bottom;
+	background-size: 100% 100%;
+}
+.table-data td div.cur-3{
+	color:#FFF;
+	background:url(../../image/bg_schedule_current_3.png) no-repeat center bottom;
+	background-size: 100% 100%;
+}
+.table-data td div.cur-4{
+	color:#FFF;
+	background:url(../../image/bg_schedule_current_4.png) no-repeat center bottom;
+	background-size: 100% 100%;
+}
+.table-data td div.cur-n-1{
+	color:#FFF;
+	background:url(../../image/bg_schedule_current_n_1.png) no-repeat center bottom;
+	background-size: 100% 100%;
+}
+.table-data td div.cur-n-2{
+	color:#FFF;
+	background:url(../../image/bg_schedule_current_n_2.png) no-repeat center bottom;
+	background-size: 100% 100%;
+}
+.table-data td div.fut{
+}
+#content{
+	position: absolute;
+	z-index:0;
+	width:100%;
+	top:1.83rem;
+}
+.classname{
+}
+.currentWeek{
+	color:#FC7876;
+}
+#cursor{
+	position: fixed;
+	z-index: 100;
+	width:0.24rem;
+	height:1.15rem;
+	
+}
+#cweek{
+	position: absolute;
+	z-index: 1;
+	background:#FF8344;
+	height:1.62rem;
+	width:0.02rem;
+}
+#empty{
+	width:100%;
+	height:100%;
+	text-align: center;
+	position: fixed;
+	background: rgba(0,0,0,0);
+	z-index: 100;
+}
+#empty .errnet{
+	height:30%;
+	background:url(../../image/icon_net_err.png) no-repeat center bottom ;
+	background-size:2.5rem 2.5rem;
+}
+#empty label{
+	margin-top:0.5rem;
+	color:#666666;
+	font-size:0.34rem;
+}
+#empty .try{
+	margin:0.3rem auto;
+	width:1.8rem;
+	height:0.6rem;
+	color: #1A9973;
+	font-size:0.34rem;
+	line-height:0.6rem;
+}

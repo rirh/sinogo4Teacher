@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+	<style>
+		html,
+		body {
+			width: 100%;
+		}
+
+		#main {
+			width: 100%;
+		}
+
+		.flex-wrap {
+			background: #FFFFFF;
+		}
+
+		.h-right {
+			text-align: right;
+			margin-right: 0.23rem;
+			-webkit-flex: 0.3;
+			/* Chrome */
+			-ms-flex: 0.3;
+			/* IE 10 */
+			flex: 0.3;
+			/* NEW, Spec - Opera 12.1, Firefox 20+ */
+			-webkit-box-flex: 0.3;
+			/* OLD - iOS 6-, Safari 3.1-6 */
+			-moz-box-flex: 0.3;
+		}
+
+		.h-left {
+			margin-left: 0.23rem;
+			text-align: left;
+			-webkit-flex: 0.3;
+			/* Chrome */
+			-ms-flex: 0.3;
+			/* IE 10 */
+			flex: 0.3;
+			/* NEW, Spec - Opera 12.1, Firefox 20+ */
+			-webkit-box-flex: 0.3;
+			/* OLD - iOS 6-, Safari 3.1-6 */
+			-moz-box-flex: 0.3;
+		}
+
+		.h-left img {
+			margin-top: 0.215rem;
+			width: 0.25rem;
+			height: 0.45rem;
+			background: url(../../image/setting/icon-back.png);
+			background-size: cover;
+			margin-left: 0;
+		}
+		/****************************************************************************************************************/
+
+		.flex-con {
+			border-bottom: #d9d9d9 solid 1px
+		}
+
+		.tab {
+			z-index: 1;
+			width: 100%;
+			height: 0.84rem;
+			background: #f6f6f6;
+			font-size: 0.3rem;
+			line-height: 0.84rem;
+			position: fixed;
+		}
+
+		.mtab {
+			position: fixed;
+			bottom: 0;
+			background: #fff;
+			height: 0.88rem;
+			width: 100%;
+			color: #FFFFFF;
+			font-size: 0.34rem;
+			text-align: center;
+			line-height: 0.88rem;
+		}
+
+		.line {
+			position: relative;
+		}
+
+		.line:after {
+			border-bottom: 1px solid #d9d9d9;
+			content: "";
+			display: block;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform: scaleY(0.5);
+		}
+
+		.box {
+			width: 100%;
+			height: 0.84rem;
+		}
+
+		.hic {}
+
+		.name {}
+
+		.sex {}
+
+		#tips p {
+			color: #FF8344;
+			display: inline-block;
+			font-size: 0.28rem;
+		}
+
+		#mtr {
+			width: 100%;
+			height: 1.52rem;
+		}
+
+		.mtd {
+			width: 16.66%;
+			height: 1.52rem;
+			background: #FFFFFF;
+			float: left;
+			position: relative;
+		}
+
+		.icon {
+			width: 0.8rem;
+			height: 0.8rem;
+			background: url(../../image/setting/icon-icon.png);
+			background-size: cover;
+			border-radius: 50%;
+			margin-left: 0.21rem;
+			margin-top: 0.14rem;
+		}
+
+		.name {
+			color: #333333;
+			font-size: 0.26rem;
+			line-height: 0.53rem;
+			width: 100%;
+			text-align: center;
+		}
+
+		.stau {
+			position: absolute;
+			height: 0.34rem;
+			width: 0.34rem;
+			top: 0.67rem;
+			left: 0.79rem;
+			font-size: 0.26rem;
+			color: #FFFFFF;
+			text-align: center;
+			border-radius: 0.02rem;
+		}
+
+		.hs {
+			background: #666666;
+		}
+
+		.cs {
+			background: #ff8344;
+		}
+
+		.ls {
+			background: #1EBEB6;
+		}
+
+		.iconhs {
+			border: #666666 solid 1px;
+		}
+
+		.iconcs {
+			border: #ff8344 solid 1px;
+		}
+
+		.iconls {
+			border: #1EBEB6 solid 1px;
+		}
+
+		.touch {
+			background: #EEEEEE
+		}
+
+		#empty {
+			width: 100%;
+			height: 100%;
+			text-align: center;
+		}
+
+		#empty .errnet {
+			height: 30%;
+			background: url(../../image/icon_net_err.png) no-repeat center bottom;
+			background-size: 2.5rem 2.5rem;
+		}
+
+		#empty label {
+			margin-top: 0.5rem;
+			color: #666666;
+			font-size: 0.34rem;
+		}
+
+		#empty .try {
+			margin: 0.3rem auto;
+			width: 1.8rem;
+			height: 0.6rem;
+			color: #1A9973;
+			font-size: 0.34rem;
+			line-height: 0.6rem;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="main">
+
+		<div class="flex-wrap flex-vertical">
+			<header>
+				<div class="h-left" onclick="closeWin();"><img src="../../image/setting/icon-back.png" />
+				</div>
+				<div class="h-conter">
+					出勤情况
+				</div>
+				<div class="h-right"></div>
+			</header>
+			<div class="tab" id="tips">
+				&nbsp应到：
+				<p id='people'>
+
+				</p>
+				人 请假：
+				<p id="leave">
+					
+				</p>
+				人
+			</div>
+			<div class="flex-con"></div>
+			<div class="mtab" onclick="signOrNot()"></div>
+		</div>
+	</div>
+	<div id="empty" style="display:none">
+		<div class="errnet"></div>
+		<label class="errmsg">网络连接异常</label>
+		<div class="try" onclick="tryAgain()">再试一次</div>
+	</div>
+</body>
+<script type="template" id="dotTmpl">
+	<div class="box"></div>
+	{{for(var i = 0 ; i
+	<it.length;i++){}} <div class="mtd line " onclick="student('{{=i}}')" tapmode='touch'>
+		<div {{if(it[i].num==0){}}class="icon iconcs " {{}else if(it[i].num==1){}}class="icon iconhs" {{}else if(it[i].num==2){}}class="icon iconls" {{ }}}></div>
+		<div class="name">{{=it[i].name}}</div>
+		<div {{if(it[i].num==0){}}class="stau cs" {{}else if(it[i].num==1){}}class="stau hs" {{}else if(it[i].num==2){}}class="stau ls" {{} }}>{{=it[i].hj}}
+		</div>
+		</div>
+		{{}}}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript">
+	var lon;
+	var lat;
+	var imageUrl;
+	var minhotcities
+
+	function student(i) {
+		if (signStatus == -1 || signStatus == 2 || signStatus == 3) {
+			return;
+		}
+		console.log(signStatus)
+		if (romnum == 3) {
+			romnum = 0;
+		}
+		var pic = $api.domAll('.icon');
+		var txt = $api.domAll('.stau');
+		if ($api.hasCls(pic[i], 'iconcs')) {
+			$api.removeCls(pic[i], 'iconcs');
+			$api.removeCls(txt[i], 'cs');
+			romnum = 1;
+		} else if ($api.hasCls(pic[i], 'iconhs')) {
+			$api.removeCls(pic[i], 'iconhs');
+			$api.removeCls(txt[i], 'hs');
+			romnum = 0;
+		} else if ($api.hasCls(pic[i], 'iconls')) {
+			$api.removeCls(pic[i], 'iconls');
+			$api.removeCls(txt[i], 'ls');
+			romnum = 2;
+		}
+		$api.addCls(pic[i], bcss[romnum]);
+		$api.addCls(txt[i], ccss[romnum]);
+		$api.text(txt[i], stute[romnum]);
+		romnum++;
+	}
+	var stute = ['到', '缺', '假'];
+	var date = [];
+	var bcss = ["iconcs", "iconhs", "iconls"];
+	var ccss = ["cs", "hs", "ls"];
+	var romnum = 0;
+
+	function json() {
+		for (var i = 0; i < hotcities.length; i++) {
+			var a;
+			//判断是否为请假
+			if (hotcities[i].leaveStatus == 0) { //0c 1h 2l
+				a = 2;
+			} else if (hotcities[i].leaveStatus == 1) {
+				a = 1;
+			} else {
+				a = 0;
+			}
+			//
+			var list = {};
+			list.num = a;
+			list.name = hotcities[i].studentName;
+			list.studentId = hotcities[i].studentId;
+			list.hj = stute[a];
+			date.push(list);
+		}
+		var c = [];
+		var b = [];
+		for (var j = 0; j < date.length; j++) {
+			if (date[j].num == 2) {
+				c.push(date[j]);
+			} else {
+				b.push(date[j]);
+			}
+		}
+		date = [];
+		for (var i = 0; i < c.length; i++) {
+			date.push(c[i]);
+		}
+		for (var i = 0; i < b.length; i++) {
+			date.push(b[i]);
+		}
+		//拼接两个数组合并成一个新的
+		date = c.concat(b);
+		//	 alert(JSON.stringify(a)+'----'+JSON.stringify(b)+'----'+JSON.stringify(date))
+		var tmpl = doT.template($api.text($api.dom("#dotTmpl")));
+		$api.html($api.dom(".flex-con"), tmpl(date));
+		$api.text($api.dom('#people'), date.length);
+		$api.text($api.dom('#leave'), c.length);
+
+		var starttime = api.pageParam.start; //上课时间
+		var endtime = api.pageParam.end; //下课时间
+		var startDate = new Date(starttime.replace(/-/g, "/"))
+		var endDate = new Date(endtime.replace(/-/g, "/"))
+
+		var startLong = startDate.getTime();
+		var endLong = endDate.getTime();
+
+		signStartLong = startLong - 5 * 60 * 1000;
+		signEndLong = endLong - 5 * 60 * 1000;
+
+		unSignStartLong = signEndLong;
+		unSignEndLong = endLong + 30 * 60 * 1000;
+
+		//self.setInterval("compareClassTime()",1000);
+
+		console.log(starttime)
+		console.log(endtime)
+
+		console.log(signStartLong)
+		console.log(signEndLong)
+		console.log(unSignStartLong)
+		console.log(unSignEndLong)
+		checkTimeTable();
+	}
+
+	function checkTimeTable() {
+
+		var list = {};
+		list.method = "getClassTimetableById";
+		list.request = {
+			"classTimetableId": api.pageParam.id
+		}
+		if (currentSchedule != -1) {
+			clearInterval(currentSchedule)
+		}
+		console.log("考勤classTimetableId请求数据" + JSON.stringify(list));
+		ajaxRequest(list, function(ret, err) {
+			if (ret) {
+				minhotcities = ret.responseBody;
+				console.log("考勤classTimetableId返回数据" + JSON.stringify(minhotcities));
+
+				if (minhotcities != null) {
+					//						console.log('签到' + hotcities.signIn + '签退' + hotcities.signIn);
+					isSignIn = minhotcities.signIn
+					isSignOut = minhotcities.signOut
+					currentSchedule = self.setInterval("compareClassTime()", 1000);
+				}
+			} else {
+				//alert(JSON.stringify(err))
+			}
+		})
+	}
+
+	var signStartLong;
+	var signEndLong;
+	var unSignStartLong;
+	var unSignEndLong;
+	var mSignTab;
+
+	var signStatus = -1; //-1:不可签 0:可签到 1:可签退 2:已签到 3已签退
+	var isSignIn = false;
+	var isSignOut = false;
+	var currentSchedule = -1;
+
+	function compareClassTime() {
+		var newDate = new Date();
+		var newLong = newDate.getTime();
+		if (isSignOut) {
+			mSignTab.style.color = "#999"
+			mSignTab.innerHTML = "已签退"
+			signStatus = 3;
+		} else {
+			if (newLong >= signStartLong && newLong < signEndLong) { //签到时间,按钮显示签到,如已签到,显示已签到,且不可点击
+				if (isSignIn) { //已经签到
+					mSignTab.style.color = "#999"
+					mSignTab.innerHTML = "已签到"
+					signStatus = 2;
+				} else {
+					mSignTab.style.color = "#333"
+					mSignTab.innerHTML = "签到"
+					signStatus = 0;
+				}
+			} else if (newLong >= unSignStartLong && newLong < unSignEndLong) { //签退时间,按钮显示签退,如已签退,显示已签退,且不可点击
+				if (isSignOut) { //已经签退
+					mSignTab.style.color = "#999"
+					mSignTab.innerHTML = "已签退"
+					signStatus = 3;
+				} else {
+					mSignTab.style.color = "#333"
+					mSignTab.innerHTML = "签退"
+					signStatus = 1;
+				}
+			} else { //其他时间,显示不在签到时间
+				mSignTab.style.color = "#999"
+				signStatus = -1;
+				mSignTab.innerHTML = "不在考勤时间"
+			}
+		}
+
+	}
+
+	function signOrNot() {
+		if (lon == -1 || lat == -1) {
+			return toastAtMiddle("请先开启定位,再进行考勤!")
+		}
+		var msgs = ["不在考勤时间", "", "", "已经签到", "已经签退"];
+		if (signStatus == -1 || signStatus == 2 || signStatus == 3) {
+			return toastAtMiddle(msgs[signStatus + 1]);
+		} else {
+			siginhttp(signStatus)
+		}
+	}
+
+	var hotcities;
+
+	function getHotCities(id) {
+		var data = {};
+		data.method = "classCurrentAttendance";
+		data.request = {
+			"classTimetableId": id,
+			"page": "1",
+			"pageSize": "100"
+		}
+		api.showProgress();
+		hotcities = "";
+		console.log("出勤classCurrentAttendance请求数据" + JSON.stringify(data));
+		ajaxRequest(data, function(ret, err) {
+			api.hideProgress();
+			if (ret) {
+				if (ret.responseCode == 0) {
+					hotcities = ret.responseBody;
+					/**********0912 修订 没有学生允许签到 wjj***************/
+					// if (hotcities.length < 1) {
+					// 	showEmpty("没查询到学生!", 0);
+					// } else {
+						$api.byId("empty").style.display = "none"
+						$api.byId("main").style.display = "block"
+						console.log("出勤classCurrentAttendance返回数据" + JSON.stringify(hotcities));
+						json();
+						var icon = $api.domAll('.icon');
+						for (var i = 0; i < icon.length; i++) {
+							if (hotcities[i].studentImg.length > 0) {
+								$api.css(icon[i], "background: url(" + imageUrl + hotcities[i].studentImg + ");background-size: 100%;");
+							} else {
+								$api.css(icon[i], "background: url(../../image/eg_header_1.png);background-size: 100%;");
+							}
+						}
+					// }
+				} else {
+					showEmpty(ret.responseMsg);
+				}
+			} else {
+				showEmpty(err.msg);
+			}
+		})
+	}
+
+	function showEmpty(msg, type) {
+		$api.byId("empty").style.display = "block"
+		$api.byId("main").style.display = "none"
+		$api.dom(".errmsg").innerHTML = msg;
+		if (type == 0) {
+			$api.dom(".errnet").style.background = "url(../../image/icon_empty.png) no-repeat center bottom "
+			$api.dom(".errnet").style.backgroundSize = "2.18rem 2.18rem";
+		} else {
+			$api.dom(".errnet").style.background = "url(../../image/icon_net_err.png) no-repeat center bottom "
+			$api.dom(".errnet").style.backgroundSize = "2.5rem 2.5rem";
+		}
+	}
+
+	function tryAgain() {
+		getHotCities(api.pageParam.id);
+	}
+
+	function siginhttp(type) {
+		var student = []
+		for (var i = 0; i < hotcities.length; i++) {
+			var json = {}
+			json.studentId = date[i].studentId;
+					/**********0914 修订  添加参数班级id LHB***************/
+			json.classId=hotcities[i].classId;
+			console.log(json.studentId);
+			var pic = $api.domAll('.icon');
+			var txt = $api.domAll('.stau');
+			//0请假1旷课2上课
+			if ($api.hasCls(pic[i], 'iconcs')) {
+				json.status = 2
+			} else if ($api.hasCls(pic[i], 'iconhs')) {
+				json.status = 1
+			} else if ($api.hasCls(pic[i], 'iconls')) {
+				json.status = 0
+			}
+			student.push(json);
+		}
+
+		var userid = api.getPrefs({
+			sync: true,
+			key: 'userid'
+		});
+		var list = {};
+		list.method = "sudentSign";
+		list.request = {
+			"attendanceLatitude": lat, //纬度
+			"attendanceType": 1, //考勤类型:1学生2家长
+			"teacherId": userid, //老师id
+			"attendanceLongitude": lon, //经度
+		}
+		list.request.students = student;
+		list.request.classtimeTableId = api.pageParam.id;
+		list.request.type = type;
+		api.showProgress();
+		console.log("考勤sudentSign签到请求数据" + JSON.stringify(list));
+		ajaxRequest(list, function(ret, err) {
+			api.hideProgress();
+			if (ret) {
+				var istodo = ret.responseBody;
+				console.log("考勤sudentSign签到返回数据" + JSON.stringify(ret));
+				if (ret.responseCode == 0) {
+					api.toast({
+						msg: '操作成功'
+					});
+				} else {
+					alert(ret.responseMsg)
+				}
+				checkTimeTable();
+			} else {
+				alert(err.msg)
+			}
+		})
+
+	}
+	var doOne = 1;
+
+	function compare(id) {
+		var now = new Date();
+		var nowStr = now.format("yyyy-MM-dd hh:mm:ss");
+		//上课时间
+		var starttime = api.pageParam.start;
+		var arr1 = starttime.split(/[- :]/);
+		var start = new Date(arr1[0], arr1[1] - 1, arr1[2], arr1[3], arr1[4], arr1[5]);
+		//下课时间
+		var endtime = api.pageParam.end;
+		var arr2 = endtime.split(/[- :]/);
+		var end = new Date(arr2[0], arr2[1] - 1, arr2[2], arr2[3], arr2[4], arr2[5]);
+		//现在时间
+		var arr3 = nowStr.split(/[- :]/);
+		var now = new Date(arr3[0], arr3[1] - 1, arr3[2], arr3[3], arr3[4], arr3[5]);
+		//测试前五分钟
+		var start_f = new Date((start - (5 * 60 * 1000)));
+		//测试结束后30分钟
+		var end_t = new Date(end - (-(30 * 60 * 1000)));
+		var min = (start_f - start);
+		var max = ((end - (5 * 60 * 1000)) - start);
+		var finish = (end_t - end);
+		if ((min <= (now - start) && (now - start) <= max)) {
+			//		          api.toast({
+			//			            msg:'现在是签到时间'
+			//		          });
+			sigin();
+
+		} else if ((min < (now - end) && (now - end) <= finish)) {
+			//		          api.toast({
+			//			            msg:'现在是签退时间'
+			//		          });
+			sigout();
+		} else {
+			//		          api.toast({
+			//			            msg:'闲置时间'
+			//		          });
+			$api.css($api.dom('.mtab'), 'display:none;');
+		}
+		var list = {};
+		list.method = "getClassTimetableById";
+		list.request = {
+			"classTimetableId": id
+		}
+		console.log("考勤getClassTimetableById请求数据" + JSON.stringify(list));
+		ajaxRequest(list, function(ret, err) {
+			if (ret) {
+				minhotcities = ret.responseBody;
+				console.log("考勤getClassTimetableById返回数据" + JSON.stringify(minhotcities));
+
+				if (minhotcities != null) {
+					//						console.log('签到' + hotcities.signIn + '签退' + hotcities.signIn);
+
+					if ((!(minhotcities.signIn)) && (!(minhotcities.signOut))) {
+						api.toast({
+							msg: '1'
+						});
+						$api.text($api.dom('.mtab'), '签到');
+					} else if (minhotcities.signIn && minhotcities.signOut) {
+						api.toast({
+							msg: '2'
+						});
+						$api.text($api.dom('.mtab'), '已签退');
+					} else if (!(minhotcities.signIn) && (minhotcities.signOut)) {
+						api.toast({
+							msg: '3'
+						});
+						$api.text($api.dom('.mtab'), '签退');
+					} else {
+						return;
+					}
+				}
+			} else {
+				alert(err.msg)
+			}
+		})
+	}
+	//var issigin = false;
+	//var issigout = false;
+	function sigin() {
+		var issigin = $api.getStorage('sigin');
+		if (issigin == '0') {
+			$api.css($api.dom('.mtab'), ' background:#ff8344;display:block');
+			$api.text($api.dom('.mtab'), '签到');
+			$api.one($api.dom('.mtab'), 'click', function() {
+				siginhttp(0);
+			});
+			$api.setStorage('sigin', '1');
+		} else {
+			return;
+		}
+	}
+
+	function sigout() {
+		var issigout = $api.getStorage('sigout');
+		if (issigout == '0') {
+			$api.css($api.dom('.mtab'), ' background:#ff8344;');
+			$api.text($api.dom('.mtab'), '签退');
+			//移除绑定的签到事件绑定签退事件
+			$api.rmEvt($api.dom('.mtab'), 'click', function() {});
+			$api.one($api.dom('.mtab'), 'click', function() {
+
+				siginhttp(1);
+			});
+			$api.setStorage('sigout', '1');
+		} else {
+			return;
+		}
+	}
+	Date.prototype.format = function(format) {
+		var o = {
+			"M+": this.getMonth() + 1, //month
+			"d+": this.getDate(), //day
+			"h+": this.getHours(), //hour
+			"m+": this.getMinutes(), //minute
+			"s+": this.getSeconds(), //second
+			"q+": Math.floor((this.getMonth() + 3) / 3), //quarter
+			"S": this.getMilliseconds() //millisecond
+		}
+		if (/(y+)/.test(format)) {
+			format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+		}
+		for (var k in o) {
+			if (new RegExp("(" + k + ")").test(format)) {
+				format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+			}
+		}
+		return format;
+	}
+
+	function getLocation() {
+		var baiduLocation = api.require('baiduLocation');
+		baiduLocation.startLocation({
+			accuracy: '100m',
+			filter: 1,
+			autoStop: true
+		}, function(ret, err) {
+			if (ret && ret.status) {
+				lon = ret.longitude;
+				lat = ret.latitude;
+				baiduLocation.stopLocation();
+			} else {
+				alert("定位失败,无法完成考勤,请打开定位开关,并赋予中棋机构端以定位权限!")
+			}
+		});
+	}
+	var lon = -1;
+	var lat = -1;
+
+	imready = function() {
+		imageUrl = api.getPrefs({
+			sync: true,
+			key: 'imageUrl'
+		});
+		$api.fixStatusBar($api.dom('header'));
+		getHotCities(api.pageParam.id);
+		$api.css($api.dom('.tab'), 'top:' + $api.offset($api.dom('header')).h + 'px');
+		console.log("老师id" + JSON.stringify(api.pageParam));
+		//var int = self.setInterval("compare(JSON.stringify(api.pageParam.id))", 1000);
+		//var i = self.setInterval("compareClassTime()",1000);
+		mSignTab = $api.dom('.mtab')
+		$api.setStorage('sigin', '0');
+		$api.setStorage('sigout', '0');
+		compareClassTime();
+		mSignTab.innerHTML = ""
+		getLocation();
+	};
+</script>
+
+</html>

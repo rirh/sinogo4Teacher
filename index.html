@@ -1,0 +1,1148 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>底部导航</title>
+	<link rel="stylesheet" type="text/css" href="./css/api.css" />
+	<link rel="stylesheet" type="text/css" href="./css/style.css" />
+	<style>
+		body {
+			height: 100%;
+			background: #F6F6F6;
+			font-size: 20%;
+		}
+
+		#header {
+			height: 3.2rem;
+			width: 100%;
+			background: #1ebeb6;
+		}
+
+		#header .title {
+			height: 0.88rem;
+		}
+
+		#header .title .tag_setting {
+			height: 0.88rem;
+			line-height: 0.88rem;
+			font-size: 0.32rem;
+			padding: 0 0.23rem;
+			text-align: center;
+			color: #FFF;
+			float: left;
+		}
+
+		#header .title .tag_setting.active {
+			background: rgba(0, 0, 0, 0.2)
+		}
+
+		#header .title .tag_message {
+			position: relative;
+			height: 0.88rem;
+			line-height: 0.88rem;
+			font-size: 0.32rem;
+			padding: 0 0.23rem;
+			color: #FFF;
+			float: right;
+		}
+
+		#header .title .tag_message.active {
+			background: rgba(0, 0, 0, 0.2)
+		}
+
+		#header img {
+			height: 1.3rem;
+			width: 1.3rem;
+			display: block;
+			margin: 0 auto;
+			border-radius: 0.8rem;
+		}
+
+		#header .teachername {
+			color: #FFF;
+			font-size: 0.32rem;
+			margin: 0 auto;
+			text-align: center;
+			margin-top: 0.1rem;
+		}
+
+		#header .teachhours {
+			color: #FFF;
+			font-size: 0.3rem;
+			margin: 0 auto;
+			text-align: center;
+		}
+
+		#teach_title {
+			height: 0.85rem;
+			width: 100%;
+			background: #F6F6F6;
+			position: relative;
+		}
+
+		#teach_title:before {
+			border-bottom: 1px solid #dddddd;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			content: "";
+			display: block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+		}
+
+		#teach_title label {
+			font-size: 0.3rem;
+			color: #333333;
+			margin-left: 0.23rem;
+			height: 0.85rem;
+			line-height: 0.85rem;
+		}
+
+		#teach_content {
+			height: 2.12rem;
+			width: 100%;
+			background: #FFFFFF;
+			position: relative;
+		}
+
+		#teach_content:before {
+			border-bottom: 1px solid #dddddd;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			content: "";
+			display: block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+		}
+
+		#teach_content ul {
+			width: 100%;
+			height: 1.52rem;
+		}
+
+		#teach_content ul li {
+			width: 25%;
+			float: left;
+			padding-top: 0.3rem;
+			padding-bottom: 0.3rem;
+		}
+
+		#teach_content ul li.active {
+			background: rgba(0, 0, 0, 0.2)
+		}
+
+		#teach_content ul img {
+			width: 1.1rem;
+			height: 1.1rem;
+			display: block;
+			margin: 0 auto;
+		}
+
+		#teach_content ul div {
+			text-align: center;
+			font-size: 0.28rem;
+			color: #333;
+		}
+
+		#task_title {
+			height: 0.85rem;
+			width: 100%;
+			background: #F6F6F6;
+			position: relative;
+		}
+		/*#task_title:before{
+				border-bottom:1px solid #dddddd;
+				position:absolute;
+				bottom:0;left:0;right:0;
+				content:"";display:block;
+				-webkit-transform: scaleY(0.5);
+				-webkit-transform-origin: 0 0;
+			}*/
+
+		#task_title label {
+			font-size: 0.3rem;
+			color: #333333;
+			margin-left: 0.23rem;
+			height: 0.85rem;
+			line-height: 0.85rem;
+		}
+
+		#task_content {
+			width: 100%;
+			background: #FFF;
+		}
+
+		#task_content table {
+			width: 100%;
+		}
+
+		#task_content table td {
+			height: 1.8rem;
+			position: relative;
+		}
+
+		#task_content table td.active {
+			background: rgba(0, 0, 0, 0.2)
+		}
+
+		#task_content table td>div {
+			height: 1.16rem;
+			width: 3.26rem;
+			background: #eee;
+		}
+
+		#task_content table tr td div:nth-child(1) {
+			margin-left: .24rem;
+		}
+
+		#task_content table tr:nth-child(1) td:nth-child(1) div img {
+			width: .44rem;
+			height: .44rem;
+			margin-top: .36rem;
+			margin-left: .62rem;
+		}
+
+		#task_content table tr:nth-child(1) td:nth-child(2) div img {
+			width: .44rem;
+			height: .44rem;
+			margin-top: .36rem;
+			margin-left: .62rem;
+		}
+
+		#task_content table tr:nth-child(2) td:nth-child(1) div img {
+			width: .44rem;
+			height: .44rem;
+			margin-top: .36rem;
+			margin-left: .62rem;
+		}
+
+		#task_content table tr:nth-child(2) td:nth-child(2) div img {
+			width: .44rem;
+			height: .44rem;
+			margin-top: .36rem;
+			margin-left: .62rem;
+		}
+
+		#task_content table td div div {
+			color: #666;
+			font-size: 0.28rem;
+		}
+
+		#task_content table td span {
+			line-height: 1.16rem;
+			font-size: .26rem;
+			color: #666;
+			margin-right: 0.8rem;
+			float: right;
+		}
+
+		#funs_title {
+			height: 0.85rem;
+			width: 100%;
+			background: #F6F6F6;
+			position: relative;
+		}
+		/*#funs_title:before{
+				border-bottom:1px solid #dddddd;
+				position:absolute;
+				bottom:0;left:0;right:0;
+				content:"";display:block;
+				-webkit-transform: scaleY(0.5);
+				-webkit-transform-origin: 0 0;
+			}*/
+
+		#funs_title label {
+			font-size: 0.3rem;
+			color: #333333;
+			margin-left: 0.23rem;
+			height: 0.85rem;
+			line-height: 0.85rem;
+		}
+
+		#funs_content {
+			width: 100%;
+			background: #FFF;
+		}
+
+		#funs_content table {
+			width: 100%;
+		}
+
+		#funs_content table td {
+			height: 1.8rem;
+			position: relative;
+		}
+
+		#funs_content table td.active {
+			background: rgba(0, 0, 0, 0.2)
+		}
+
+		#funs_content table td>div {
+			text-align: center;
+		}
+
+		#funs_content table td div img {
+			height: 0.55rem;
+		}
+
+		#funs_content table td div div {
+			color: #666;
+			font-size: 0.28rem;
+		}
+
+		#funs_content table td span {
+			position: absolute;
+			background: #F40;
+			width: 0.24rem;
+			height: 0.24rem;
+			line-height: 0.24rem;
+			border-radius: 0.9rem;
+			text-align: center;
+			right: 0.5rem;
+			top: 0.22rem;
+			color: #FFF;
+			font-size: 0.14rem;
+			border: 2px solid #FFF;
+			display: none;
+		}
+
+		#teach_content ul li span {
+			position: absolute;
+			background: #F40;
+			width: 0.24rem;
+			height: 0.24rem;
+			line-height: 0.24rem;
+			border-radius: 0.9rem;
+			text-align: center;
+			right: 0.5rem;
+			top: 0.22rem;
+			color: #FFF;
+			font-size: 0.14rem;
+			border: 2px solid #FFF;
+			display: none;
+		}
+
+		.badge {
+			float: right;
+			position: absolute;
+			margin-top: 0.1rem;
+			right: 0.15rem;
+			top: 0.1rem;
+			font-size: 0.22rem;
+			color: #fff;
+			width: 0.2rem;
+			height: 0.2rem;
+			background-color: #dd524d;
+			border-radius: 0.1rem;
+		}
+
+		.tapmode {
+			background: #efefef;
+		}
+	</style>
+</head>
+
+<body style="">
+	<div id="header">
+		<div class="title">
+			<div tapmode='active' class="tag_setting">设置</div>
+			<div tapmode='active' class="tag_message" onclick="openMessageList()">消息<span class="badge" style="display: none">&nbsp;</span></div>
+		</div>
+		<div style="height:100%">
+			<div style=" height:2.32rem;">
+				<div style="height:2.32rem;width:2.6rem;margin:0 auto;">
+					<img src="./image/eg_header.png" class="teacherimage" alt="" />
+					<div class="teachername">张凯亚</div>
+					<div class="teachhours">累计课时:0</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="teach_title">
+		<label>日常教学</label>
+	</div>
+	<div id="teach_content">
+		<ul>
+			<li tapmode="active"><img src="./image/icon_schedule.png" alt="" />
+				<div>课表</div>
+			</li>
+			<li tapmode="active"><img src="./image/icon_classroom.png" alt="" />
+				<div>班级</div>
+			</li>
+			<li tapmode="active"><img src="./image/icon_attendance.png" alt="" />
+				<div>考勤</div>
+			</li>
+			<li tapmode="active"><img src="./image/icon_updateclass.png" alt="" />
+				<div>调课处理</div>
+				<span class="msg-count">12</span>
+			</li>
+		</ul>
+	</div>
+	<div id="task_title">
+		<label>作业测试</label>
+	</div>
+	<div id="task_content">
+		<table>
+			<tr>
+				<td tapmode="tapmode" width="25%">
+					<div>
+						<img src="./image/homework_img/icon_hantask.png" />
+						<span>布置作业</span>
+					</div>
+				</td>
+				<td tapmode="tapmode" width="25%">
+					<div><img src="./image/homework_img/icon_tasktest.png" />
+						<span>习题测试</span>
+					</div>
+				</td>
+				<tr>
+					<td tapmode="tapmode">
+						<div><img src="./image/homework_img/icon_checktask.png" />
+							<span>检查作业</span>
+						</div>
+					</td>
+					<td tapmode="tapmode">
+						<div><img src="./image/homework_img/icon_learview.png" />
+							<span>学情查看</span>
+						</div>
+					</td>
+				</tr>
+		</table>
+	</div>
+	<div id="funs_title">
+		<label>常用功能</label>
+	</div>
+	<div id="funs_content">
+		<table border="1" bordercolor="#dddddd">
+			<tr>
+				<td tapmode="active" width="25%">
+					<div><img src="./image/icon_hours.png" />
+						<div>课时统计</div>
+					</div>
+				</td>
+				<td tapmode="active" width="25%">
+					<div><img src="./image/icon_business.png" />
+						<div>业务统计</div>
+					</div>
+				</td>
+				<td tapmode="active" width="25%">
+					<div><img src="./image/icon_cs.png" />
+						<div>售后服务</div>
+					</div><span class="custom-count">12</span></td>
+				<td tapmode="active">
+					<div><img src="./image/icon_register.png" />
+						<div>学生注册</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td tapmode="active">
+					<div><img src="./image/icon_shopping.png" />
+						<div>教辅代购</div>
+					</div>
+				</td>
+				<td tapmode="active">
+					<div><img src="./image/icon_course.png" />
+						<div>课程代报</div>
+					</div>
+				</td>
+				<td tapmode="active">
+					<div><img src="./image/icon_order.png" />
+						<div>发货信息</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+
+</html>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="script/common.js"></script>
+<script type="text/javascript" src="script/Vue.js"></script>
+<script type="text/javascript">
+	var imageUrl
+	imready = function() {
+		$api.fixStatusBar($api.byId('header'));
+
+		var serviceUrl = api.getPrefs({
+			sync: true,
+			key: 'serviceUrl'
+		})
+
+		if (serviceUrl) {
+			var lastversion = api.getPrefs({
+				sync: true,
+				key: 'version'
+			})
+			var version = api.version;
+			if (lastversion == version) { //相同版本
+				//不处理
+			} else { //版本不同
+				api.setPrefs({ //设置用户id为空
+					key: 'userid',
+					value: ''
+				});
+				api.setPrefs({ //关闭debug模式
+					key: 'isDebug',
+					value: false
+				});
+
+				api.setPrefs({
+					key: 'imageUrl',
+					value: 'http://api.sinogo.net.cn:8085'
+				});
+				api.setPrefs({
+					key: 'serviceUrl',
+					value: 'http://api.sinogo.net.cn:8086/gateway'
+				});
+				api.setPrefs({
+					key: 'version',
+					value: version
+				});
+			}
+		} else { //没有服务器地址,默认设为生产地址,且至空userid
+			api.setPrefs({
+				key: 'userid',
+				value: ''
+			});
+			api.setPrefs({
+				key: 'isDebug',
+				value: false
+			});
+			api.setPrefs({
+				key: 'imageUrl',
+				value: 'http://api.sinogo.net.cn:8085'
+			});
+			api.setPrefs({
+				key: 'serviceUrl',
+				value: 'http://api.sinogo.net.cn:8086/gateway'
+			});
+		}
+		//未登录则先登录
+		var userid = api.getPrefs({
+			sync: true,
+			key: 'userid'
+		});
+		if (userid) { //已经登录
+			checkLoginState();
+		} else {
+			goLogin();
+		}
+	}
+
+	function goLogin(str) {
+		api.setPrefs({
+			key: 'userid',
+			value: ''
+		});
+		api.setPrefs({
+			key: 'organizationid',
+			value: ''
+		});
+		api.setPrefs({
+			key: 'username',
+			value: ''
+		});
+		api.setPrefs({
+			key: 'userimage',
+			value: ''
+		});
+		api.setPrefs({
+			key: 'useraccount',
+			value: ''
+		});
+		api.setPrefs({
+			key: 'userpass',
+			value: ''
+		});
+		if (str) {
+			api.openWin({
+				name: 'login',
+				url: './html/login.html',
+				pageParam: {
+					errmsg: str
+				}
+			});
+		} else {
+			api.openWin({
+				name: 'login',
+				url: './html/login.html'
+			});
+		}
+	}
+
+	function getIpInfo() {
+		api.ajax({
+			url: 'http://ip.taobao.com/service/getIpInfo.php?ip=myip'
+		}, function(ret, err) {
+			var requestIp = "0.0.0.0"
+			if (ret) {
+				if (ret.code == 0) {
+					requestIp = ret.data.ip
+				}
+			} else {
+				//
+			}
+			api.setPrefs({
+				key: 'requestIp',
+				value: requestIp
+			});
+		});
+	}
+
+	function checkLoginState() {
+		initIndex()
+		api.showProgress("加载中...");
+		var body = { //调用登录接口
+			method: "employeeLogin",
+			request: {
+				loginId: api.getPrefs({
+					sync: true,
+					key: 'useraccount'
+				}),
+				password: api.getPrefs({
+					sync: true,
+					key: 'userpass'
+				}),
+				employeeToken: hex_md5(api.deviceId).substr(8, 16) //MD5
+			}
+		}
+		ajaxRequest(body, function(ret, err) {
+			api.hideProgress();
+			if (ret) {
+				if (ret.responseCode == 0) {
+					api.setPrefs({
+						key: 'userid',
+						value: ret.responseBody.id
+					});
+					api.setPrefs({
+						key: 'organizationid',
+						value: ret.responseBody.employeeOrganization
+					});
+					api.setPrefs({
+						key: 'username',
+						value: ret.responseBody.employeeName
+					});
+					api.setPrefs({
+						key: 'useraccount',
+						value: ret.responseBody.employeeAccount
+					});
+					api.setPrefs({
+						key: 'userimage',
+						value: ret.responseBody.employeeImage
+					});
+					initView()
+				} else {
+					goLogin("登录状态超时,请重新登录!");
+				}
+			} else {
+				goLogin("登录状态超时,请重新登录!");
+			}
+		})
+	}
+
+	function requestTeachingTime() {
+		var body = {
+			"method": "teacherTeachingTimeTotal",
+			"request": {
+				"teacherId": api.getPrefs({
+					sync: true,
+					key: "userid"
+				})
+			}
+		}
+		ajaxRequest(body, function(ret, err) {
+			if (ret) {
+				if (ret.responseCode == 0) {
+					$api.dom(".teachhours").innerHTML = "累计课时:" + ret.responseBody
+				} else {
+
+				}
+			} else {
+
+			}
+		})
+	}
+
+	function initIndex() {
+		var userimage = api.getPrefs({
+			sync: true,
+			key: 'userimage'
+		})
+		var username = api.getPrefs({
+			sync: true,
+			key: 'username'
+		})
+		if (userimage) {
+			userimage = imageUrl + userimage
+			$api.attr($api.dom(".teacherimage"), "src", userimage);
+			$api.dom(".teacherimage").onerror = function() {
+				$api.attr($api.dom(".teacherimage"), "src", './image/eg_header.png');
+			}
+		} else {
+			$api.attr($api.dom(".teacherimage"), 'src', './image/eg_header.png')
+		}
+		$api.dom(".teachername").innerHTML = username;
+		$api.dom("body").style.display = "block"
+	}
+
+	function initView() {
+		requestTeachingTime();
+		requestMessageList();
+		getIpInfo(); //获取本机ip地址
+		console.log("initView...")
+		requestEmployeeTag();
+		/**********3.10新增,调课消息数量******************/
+		requestClassMessage();
+		requestCustomNum();
+		api.addEventListener({
+			name: 'classMessageListener'
+		}, function(ret, err) {
+			var msgCount = ret.value.count;
+			if (msgCount > 0) {
+				$api.dom("ul li .msg-count").style.display = "block"
+				$api.dom("ul li .msg-count").innerHTML = msgCount
+
+			} else {
+				$api.dom("ul li .msg-count").style.display = "none"
+				$api.dom("ul li .msg-count").innerHTML = 0
+			}
+		});
+		/**********3.10新增,每次开启页面查询消息列表数量,已显示消息******************/
+		api.addEventListener({
+			name: 'viewappear'
+		}, function(ret, err) {
+			requestTeachingTime();
+			requestMessageList();
+			requestCustomNum();
+		});
+		//		initTJ();
+		imageUrl = api.getPrefs({
+			sync: true,
+			key: 'imageUrl'
+		});
+		api.addEventListener({
+			name: 'userheaderchanged'
+		}, function(ret, err) {
+			var userimage = api.getPrefs({
+				sync: true,
+				key: 'userimage'
+			})
+			userimage = imageUrl + userimage
+			$api.attr($api.dom(".teacherimage"), "src", userimage);
+			$api.dom(".teacherimage").onerror = function() {
+				$api.attr($api.dom(".teacherimage"), "src", './image/eg_header.png');
+			}
+		});
+
+		initIndex();
+		var tds = $api.domAll("#funs_content table td");
+		var funs = ["teachingStatistics", "businessStatistics", "customerTitle", "register", "goodsList", "coursesList", "backOrders"]; //
+		for (var i = 0; i < tds.length; i++) {
+			tds[i].index = i;
+			tds[i].onclick = function() {
+				if (this.index == 2) {
+					api.openWin({
+						name: funs[0],
+						url: "./html/customer/" + funs[this.index] + ".html",
+					});
+				} else {
+					api.openWin({
+						name: funs[this.index],
+						url: "./html/functions/" + funs[this.index] + ".html",
+					});
+				}
+			}
+		}
+		//作业测试
+		/**
+		 chooseClass_win布置作业
+     chooseClassTest_win习题测试
+		 jobList_win检查作业
+		 learSituaView_win学情查看
+		*/
+		var tasks = $api.domAll("#task_content table td");
+		var taskName = ["chooseClass_win", "chooseClassTest_win", "jobList_win", "learSituaView_win"];
+		for (var i = 0; i < tasks.length; i++) {
+			tasks[i].index = i;
+			tasks[i].onclick = function() {
+				if(this.index == 1){
+           api.toast({
+               msg: '敬请期待',
+               duration: 2000,
+               location: 'bottom'
+           });
+				}else{
+					api.openWin({
+						name: funs[this.index],
+						url: "./html/homework/" + taskName[this.index] + ".html"
+					});
+				}
+
+			}
+		}
+
+		var lis = $api.domAll("#teach_content li");
+		var teaches = ["schedule", "classtittle", "attendancetitle", "removesetting", ]
+
+		for (var i = 0; i < lis.length; i++) {
+			lis[i].index = i;
+			lis[i].onclick = function() {
+				if (this.index == 3) {
+					api.openWin({
+						name: teaches[this.index],
+						url: "./functions/" + teaches[this.index] + ".html"
+					});
+				} else {
+					api.openWin({
+						name: teaches[this.index],
+						url: "./html/teaching/" + teaches[this.index] + ".html"
+					});
+				}
+
+			}
+		}
+
+		var db = api.require('db');
+		db.openDatabaseSync({
+			name: 'sinogoTeacher'
+		});
+		//创建教师代购的教辅用品表
+		var createResult_goods = db.executeSqlSync({
+			name: 'sinogoTeacher',
+			sql: "CREATE TABLE IF NOT EXISTS teacher_cart_goods(_id INTEGER PRIMARY KEY AUTOINCREMENT,goodsOrganization INTEGER,goodsNo varchar(255),goodsPreview varchar(255), goodsName varchar(255), goodsType INTEGER,goodsPrice varchar(255),goodsNum varchar(255),storageNum INTEGER,freightAmount INTEGER,couponsAmount INTEGER,cashBack INTEGER,sinogoCoin INTEGER,orderRemark varchar(255),distributionMode INTEGER,spec1 varchar(255),spec2 varchar(255),courseCode varchar(255),ts varchar(255))"
+		});
+		var createResult_courses = db.executeSqlSync({
+			name: 'sinogoTeacher',
+			sql: "CREATE TABLE IF NOT EXISTS teacher_cart_courses(_id INTEGER PRIMARY KEY AUTOINCREMENT,goodsOrganization INTEGER,goodsNo varchar(255),goodsPreview varchar(255), goodsName varchar(255), goodsType INTEGER,goodsPrice varchar(255),goodsNum INTEGER,storageNum INTEGER,freightAmount INTEGER,couponsAmount INTEGER,cashBack INTEGER,sinogoCoin INTEGER,orderRemark varchar(255),distributionMode INTEGER,address varchar(255),orgname varchar(255),supporting_books_id varchar(255),ts varchar(255))"
+		});
+		//v0.0.3新增字段:
+
+		//  增加一列 - ALTER TABLE 表名 ADD COLUMN 列名 数据类型
+
+		var update_goods = db.executeSqlSync({
+			name: 'sinogoTeacher',
+			sql: 'ALTER TABLE teacher_cart_goods ADD COLUMN storageNum INTEGER'
+		});
+		var update_courses = db.executeSqlSync({
+			name: 'sinogoTeacher',
+			sql: 'ALTER TABLE teacher_cart_courses ADD COLUMN storageNum INTEGER'
+		});
+		//删除
+		db.executeSqlSync({
+			name: 'sinogoTeacher',
+			sql: 'delete from teacher_cart_goods'
+		});
+		db.executeSqlSync({
+			name: 'sinogoTeacher',
+			sql: 'delete from teacher_cart_courses'
+		});
+	}
+
+	/*请求消息列表*/
+	function requestMessageList() {
+		var body = {};
+		var userId = api.getPrefs({
+			sync: true,
+			key: 'userid'
+		})
+		body.method = "readShowVerify";
+		body.request = {
+			"scopeType": 2, //1用户,2员工,应该用2.
+			"messageReceiverId": userId,
+			"status": 0
+		}
+		ajaxRequest(body, function(ret, err) {
+			console.log(JSON.stringify(ret))
+			if (ret) {
+				if (ret.responseCode == 0) {
+					if (ret.responseBody) { //有未读消息
+						$api.dom(".badge").style.display = "block"
+					} else { //无未读消息
+						$api.dom(".badge").style.display = "none"
+					}
+				} else {
+					$api.dom(".badge").style.display = "block"
+				}
+			} else {
+				$api.dom(".badge").style.display = "block"
+			}
+		})
+	}
+
+	function requestCustomNum() {
+		var data = {};
+		data.method = "orderSupportSearch";
+		data.request = {
+			"teacherId": api.getPrefs({
+				sync: true,
+				key: 'userid'
+			}),
+			//              "teacherId": "53",
+			"page": 1,
+			"pageSize": 1000
+		};
+		console.log(JSON.stringify(data))
+		ajaxRequest(data, function(ret, err) {
+			if (ret) {
+				console.log(JSON.stringify(ret))
+				if (ret.responseCode == 0) {
+					var j = ret.responseBody;
+					if (j) {
+						//var total = j.total;
+						var count = 0;
+						for (var i = 0; i < j.rows.length; i++) {
+							if (j.rows[i].supportStatus == 1) {
+								count++;
+							}
+						}
+						if (count > 0) {
+							$api.dom("table .custom-count").style.display = "block"
+							$api.dom("table .custom-count").innerHTML = count
+						} else {
+							$api.dom("table .custom-count").style.display = "none"
+							$api.dom("table .custom-count").innerHTML = 0
+						}
+					} else {
+						//
+					}
+				} else {
+					//alert(ret.responseMsg)
+				}
+			} else {
+				//alert(err.msg)
+			}
+		});
+	}
+
+	function requestClassMessage() {
+		var body = {};
+		body.method = "teachersTaskNum";
+		body.request = {
+			"teacherId": api.getPrefs({
+				sync: true,
+				key: 'userid'
+			})
+		};
+		ajaxRequest(body, function(ret, err) {
+			if (ret) {
+				console.log(JSON.stringify(ret))
+				if (ret.responseCode == 0) {
+					var j = ret.responseBody;
+					if (j) {
+						var msgCount = j.changeClass + j.noLeave + j.haveLeave;
+						if (msgCount > 0) {
+							$api.dom("ul li .msg-count").style.display = "block"
+							$api.dom("ul li .msg-count").innerHTML = msgCount
+						} else {
+							$api.dom("ul li .msg-count").style.display = "none"
+							$api.dom("ul li .msg-count").innerHTML = 0
+						}
+					} else {
+						//
+					}
+				} else {
+					//alert(ret.responseMsg)
+				}
+			} else {
+				//alert(err.msg)
+			}
+		})
+	}
+
+	function requestEmployeeTag() {
+		var body = {
+			"method": "getUserTagsById",
+			"request": {
+				"userType": 2, //1用户   2员工
+				"userId": api.getPrefs({
+					sync: true,
+					key: 'userid'
+				})
+			}
+		}
+		ajaxRequest(body, function(ret, err) {
+			window.tags = [];
+			if (ret) {
+				if (ret.responseCode == 0) {
+					//
+					for (var i = 0; i < ret.responseBody.classIds.length; i++) {
+						window.tags.push("class" + ret.responseBody.classIds[i])
+					}
+					for (var i = 0; i < ret.responseBody.organizationIds.length; i++) {
+						window.tags.push("organization" + ret.responseBody.organizationIds[i])
+					}
+					for (var i = 0; i < ret.responseBody.schoolIds.length; i++) {
+						window.tags.push("school" + ret.responseBody.schoolIds[i])
+					}
+				}
+			} else {
+				//
+			}
+			registJPush();
+		})
+
+	}
+
+	function initTJ() {
+		var baiduMTJ = api.require('baiduMTJ');
+		if (!baiduMTJ) {
+			return;
+		}
+		baiduMTJ.init({}, function(ret, err) {
+			if (ret) {
+				alert(JSON.stringify(ret));
+			} else {
+				alert(JSON.stringify(err));
+			}
+		});
+	}
+
+	function registJPush() {
+		if (api.appName == 'AppLoader') {
+			return;
+		}
+		var ajpush = api.require('ajpush');
+		if (!ajpush) {
+			return;
+		}
+		ajpush.init(function(ret) {
+			if (ret && ret.status) {
+				//success
+			}
+		});
+		var userid = api.getPrefs({
+			sync: true,
+			key: 'userid'
+		});
+		var alias = hex_md5(api.deviceId).substr(8, 16);
+		var param = {
+			alias: alias,
+			tags: window.tags
+		};
+		//		toastAtMiddle(JSON.stringify(param))
+		ajpush.bindAliasAndTags(param, function(ret) {
+			var statusCode = ret.statusCode;
+			//	        alert(statusCode)
+			//			toastAtMiddle(statusCode)
+		});
+		//		ajpush.setBadge({
+		//		    badge:0
+		//		});
+		ajpush.setListener(
+			function(ret) {
+				var count = api.getPrefs({
+					sync: true,
+					key: 'iosmessagecount'
+				});
+				if (!count) {
+					count = 1;
+				} else {
+					count++;
+				}
+				api.setPrefs({
+					key: 'iosmessagecount',
+					value: count
+				});
+				ajpush.setBadge({
+					badge: count
+				});
+				api.notification({
+					notify: {
+						title: ret.title,
+						content: ret.content,
+						extra: ret.extra
+					}
+				}, function(ret, err) {
+					//toastAtMiddle(ret.id)
+					if (api.systemType == 'ios') {
+						$api.dom(".badge").style.display = "block"
+					}
+				});
+			}
+		);
+		if (api.systemType == 'ios') {
+			api.addEventListener({
+				name: 'noticeclicked'
+			}, function(ret, err) {
+				if (ret && ret.value) {
+					var aa = ret.value;
+					var content = aa.content;
+					var extra = aa.extra;
+					//alert("content--"+content+"--extra--"+extra)
+					openMessageList();
+				}
+			})
+		} else {
+			api.addEventListener({
+				name: 'appintent'
+			}, function(ret, err) {
+				if (ret && ret.appParam.ajpush) {
+					var ajpush = ret.appParam.ajpush;
+					var id = ajpush.id;
+					var title = ajpush.title;
+					var content = ajpush.content;
+					var extra = ajpush.extra;
+					//alert("index--"+id+"--"+title+"--"+content+"--"+extra+"--")
+					openMessageList();
+				}
+			})
+		}
+	}
+
+	function openMessageList() {
+		$api.dom(".badge").style.display = "none"
+		if (api.systemType == 'ios') {
+			var ajpush = api.require('ajpush');
+			ajpush.setBadge({
+				badge: 0
+			});
+		}
+		var body = {
+			method: "updateMessageStatus",
+			request: {
+				scopeType: 2,
+				messageReceiverId: api.getPrefs({
+					sync: true,
+					key: "userid"
+				}),
+				status: 1
+			}
+		}
+		console.log(JSON.stringify(body))
+		api.showProgress();
+		ajaxRequest(body, function(ret, err) {
+			console.log(JSON.stringify(ret))
+			api.hideProgress();
+			if (ret) {
+
+			} else {
+
+			}
+			var frameInfo = {
+				name: "messagelist",
+				url: "messagelist.html"
+			}
+			openWinWithTitle("title_message", "消息", frameInfo, "html/home/");
+		})
+
+	}
+
+
+
+	$api.dom('.tag_setting').onclick = function() {
+		api.openWin({
+			name: 'setting',
+			url: './html/setting/setting.html'
+		});
+
+	}
+</script>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<style>
+			.h-right {
+				text-align: right;
+				margin-right: 0.23rem;
+				-webkit-flex: 0.3; /* Chrome */
+				-ms-flex: 0.3; /* IE 10 */
+				flex: 0.3; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 0.3; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 0.3;
+			}
+			.h-left {
+				margin-left: 0.23rem;
+				text-align: left;
+				-webkit-flex: 0.3; /* Chrome */
+				-ms-flex: 0.3; /* IE 10 */
+				flex: 0.3; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 0.3; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 0.3;
+			}
+			.h-left img {
+				margin-top: 0.215rem;
+				width: 0.25rem;
+				height: 0.45rem;
+				background: url(../../image/setting/icon-back.png);
+				background-size: cover;
+				margin-left: 0;
+			}
+			/****************************************************************************************************************/
+			.flex-wrap {
+				position: relative;
+			}
+			#main .customerBox {
+				width: 100%;
+				background: #fff;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+				border-bottom: solid #d9d9d9 1px;
+			}
+			#main .customerBox .serviceNumber {
+				height: 0.85rem;
+				line-height: 0.85rem;
+				border-bottom: solid #d9d9d9 1px;
+				display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+				display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+				display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+				display: -moz-box; /* 老版本语法: Firefox (buggy) */
+				display: -ms-flexbox; /* 混合版本语法: IE 10 */
+			}
+			#main .customerBox .serviceNumber .serviceNumberConten {
+				-webkit-flex: 2; /* Chrome */
+				-ms-flex: 2; /* IE 10 */
+				flex: 2; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 2; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 2; /* OLD - Firefox 19- */
+				margin-left: 0.23rem;
+				font-size: 0.3rem;
+				color: #333;
+			}
+			#main .customerBox .serviceNumber .serviceNumberState {
+				-webkit-flex: 1; /* Chrome */
+				-ms-flex: 1; /* IE 10 */
+				flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 1; /* OLD - Firefox 19- */
+				margin-left: 0.23rem;
+				font-size: 0.28rem;
+				text-align: right;
+				margin-right: 0.23rem;
+			}
+			.PendingTreatment {
+				color: #FF8344;
+			}
+			.AlreadyCompleted {
+				color: #1EBEB6
+			}
+			#main .customerBox .serviceNumber .serviceNumberConten span {
+				font-size: 0.28rem;
+				color: #666;
+			}
+			#main .customerBox  .aftermarketTypebox {
+			    margin-top:0.23rem;
+				height: 0.66rem;
+				line-height: 0.66rem;
+				font-size: 0.26rem;
+				color: #666;
+				display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+				display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+				display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+				display: -moz-box; /* 老版本语法: Firefox (buggy) */
+				display: -ms-flexbox; /* 混合版本语法: IE 10 */
+			}
+			#main .customerBox  .aftermarketTypebox .studentName {
+				margin-left: 0.23rem;
+				font-size: 0.3rem;
+				font-size: 0.28rem;
+
+			}
+			#main .customerBox  .aftermarketTypebox .timeBox {
+				margin-left: 0.23rem;
+				font-size: 0.3rem;
+			}
+			#main .customerBox .aftermarketTypebox .studentName span {
+				width: 0.8rem;
+				font-size: 0.26rem;
+			}
+			#main .customerBox  .aftermarketTypebox .aftermarketType {
+				margin-left: 1rem;
+				font-size: 0.28rem;
+			}
+			#main .customerBox  .aftermarketTypebox .aftermarketType span {
+				font-size: 0.26rem;
+			}
+			#main .customerBox  .orderContentBox {
+				height: 2.3rem;
+				display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+				display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+				display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+				display: -moz-box; /* 老版本语法: Firefox (buggy) */
+				display: -ms-flexbox; /* 混合版本语法: IE 10 */
+				border-bottom: solid 1px #d9d9d9;
+			}
+			#main .customerBox  .orderContentBox .orderContentImg {
+				height: 1.60rem;
+				width: 2.60rem;
+				margin-left: 0.23rem;
+				margin-top: 0.28rem;
+			}
+			#main .customerBox  .orderContentTextbox {
+				margin-left: 0.32rem;
+				width: 4.14rem;
+				margin-top: 0.3rem;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				-o-text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			#main .customerBox  .orderContentTextbox p {
+				margin-top: 0.2rem;
+				font-size: 0.26rem;
+				color: #666;
+				white-space:normal;
+				max-height: 0.4rem
+			}
+			#main .aftermarketTypebox .price {
+				margin-left: 1rem;
+			}
+			#main .customerBox .tips {
+				height: 0.88rem;
+				color: #FF8344;
+				line-height: 0.88rem;
+				font-size: 0.22rem;
+			}
+			#main .customerBox  .tips img {
+				margin-left: 0.23rem;
+				width: 0.29rem;
+				height: 0.29rem;
+				margin-right: 0.12rem;
+				display: block;
+				float: left;
+				margin-top: 0.295rem;
+			}
+			#main .customerBox  .tips a {
+				display: block;
+				float: left;
+				line-height: 0.88rem;
+				height: 0.88rem;
+			}
+			#main   .buttonBox {
+			    display:none;
+				height: 0.98rem;
+				color: #FF8344;
+				line-height: 0.98rem;
+				font-size: 0.32rem;
+				position: fixed;
+				bottom: 0rem;
+				width: 100%;
+			}
+			#main   .buttonBox button {
+				outline: none;
+			}
+			#main  .buttonBox  .endtab {
+				width: 50%;
+				float: left;
+				text-align: center;
+			}
+			#main  .buttonBox .endtab img {
+				margin-right: 0.31rem;
+				width: 0.43rem;
+				height: 0.43rem;
+				vertical-align: middle;
+			}
+			#main  .buttonBox  .endtab a {
+				line-height: 0.98rem;
+				height: 0.98rem;
+				display: inline-block;
+			}
+			#main .agree {
+				background: #1EBEB6;
+			}
+			#main .refuse {
+				background: #fff;
+			}
+			#main .remark{
+			  	-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+				width: 100%;
+				background: #fff;
+				border-top:solid #eee 1px;
+			    max-height: 2.4rem;
+
+			}
+			#main .remark .remarkTitle{
+			font-size: 0.26rem;
+			color: #666;
+			line-height: 0.6rem;
+			margin-left: 0.23rem;
+			}
+			#main .remark p{
+			font-size: 0.26rem;
+			color: #999;
+			text-indent: 2em;
+			padding: 0 0.23rem 0.23rem 0.23rem;
+
+			}
+
+
+			.tapmode {
+				background: #d9d9d9
+			}
+
+
+		</style>
+	</head>
+	<body>
+		<div class="flex-wrap flex-vertical">
+			<header>
+				<div class="h-left" onclick="api.closeWin();"><img src="../../image/setting/icon-back.png" />
+				</div>
+				<div class="h-conter">
+					审批详情
+				</div>
+				<div class="h-right"></div>
+			</header>
+			<div class="flex-con" id="main">
+				<div class="customerBox" >
+					<div class="serviceNumber">
+						<div class="serviceNumberConten">
+							服务单号：<span></span>
+						</div>
+					</div>
+					<div class="aftermarketTypebox">
+						<div class="studentName aftermarketTypeDemo">
+							售后类型：<span></span>
+						</div>
+						<div class="aftermarketType aftermarketTypeStauts">
+							售后状态：<span></span>
+						</div>
+					</div>
+					<div class="line" style="height: 1px;background: #eee;margin-left: 0.23rem;"></div>
+					<div class="aftermarketTypebox">
+						<div class="studentName userName">
+							学生姓名：<span></span>
+						</div>
+						<div class="aftermarketType userPhone">
+							家长电话：<span></span>
+						</div>
+					</div>
+					<div class="line" style="height: 1px;background: #eee;margin-left: 0.23rem;"></div>
+					<div class="aftermarketTypebox refundinfo">
+						<div class="studentName  Surplus">
+							剩余课时：<span style="color: #FF8344"></span>
+						</div>
+						<div class="aftermarketType refundMoney">
+							退款金额：<span style="color: #FF8344"></span>
+						</div>
+					</div>
+					<div class="line" style="height: 1px;background: #eee;margin-left: 0.23rem;"></div>
+					<div class="aftermarketTypebox">
+						<div class="timeBox createTime">
+							下单时间：<span></span>
+						</div>
+					</div>
+					<div class="line" style="height: 1px;background: #eee;margin-left: 0.23rem;"></div>
+					<div class="orderContentBox">
+						<img class="orderContentImg" src='{{=it[i].img}}'?'{{=it[i].img}}':../../image/eg_books.png/>
+						<div class="orderContentTextbox goodsName">
+							<p>
+
+							</p>
+							<div class="aftermarketTypebox">
+								<div class="orederNumber goodsNum">
+									数量：x<span></span>
+								</div>
+								<div class="price goodsPrice">
+									价格：<span style="color: #F48344"><span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="remark">
+					<div class="remarkTitle">
+					  问题描述
+					</div>
+					<p></p>
+
+				</div>
+					<div class="tips">
+						<img src="../../image/customer_img/tips.png"><a>请在确认收到货后，再进行处理该条信息</a>
+					</div>
+				</div>
+
+				<div class="buttonBox">
+					<button type="button" class="endtab refuse" onclick=" dependOn(3)" tapmode="tapmode">
+						<img src="../../image/customer_img/refuse.png"><a style="color: #FF8344;">拒绝</a>
+					</button>
+					<button type="button" class="endtab agree" onclick="dependOn(2)" tapmode="tapmode">
+		            <img src="../../image/customer_img/agree.png"><a style="color: #FFFFFF;">同意</a>
+					</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/doT.js"></script>
+	<script type="text/javascript" src="../../script/vue.js"></script>
+	<script type="text/javascript">
+	//提交状态开关
+	var dependSwitch=false;
+	//售后类型
+	var supportType
+	//售后状态
+	var supportStatus;
+		imready = function() {
+			$api.fixStatusBar($api.dom('header'));
+			init();
+		};
+		function init() {
+			console.log("审批详情pageParam数据" + JSON.stringify(api.pageParam.orderDetails));
+			//订单编号
+			$api.text($api.dom("#main .customerBox .serviceNumber .serviceNumberConten span"), api.pageParam.orderDetails.id);
+			//售后类型
+			switch(api.pageParam.orderDetails.supportType){
+			    case 1:
+			       supportType="退货"
+			    break;
+			     case 2:
+			      supportType="换货"
+			    break;
+			     case 3:
+			      supportType="退费"
+			    break;
+
+			}
+			$api.text($api.dom(".aftermarketTypeDemo span"), supportType);
+			//售后状态
+			switch(api.pageParam.orderDetails.supportStatus) {
+				case 1:
+					//（1，已提交  2，教师审核通过  3，教师拒绝 4，已完成 5，管理员已拒绝）
+					supportStatus = "已提交";
+					dependSwitch=true;
+					break;
+				case 2:
+					supportStatus = "教师审核通过";
+					$api.css($api.dom("#main .customerBox .tips "), "display:none");
+					break;
+				case 3:
+					supportStatus = "教师拒绝";
+					$api.css($api.dom("#main .customerBox .tips "), "display:none");
+					break;
+				case 4:
+					supportStatus = "已完成";
+					$api.css($api.dom("#main .customerBox .tips "), "display:none");
+					break;
+				case 5:
+					supportStatus = "管理员已拒绝";
+					$api.css($api.dom("#main .customerBox .tips "), "display:none");
+					break;
+				default:
+					supportStatus = "";
+					$api.css($api.dom("#main .customerBox .tips "), "display:none");
+					break;
+			}
+
+			if(dependSwitch){
+			  $api.css($api.dom(".buttonBox"),"display:block");
+			}
+			$api.text($api.dom(".aftermarketTypeStauts span"), supportStatus);
+			//学生姓名
+			$api.text($api.dom(".userName span"), api.pageParam.orderDetails.studentName);
+			//家长电话
+			$api.text($api.dom(".userPhone span"), api.pageParam.orderDetails.userPhone);
+			switch(api.pageParam.orderDetails.supportType) {//1退货，2换货，3退课
+
+				case 1:
+					$api.css($api.dom(".Surplus"), "display:none");
+					$api.css($api.dom(".refundMoney"), "margin-left: 0.23rem;");
+					break;
+				case 2:
+					$api.css($api.dom(".refundinfo"), "display:none");
+					break;
+				case 3:
+					$api.css($api.dom("#main .customerBox .tips "), "display:none");
+					break;
+				default:
+					$api.css($api.dom(".Surplus"), "display:none");
+					$api.css($api.dom(".refundMoney"), "margin-left: 0.23rem;");
+					break;
+			}
+		    console.log(api.pageParam.orderDetails.residue)
+			//剩余课时
+			$api.text($api.dom(".Surplus span"), api.pageParam.orderDetails.residue);
+			//退款金额
+			$api.text($api.dom(".refundMoney span"), api.pageParam.orderDetails.refundMoney);
+			//下单时间
+			$api.text($api.dom(".createTime span"), api.pageParam.orderDetails.createTime);
+			//课程图片
+			$api.dom(".orderContentBox img").src = api.pageParam.orderImg;
+			//课程名称
+			$api.text($api.dom(".goodsName p"), api.pageParam.orderDetails.goodsName);
+			//课程数量
+			$api.text($api.dom(".goodsNum span"), api.pageParam.orderDetails.goodsNum);
+			//goodsPrice
+			$api.text($api.dom(".goodsPrice span"), api.pageParam.orderDetails.goodsPrice);
+		    //问题描述备注
+		    api.pageParam.orderDetails.remark.length>0?$api.text($api.dom("#main .remark p"), api.pageParam.orderDetails.remark):$api.css($api.dom("#main .remark"),"display:none");
+		}
+		function dependOn(depend) {
+			var data = {};
+			data.method = "handleOrderSupport";
+			data.request = {
+				"status" : depend, //2：同意  3：拒绝
+				"teacherId" : api.getPrefs({
+					sync : true,
+					key : 'userid'
+				}),
+				"supportId" : api.pageParam.orderDetails.id
+			}, api.showProgress();
+			console.log('审批详情handleOrderSupport:请求数据' + '--' + JSON.stringify(data))
+			ajaxRequest(data, function(ret, err) {
+				api.hideProgress();
+				if (ret) {
+					console.log('审批详情handleOrderSupport:成功返回数据' + '--' + JSON.stringify(ret))
+					alert("操作成功！")
+					api.closeWin({
+					});
+					api.sendEvent({
+						name : 'updateInfo'
+					});
+				} else {
+					console.log('审批详情handleOrderSupport:失败返回数据' + '--' + JSON.stringify(err))
+					alert(err.msg);
+				}
+			})
+		}
+	</script>
+</html>

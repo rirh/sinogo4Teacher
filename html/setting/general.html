@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+	<style>
+		.h-right {
+			text-align: right;
+			margin-right: 0.23rem;
+			-webkit-flex: 0.3;
+			/* Chrome */
+			-ms-flex: 0.3;
+			/* IE 10 */
+			flex: 0.3;
+			/* NEW, Spec - Opera 12.1, Firefox 20+ */
+			-webkit-box-flex: 0.3;
+			/* OLD - iOS 6-, Safari 3.1-6 */
+			-moz-box-flex: 0.3;
+		}
+
+		.h-left {
+			margin-left: 0.23rem;
+			text-align: left;
+			-webkit-flex: 0.3;
+			/* Chrome */
+			-ms-flex: 0.3;
+			/* IE 10 */
+			flex: 0.3;
+			/* NEW, Spec - Opera 12.1, Firefox 20+ */
+			-webkit-box-flex: 0.3;
+			/* OLD - iOS 6-, Safari 3.1-6 */
+			-moz-box-flex: 0.3;
+		}
+
+		.h-left img {
+			margin-top: 0.215rem;
+			width: 0.25rem;
+			height: 0.45rem;
+			background: url(../../image/setting/icon-back.png);
+			background-size: cover;
+			margin-left: 0;
+		}
+		/****************************************************************************************************************/
+
+		.setbox {
+			background: #ffffff;
+			height: 0.88rem;
+			line-height: 0.88rem;
+			width: 100%;
+			display: -webkit-flex;
+			/* 新版本语法: Chrome 21+ */
+			display: flex;
+			/* 新版本语法: Opera 12.1, Firefox 22+ */
+			display: -webkit-box;
+			/* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+			display: -moz-box;
+			/* 老版本语法: Firefox (buggy) */
+			display: -ms-flexbox;
+			/* 混合版本语法: IE 10 */
+		}
+
+		.setleft {
+			display: block;
+			margin-left: 0.23rem;
+			line-height: 0.88rem;
+			text-align: left;
+			color: #333333;
+			font-size: 0.28rem;
+		}
+
+		.setcon {
+			text-align: right;
+			margin-left: 0.2rem;
+			color: #999999;
+			font-size: 0.26rem;
+			-webkit-flex: 1;
+			/* Chrome */
+			-ms-flex: 1;
+			/* IE 10 */
+			flex: 1;
+			/* NEW, Spec - Opera 12.1, Firefox 20+ */
+			-webkit-box-flex: 1;
+			/* OLD - iOS 6-, Safari 3.1-6 */
+			-moz-box-flex: 1;
+			margin-right: 0.23rem;
+		}
+
+		.setright {
+			width: 0.16rem;
+			height: 0.28rem;
+			margin-right: 0.23rem;
+			background: url(../../image/setting/icon-todo.png);
+			background-size: cover;
+			margin-top: 0.3rem;
+		}
+
+		.sp {
+			height: 0;
+			width: 0;
+		}
+
+		.dp {
+			margin-top: 0.77rem;
+		}
+
+		.line {
+			margin-left: 0.23rem;
+			position: relative;
+		}
+
+		.line:after {
+			border-bottom: 1px solid #d9d9d9;
+			content: "";
+			display: block;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform: scaleY(0.5);
+		}
+
+		.start {
+			position: relative;
+		}
+
+		.start:after {
+			border-bottom: 1px solid #cccccc;
+			content: "";
+			display: block;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform: scaleY(0.5);
+		}
+
+		.hicp {
+			float: right;
+			height: 0.90rem;
+			width: 0.9rem;
+			border-radius: 50%;
+			background-color: #333333;
+			margin-top: 0.46rem;
+		}
+
+		.school {
+			color: #666666;
+			font-size: 0.26rem;
+			margin-left: 0.23rem;
+		}
+
+		.touch {
+			background: #EEEEEE;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="flex-wrap flex-vertical">
+		<header>
+			<div class="h-left" onclick="closeGeneral();"><img src="../../image/setting/icon-back.png" /></div>
+			<div class="h-conter">通用</div>
+			<div class="h-right"></div>
+		</header>
+		<div class="flex-con">
+
+		</div>
+	</div>
+</body>
+<script type="template" id="dotTmpl">
+
+	<div class="setbox" tapmode='touch' onclick="set(0)">
+		<div class="setleft general">调试模式</div>
+		<div class="setcon">{{=it[0].update}}</div>
+		<input type="checkbox" style="margin:0.22rem 0.23rem" class="aui-switch aui-switch-primary aui-pull-right" checked>
+	</div>
+	<div class="line"></div>
+	<div class="setbox" tapmode='touch' onclick="set(1)">
+		<div class="setleft general">清理缓存</div>
+		<div class="setcon">{{=it[0].update}}</div>
+		<div class="setright "></div>
+	</div>
+	<div class="line"></div>
+	<div class="setbox" tapmode='touch' onclick="set(2)">
+		<div class="setleft about">修改密码</div>
+		<div class="setcon">{{=it[0].admintel}}</div>
+		<div class="setright "></div>
+	</div>
+	<div class="line"></div>
+
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript">
+	var switchbox;
+	var isDebug_last;
+	var isDebug;
+	var i
+
+	function set(tag) {
+		switch (tag) {
+			case 0: //调试模式
+				switchbox.checked = !switchbox.checked
+				switchServiceUrl(switchbox.checked);
+				break;
+			case 1:
+				//  i=setInterval("api.showProgress();",0)
+				//  setTimeout("api.hideProgress();window.clearInterval(i);api.toast({ msg:'清除完成'});",Math.round(Math.random()*3000));
+				api.clearCache(function() {
+					api.toast({
+						msg: '清除完成'
+					});
+				});
+				break;
+			case 2:
+				api.openWin({
+					name: 'returnpassword',
+					url: 'returnpassword.html'
+				});
+				break;
+
+		}
+
+
+
+	}
+
+	function switchServiceUrl(checked) {
+		api.toast({
+			msg: checked ? '已切换至调试服务器' : '已切换至生产服务器',
+			location: 'middle'
+		});
+		if (checked) {
+			api.setPrefs({
+				key: 'imageUrl',
+				value: 'http://bj.sinogo.org:8085'
+			});
+			api.setPrefs({
+				key: 'serviceUrl',
+				value: 'http://bj.sinogo.org:8086/gateway'
+			});
+		} else {
+			api.setPrefs({
+				key: 'imageUrl',
+				value: 'http://api.sinogo.net.cn:8085'
+			});
+			api.setPrefs({
+				key: 'serviceUrl',
+				value: 'http://api.sinogo.net.cn:8086/gateway'
+			});
+			//       api.setPrefs({
+			//	         key:'imageUrl',
+			//	         value:'http://bj.sinogo.org:8085'
+			//       });
+			//   	api.setPrefs({
+			//	         key:'serviceUrl',
+			//	         value:'http://bj.sinogo.org:8086/gateway'
+			//       });
+		}
+		api.setPrefs({
+			key: 'isDebug',
+			value: checked
+		});
+		isDebug = checked;
+	}
+
+	function json() {
+		var json = [];
+		var list = {};
+		list.update = '';
+		list.admintel = '';
+		json.push(list);
+		var tmpl = doT.template($api.text($api.dom("#dotTmpl")));
+		$api.html($api.dom(".flex-con"), tmpl(json));
+		switchbox = $api.dom(".aui-switch")
+		switchbox.onclick = function(e) {
+			e.stopPropagation();
+			set(0)
+		}
+	}
+
+	imready = function() {
+		$api.fixStatusBar($api.dom('header'));
+		isDebug_last = api.getPrefs({
+			sync: true,
+			key: 'isDebug'
+		});
+		isDebug = isDebug_last;
+		json();
+		var c = (isDebug_last && isDebug_last != 'false')
+		switchbox.checked = c;
+		api.addEventListener({
+			name: 'keyback'
+		}, function(ret, err) {
+			closeGeneral();
+		});
+		api.addEventListener({
+			name: 'swiperight'
+		}, function(ret, err) {
+			console.log("向右滑动")
+		});
+	};
+
+	function closeGeneral() {
+		if (String(isDebug_last) == String(isDebug)) { //服务器地址未改变
+			closeWin();
+		} else { //服务器地址改变,需要重新登录
+			api.setPrefs({
+				key: 'userid',
+				value: ''
+			});
+			api.setPrefs({
+				key: 'organizationid',
+				value: ''
+			});
+			api.setPrefs({
+				key: 'username',
+				value: ''
+			});
+			api.setPrefs({
+				key: 'userimage',
+				value: ''
+			});
+			api.setPrefs({
+				key: 'useraccount',
+				value: ''
+			});
+			api.setPrefs({
+				key: 'userpass',
+				value: ''
+			});
+
+			api.openWin({
+				name: 'login',
+				url: '../login.html'
+			});
+		}
+	}
+</script>
+
+</html>

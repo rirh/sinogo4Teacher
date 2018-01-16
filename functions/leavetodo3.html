@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <style>
+     .h-right{
+		     text-align:right;
+		     margin-right:0.23rem;
+	        -webkit-flex: 0.3;        /* Chrome */  
+		    -ms-flex:  0.3 ;            /* IE 10 */  
+		    flex:  0.3;                /* NEW, Spec - Opera 12.1, Firefox 20+ */
+		    -webkit-box-flex:  0.3 ;    /* OLD - iOS 6-, Safari 3.1-6 */  
+		    -moz-box-flex:  0.3;  
+	   }
+     .h-left{
+             width: 0%; 
+     	    margin-left: 0.23rem;
+	        text-align:left;
+	       -webkit-flex: 0.3;        /* Chrome */  
+		    -ms-flex:  0.3 ;            /* IE 10 */  
+		    flex:  0.3;                /* NEW, Spec - Opera 12.1, Firefox 20+ */
+		    -webkit-box-flex:  0.3 ;    /* OLD - iOS 6-, Safari 3.1-6 */  
+		    -moz-box-flex:  0.3;  
+	   }
+	   .h-left img{
+	    	margin-top: 0.215rem;
+	        width: 0.25rem;
+	    	height: 0.45rem;
+	    	background: url(../image/setting/icon-back.png);
+	    	background-size: cover;
+	    	margin-left: 0;
+	   }
+	   
+	   
+    	/****************************************************************************************************************/
+    		.setbox{
+    	    background:#ffffff;
+    	    height:0.88rem;
+    	    line-height:0.88rem;
+    	    display: -webkit-flex;  /* 新版本语法: Chrome 21+ */
+		    display: flex;          /* 新版本语法: Opera 12.1, Firefox 22+ */
+		    display: -webkit-box;   /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+		    display: -moz-box;      /* 老版本语法: Firefox (buggy) */
+		    display: -ms-flexbox;   /* 混合版本语法: IE 10 */   
+    	}
+    	.setleft{
+    	display:block;
+    	margin-left: 0.27rem;
+    	line-height: 0.88rem;
+    	text-align: left;
+    	color: #333333;
+    	font-size: 0.28rem;
+    	}
+    	.setcon{
+    	     text-align:right;
+    	     margin-left:0.2rem;
+    	     color:#666666;
+             font-size:0.26rem;
+    	    -webkit-flex: 1;        /* Chrome */  
+		    -ms-flex: 1 ;            /* IE 10 */  
+		    flex: 1;                /* NEW, Spec - Opera 12.1, Firefox 20+ */
+		    -webkit-box-flex: 1 ;    /* OLD - iOS 6-, Safari 3.1-6 */  
+		    -moz-box-flex: 1;
+		    margin-right: 0.23rem;  
+    	}
+    	.setright{
+    	    width: 0.16rem;
+	    	height: 0.28rem;
+	    	margin-right:0.23rem;
+	    	background: url(../image/setting/icon-todo.png);
+	    	background-size: cover;
+	    	margin-top: 0.3rem;
+	    	display: none;
+    	}
+    	.sp{
+    	height: 0;
+    	width: 0;
+    	
+    	}
+    	.dp{
+    	margin-top: 0.77rem;
+    	
+    	}
+    	.line{
+        margin-left:0.23rem;
+    	position: relative;
+    	}
+    	.line:after{
+    		border-bottom: 1px solid #d9d9d9;
+    		content:"";
+    		display:block;
+    		position:absolute;
+    		bottom:0;left:0;right:0;
+    		-webkit-transform-origin: 0 0;
+    		-webkit-transform:scaleY(0.5);
+    	}
+    	.start{
+    	  	position: relative;
+    	}
+    
+    	.start:after{
+    		border-bottom: 1px solid #cccccc;
+    		content:"";
+    		display:block;
+    		position:absolute;
+    		bottom:0;left:0;right:0;
+    		-webkit-transform-origin: 0 0;
+    		-webkit-transform:scaleY(0.5);
+    	}
+    	.person{
+	    	height: 1.23rem;
+	    	line-height: 1.23rem;
+    	}
+    	
+    	.perleft{
+	    	text-align:left;
+	        -webkit-flex: 1;        /* Chrome */  
+		    -ms-flex: 1 ;            /* IE 10 */  
+		    flex: 1;                /* NEW, Spec - Opera 12.1, Firefox 20+ */
+		    -webkit-box-flex: 1 ;    /* OLD - iOS 6-, Safari 3.1-6 */  
+		    -moz-box-flex: 1;  
+    	} 
+    	.per{ 
+    	    display: -webkit-flex;  /* 新版本语法: Chrome 21+ */
+		    display: flex;          /* 新版本语法: Opera 12.1, Firefox 22+ */
+		    display: -webkit-box;   /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+		    display: -moz-box;      /* 老版本语法: Firefox (buggy) */
+		    display: -ms-flexbox;   /* 混合版本语法: IE 10 */   
+    	    overflow: hidden;
+    	    display: block;
+    	}
+    	.hicp{
+    	    float:right;
+	    	height: 0.90rem;
+	    	width: 0.9rem;
+	        border-radius: 50%;
+	        background: url(../image/setting/icon-icon.png);
+	    	background-size: cover;
+	        margin-top: 0.19rem;
+    	}
+        .school{
+        color: #666666;
+        font-size: 0.26rem;
+        margin-left: 0.23rem;
+        
+        } 
+          .endtab{
+	        position:fixed;
+	        bottom:0;
+			height: 0.98rem;
+			background: #cccccc;
+			border-top-color: #EEEEEE;
+		    text-align:center;
+		    line-height:0.98rem;
+			width:100%;
+			border-top:#EEEEEE solid 0.01rem; 
+			margin-bottom: 0;
+			color: #FFFFFF;
+			font-size: 0.32rem;
+			} 	
+			.hid{
+			display: none;
+			}
+			.txtleft{
+			text-align: left;
+			
+			}
+			.fontcolor{
+			color: #FF8344;
+			}
+			.todo{
+			border:1px dashed #efefef;
+			height: 0.44rem;
+			display: inline-block;
+			overflow:hidden;
+			line-height: 0.44rem;
+			margin-top: 0.22rem;
+			color: #ff8344;
+			padding: 0rem 0.1rem 0 0.1rem;
+			}
+			#maclass{
+			display: none;
+			}
+			#ticlass{
+			display: none;
+			}
+    </style>
+</head>
+<body>
+	<div class="flex-wrap flex-vertical">
+		
+	</div>
+</body>
+<script type="template" id="dotTmpl">
+<header>
+			<div class="h-left" onclick="closeWin();"><img src="../image/setting/icon-back.png" /></div>
+			<div class="h-conter">
+				{{=it[0].title}}
+			</div>
+			<div class="h-right"></div>
+		</header>
+		<div class="flex-con">
+			  <div class="setbox person" >
+				<div class="setleft person">头像</div>
+				<div class="setcon per">
+				<div class="hicp"></div>
+	            </div>
+				<div class="setright dp"></div>
+			</div>
+			<div class="start"></div>
+			<div class="setbox" >
+			<div class="setleft general">姓名：</div>
+			<div class="setcon">{{=it[0].name}}</div>
+			<div class="setright sp"></div>
+			</div>
+			<div class="line"></div>
+			<div class="setbox" >
+			<div class="setleft about">家长电话：</div>
+			<div class="setcon">{{=it[0].tel}}</div>
+			<div class="setright sp"></div>
+			</div>
+			<div class="line"></div>
+			<div class="setbox" >
+			<div class="setleft about ">请假班级：</div>
+			<div class="setcon txtleft">{{=it[0].cls}}</div>
+			<div class="setright"></div>
+			</div>
+			<div class="line"></div>
+			<div class="setbox" >
+			<div class="setleft about">请假课时：</div>
+			<div class="setcon txtleft">{{=it[0].lesson}}</div>
+			<div class="setright"></div>
+			</div>
+			<div class="line"></div>
+			<div class="setbox" onclick="set(1)">
+			<div class="setleft about">处理意见：</div>
+			<div class="setcon txtleft todo" id='tk'>{{=it[0].suggestion}}</div>
+			<div class="setright"></div>
+			</div>
+			<div class="line"></div>
+			<div class="setbox" id='maclass' onclick="set(2)">
+			<div class="setleft about">补课班级：</div>
+			<div class="setcon txtleft todo" id='tk2'>{{=it[0].makeup}}</div>
+			<div class="setright"></div>
+			</div>
+			<div class="line"></div>
+			<div class="setbox"id='ticlass' onclick="set(3)">
+			<div class="setleft about">补课时间：</div>
+			<div class="setcon txtleft todo "id='tk3' >{{=it[0].time}}</div>
+			<div class="setright"></div>
+			</div>
+			<div class="endtab ">提交审核</div>
+		</div>
+			
+			
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/doT.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript">
+var tk;
+var info;
+var tittle;
+var imageUrl;
+  function set(tag){
+  switch(tag){
+  case 1:
+   api.actionSheet({
+					    cancelTitle: "取消",
+					    buttons: tk
+					}, function(ret, err) {
+					    var index = ret.buttonIndex;
+					    if(index==1){
+					     $api.text($api.dom('#tk'), "调课");
+					     $api.css($api.dom('#maclass'),'display:  display: -webkit-flex; display: flex;  display: -webkit-box;   /* 老版本语法: Safari, iOS, Android browser, older  WebKit browsers. */ display: -moz-box; /* 老版本语法: Firefox (buggy) display: -ms-flexbox;   /* 混合版本语法: IE 10 */   ');
+					     $api.css($api.dom('#ticlass'),'display:  display: -webkit-flex; display: flex;  display: -webkit-box;   /* 老版本语法: Safari, iOS, Android browser, older  WebKit browsers. */ display: -moz-box; /* 老版本语法: Firefox (buggy) display: -ms-flexbox;   /* 混合版本语法: IE 10 */   ');
+					     $api.css($api.dom('.endtab'),'background: #cccccc;');
+					     moveLesson()
+					    }else if(index==2){
+					       $api.text($api.dom('#tk'), "直接销课");
+					       $api.css($api.dom('#maclass'),'display:none');
+					       $api.css($api.dom('#ticlass'),'display:none');
+					       $api.css($api.dom('.endtab'),'background: #ff8344;');
+					      
+					    }else if(index==3){
+					      $api.text($api.dom('#tk'), "保留课次");
+					      $api.css($api.dom('#maclass'),'display:none');
+					      $api.css($api.dom('#ticlass'),'display:none');
+					      $api.css($api.dom('.endtab'),'background: #ff8344;');
+					    
+					    }
+					});
+  break;
+   case 2:
+   
+   
+  break;
+    case 3:
+  break;
+  
+  }
+  
+  
+  
+  }
+  //
+  function moveLesson(){
+		var data =  {};
+		data.method="selectClass";
+		data.request={"timetableId":info.timetableId},
+		api.showProgress();
+		console.log(JSON.stringify(data));
+		ajaxRequest(data,function(ret,err){
+			api.hideProgress();
+			if(ret){
+			if(ret.responseBody!=null){
+			var inclass = ret.responseBody.insClass;
+			var timetable=ret.responseBody.timetable;
+		    var newclass = [];
+		    var newtable={};
+			for(var i = 0 ; i<inclass.length; i++){
+				 newclass[i]=inclass[i].className;
+				 console.log(timetable[i].length);
+				 var key = newclass[i];
+				 var list=[];
+					  if(timetable[i].length!=0){
+					     for(var j = 0 ;j <timetable[i].length;j++){
+						  	list[j]=timetable[i][j].schoolTime.substring(0,16)+'-'+timetable[i][j].quittingTime.substring(10,16);
+						 }
+						 newtable[key]=list;
+					 }else{
+					        newtable[key]=null;
+					 }
+			}
+			if(newclass!=null&&newclass.length>0){
+		     if(newtable[newclass[0]]==null){
+		        time ='没有空闲时间';
+		     }else if(newtable[newclass[0]].length>1){
+		         time =newtable[newclass[0]][0];
+		     }else{
+		         time =newtable[newclass[0]]
+		     }
+	           	$api.text($api.dom('#tk2'), '点击选择');
+	           	$api.text($api.dom('#tk3'), '点击选择');		
+	            openSelect(newclass,newtable);
+            }else{
+	            $api.text($api.dom('#tk2'), '没有可调班级');
+	           	$api.text($api.dom('#tk3'), '没有可调时间');
+            }
+			}
+			}else{
+				//alert(JSON.stringify(err))
+			}
+		})
+
+  
+  }
+ var Cosur;
+  function openSelect(selectArray,selectTime){
+  
+  $api.addEvt($api.dom('#tk2'), 'click', function(){
+  if(selectArray.length==0){
+  }else{
+    		    api.actionSheet({
+					    cancelTitle: "取消",
+					    buttons: selectArray,
+					    style: { fontNormalColor:'#666666'}
+					}, function(ret, err) {
+						    var index = ret.buttonIndex;
+						    if(index==(selectArray.length+1)){
+						    }else{
+						     	$api.text($api.dom('#tk2'), selectArray[index-1]);
+						     	Cosur=index-1;
+						      
+						     	if(selectTime[selectArray[Cosur]]!=null){
+						    
+						     		$api.text($api.dom('#tk3'), '点击选择');
+						            $api.addEvt($api.dom('#tk3'), 'click', function(){
+					    		    api.actionSheet({
+										    cancelTitle: "取消",
+										    buttons: selectTime[selectArray[Cosur]],
+										    style: { fontNormalColor:'#333'}
+										}, function(ret, err) {
+											    var index = ret.buttonIndex;
+											    if(index==(selectTime[selectArray[Cosur]].length+1)){
+											    }else{
+											     $api.text($api.dom('#tk3'), selectTime[selectArray[Cosur]][index]);
+											     $api.css($api.dom('.endtab'),'background: #ff8344;');
+											     $api.addEvt($api.dom('#tk3'), 'click', function(){
+											     //TODO提交调班信息
+											     })	
+											    
+											    }
+						                        
+														                        
+														 })
+								}); }else{
+										$api.text($api.dom('#tk3'), '没有可用时间');
+								}
+						    }
+	 })}
+    });
+  }
+ 
+function json(){
+ var json=[];
+ var list={};
+ list.title=tittle;
+ list.name=info.studentName;
+ list.tel='10065781007';
+ list.cls=info.oldClassName;
+ list.lesson=info.createTime;
+ list.num=info.stute;
+	 if(info.stute==0){
+		 list.suggestion='点击选择';
+		 list.makeup='点击选择';
+		 list.time='点击选择';
+		 $api.addCls($api.domAll('.txtleft')[0], 'fontcolor');
+		 $api.addCls($api.domAll('.txtleft')[1], 'fontcolor');
+		 $api.addCls($api.domAll('.txtleft')[2], 'fontcolor');
+	 }else{
+		 list.suggestion='调课'
+		 list.makeup='围棋一班';
+		 list.time='2017-1-1 11:11';
+	 }
+ json.push(list);
+ var tmpl = doT.template($api.text($api.dom("#dotTmpl")));
+ $api.html($api.dom(".flex-wrap"), tmpl(json)); 
+}
+
+
+
+
+
+	imready = function(){
+	imageUrl = api.getPrefs({
+	        sync:true,
+	        key:'imageUrl'
+        });
+
+	 tk= ["调课", "直接销课", "保留课次"];
+    info=api.pageParam;
+    console.log('api.pageParam信息：'+JSON.stringify(info)+imageUrl+info.studentImg);
+    if(info.stute==0){
+       tittle = '调班处理';
+       json();
+       $api.css($api.dom('.hicp'),"background: url("+imageUrl+info.studentImg+");");
+    }else{
+       tittle = '调班详情';
+       json();
+       $api.css($api.dom('.hicp'),"background: url("+imageUrl+info.studentImg+");");
+       $api.addCls($api.dom('.endtab'), 'hid');
+    }
+	};
+
+	
+	
+	
+</script>
+</html>

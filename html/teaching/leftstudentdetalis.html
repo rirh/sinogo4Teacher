@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<style>
+			.h-right {
+				text-align: right;
+				margin-right: 0.23rem;
+				-webkit-flex: 0.3; /* Chrome */
+				-ms-flex: 0.3; /* IE 10 */
+				flex: 0.3; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 0.3; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 0.3;
+			}
+			.h-left {
+				margin-left: 0.23rem;
+				text-align: left;
+				-webkit-flex: 0.3; /* Chrome */
+				-ms-flex: 0.3; /* IE 10 */
+				flex: 0.3; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 0.3; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 0.3;
+			}
+			.h-left img {
+				margin-top: 0.215rem;
+				width: 0.25rem;
+				height: 0.45rem;
+				background: url(../../image/setting/icon-back.png);
+				background-size: cover;
+				margin-left: 0;
+			}
+			/****************************************************************************************************************/
+			.setbox {
+				background: #ffffff;
+				height: 0.88rem;
+				line-height: 0.88rem;
+				display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+				display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+				display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+				display: -moz-box; /* 老版本语法: Firefox (buggy) */
+				display: -ms-flexbox; /* 混合版本语法: IE 10 */
+			}
+			.setleft {
+				display: block;
+				margin-left: 0.27rem;
+				line-height: 0.88rem;
+				text-align: left;
+				color: #333333;
+				font-size: 0.28rem;
+			}
+			.setcon {
+				text-align: right;
+				margin-left: 0.2rem;
+				color: #666666;
+				font-size: 0.26rem;
+				-webkit-flex: 1; /* Chrome */
+				-ms-flex: 1; /* IE 10 */
+				flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 1;
+				margin-right: 0.23rem;
+			}
+			.setright {
+				width: 0.16rem;
+				height: 0.28rem;
+				margin-right: 0.23rem;
+				background: url(../../image/setting/icon-todo.png);
+				background-size: cover;
+				margin-top: 0.3rem;
+			}
+			.sp {
+				height: 0;
+				width: 0;
+			}
+			.dp {
+				margin-top: 0.77rem;
+			}
+			.line {
+				margin-left: 0.23rem;
+				position: relative;
+			}
+			.line:after {
+				border-bottom: 1px solid #d9d9d9;
+				content: "";
+				display: block;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				-webkit-transform-origin: 0 0;
+				-webkit-transform: scaleY(0.5);
+			}
+			.start {
+				position: relative;
+			}
+			.start:after {
+				border-bottom: 1px solid #cccccc;
+				content: "";
+				display: block;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				-webkit-transform-origin: 0 0;
+				-webkit-transform: scaleY(0.5);
+			}
+			.person {
+				height: 1.23rem;
+				line-height: 1.23rem;
+			}
+			.perleft {
+				text-align: left;
+				-webkit-flex: 1; /* Chrome */
+				-ms-flex: 1; /* IE 10 */
+				flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 1;
+			}
+			.per {
+				display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+				display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+				display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+				display: -moz-box; /* 老版本语法: Firefox (buggy) */
+				display: -ms-flexbox; /* 混合版本语法: IE 10 */
+				overflow: hidden;
+				display: block;
+			}
+			.hicp {
+				float: right;
+				height: 0.90rem;
+				width: 0.9rem;
+				border-radius: 50%;
+				background: url(../../image/setting/icon-icon.png);
+				background-size: 100%;
+				margin-top: 0.165rem;
+			}
+			.school {
+				color: #666666;
+				font-size: 0.26rem;
+				margin-left: 0.23rem;
+			}
+			.fontcolor_1 {
+				color: #1EBEB6;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="flex-wrap flex-vertical">
+			<div class="flex-con"></div>
+		</div>
+	</body>
+	<script type="template" id="dotTmpl">
+		<div class="setbox person">
+		<div class="setleft person">头像</div>
+		<div class="setcon per">
+		<div class="hicp"></div>
+		</div>
+		<div class="setright sp"></div>
+		</div>
+		<div class="start"></div>
+		<div class="setbox" >
+		<div class="setleft general">学员姓名：</div>
+		<div class="setcon">{{=it[0].name}}</div>
+		<div class="setright sp"></div>
+		</div>
+		<div class="line"></div>
+		<div class="setbox" >
+		<div class="setleft about">学校名称：</div>
+		<div class="setcon">{{=it[0].school}}</div>
+		<div class="setright sp"></div>
+		</div>
+		<div class="line"></div>
+		<div class="setbox" >
+		<div class="setleft about">所在班级：</div>
+		<div class="setcon tel">{{=it[0].inclass}}</div>
+		<div class="setright sp"></div>
+		</div>
+		<div class="line"></div>
+		<div class="setbox" >
+		<div class="setleft about">家长电话：</div>
+		<div class="setcon sex callphone fontcolor_1">{{=it[0].tel}}</div>
+		<div class="setright sp"></div>
+		</div>
+		<div class="line"></div>
+		<div class="setbox">
+		<div class="setleft about">剩余课时：</div>
+		<div class="setcon birthday">{{=it[0].less}}</div>
+		<div class="setright sp"></div>
+		</div>
+		<div class="start"></div>
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript">
+		var imageUrl;
+		function date() {
+			var json = [];
+			var list = {};
+			list.name = hotcities.studentName;
+			list.school = hotcities.institutionName;
+			list.inclass = hotcities.className;
+			if (hotcities.surplus == null) {
+				list.less = "";
+			} else {
+				list.less = hotcities.surplus;
+			}
+			list.tel = hotcities.userPhone;
+			json.push(list);
+			var tmpl = doT.template($api.text($api.dom("#dotTmpl")));
+			$api.html($api.dom(".flex-con"), tmpl(json));
+			//电话号码拨打电话
+			$api.addEvt($api.dom('.callphone'), 'click', function() {
+				if (list.tel.length > 0) {
+					api.call({
+						type : 'tel_prompt',
+						number : list.tel
+					});
+				} else {
+				}
+			});
+		}
+
+		var hotcities;
+		function getHotCities(studentid, classid) {
+			api.showProgress();
+			var data = {};
+			data.method = "findStudentInfo";
+			data.request = {
+				"studentId" : studentid,
+				"classId" : classid
+			}
+			console.log("学员详情findStudentInfo请求数据" + JSON.stringify(data));
+			ajaxRequest(data, function(ret, err) {
+				api.hideProgress();
+				if (ret) {
+					hotcities = ret.responseBody;
+					console.log("学员详情findStudentInfo请求数据" + JSON.stringify(hotcities));
+					if (hotcities != null) {
+						date();
+						if (hotcities.studentImage.length > 0) {
+							$api.css($api.dom(".hicp"), "background: url(" + imageUrl + hotcities.studentImage + ");background-size: 100%;");
+						} else {
+							$api.css($api.dom(".hicp"), "background: url(../../image/eg_header_1.png);background-size: 100%;");
+						}
+					} else {
+						alert('没有数据');
+					}
+				} else {
+					alert(err.msg)
+				}
+			})
+			
+		}
+		//打开头像时间
+		
+	imready = function(){
+		$api.fixStatusBar($api.dom('header'));
+		imageUrl = api.getPrefs({
+	        sync:true,
+	        key:'imageUrl'
+        });
+
+		getHotCities(JSON.stringify(api.pageParam.id), JSON.stringify(api.pageParam.classid))
+	}
+	</script>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>选择班级</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+
+    <style>
+        .h-right {
+            text-align: right;
+            margin-right: .23rem;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left {
+            margin-left: .23rem;
+            text-align: left;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left img {
+            margin-top: .215rem;
+            width: .25rem;
+            height: .45rem;
+            background: url(../../image/setting/icon-back.png);
+            background-size: cover;
+            margin-left: 0;
+        }
+        /*****************************************************************************************/
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: .98rem;
+            font-size: .32rem;
+            background: #cecece;
+            color: #fff;
+            text-align: center;
+            line-height: .98rem;
+        }
+
+        .isChooseToipc {
+            background: #ff8344!important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex-wrap flex-vertical">
+        <header>
+            <div class="h-left" onclick="closeWin();"><img src="../../image/setting/icon-back.png" />
+            </div>
+            <div class="h-conter">
+                系统选题
+            </div>
+            <div class="h-right"></div>
+        </header>
+        <div class="flex-con" id="main">
+            <footer @click="generatingQuestion()" :class="{'isChooseToipc':isChooseToipc}">{{generatingQuestions}}</footer>
+        </div>
+
+    </div>
+</body>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script>
+    openFrame = function() { //作业详情的vframe push放入数据
+        api.openFrame({
+            name: 'chooseClassTest_tQ_ranDomSystem_frm',
+            url: 'chooseClassTest_tQ_ranDomSystem_frm.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: $api.offset($api.dom("header")).h,
+                w: 'auto',
+                h: api.frameHeight - $api.offset($api.dom("header")).h - $api.offset($api.dom("footer")).h
+            },
+            pageParam: {
+                'school': api.pageParam.school
+            }
+        })
+
+
+
+
+
+    };
+    listenManager = function() { //监听选择系统题型istopicTypes
+        api.addEventListener({
+            name: 'istopicTypes'
+        }, function(ret, err) {
+            if (ret) {
+                c("istopicTypes随机选题监听事件", ret);
+                var score = 0;
+                for (var i = 0; i < ret.value.key2.length; i++) {
+                    score += ret.value.key2[i].questionQuantity;
+                }
+                if (ret.value.key1 && score > 0) {
+                    ranDomSystem.isChooseToipc = true;
+                    ranDomSystem.cache = ret.value.key2;
+                } else {
+                    ranDomSystem.isChooseToipc = false;
+                }
+
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+
+
+
+    }
+
+    initVue = function() { //初始化vue
+
+        ranDomSystem = new Vue({
+            el: '#main', //绑定元素
+            data: {
+                "isChooseToipc": false,
+                "generatingQuestions": "生成试题",
+                "cache": "",
+                "programmeId": ""
+            }, //本页面的静态动态全部数据
+            methods: {
+                generatingQuestion: function() {
+                    if (ranDomSystem.isChooseToipc) {
+                        //打开随机布置作业界面
+                        api.openWin({
+                            name: 'pura_job',
+                            url: 'pura_job.html',
+                            pageParam: {
+                                'school': api.pageParam.school,
+                                'joblist': ranDomSystem.cache
+                            }
+                        });
+                    }
+
+
+                }
+
+            }
+        });
+
+    }
+    var ranDomSystem;
+    imready = function() {
+        api.parseTapmode(); //默认页面加载完成后，引擎会对 dom 里面的元素进行 tapmode 属性解析，若是之后用代码创建的 dom 元素，则需要调用该方法后 tapmode 属性才会生效
+        $api.fixStatusBar($api.dom('header'));
+        openFrame();
+        initVue();
+        listenManager();
+    };
+</script>
+
+</html>

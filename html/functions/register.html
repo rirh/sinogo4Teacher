@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <style>
+    	html,body{
+    		background:#F6F6F6;height:100%;
+    	}
+    	#header{
+		    background-color: #1EBEB6;
+		    text-align: center; color: #fff;
+		    width: 100%; position: relative;
+		    height:0.88rem;
+		}
+		#header .back-icon{
+		    display: inline-block; width: 0.88rem; height: 0.88rem;
+		    background: url(../../image/icon_arrow_left.png) no-repeat center center; 
+		    background-size: 0.24rem 0.42rem;
+		    position: absolute; left: 0; bottom: 0;
+		}
+		#header .back-icon.active{
+			 background: url(../../image/icon_arrow_left.png) no-repeat center center rgba(0,0,0,0.2); 
+			 background-size: 0.24rem 0.42rem;
+		}
+		#header h1{
+		    font-size: 0.34rem;
+		    height: 0.88rem; line-height: 0.88rem; margin: 0 auto; color: #fff;
+		    width:5rem;
+		}
+		#header .btn_right{
+			width: 0.95rem; height: 0.88rem;
+			line-height: 0.88rem;
+			font-size:0.3rem;
+			position: absolute;
+			top: 25px;
+			right:0;
+			text-align: center;
+			background: url(../../image/icon_history.png) no-repeat center center;
+			background-size: 0.31rem 0.31rem;
+		}
+		#header .btn_right.active{
+			background: url(../../image/icon_history.png) no-repeat center center rgba(0,0,0,0.3);
+			background-size: 0.31rem 0.31rem;
+		}
+		#main{
+			height:100%;
+			width:100%;
+		}
+		#main .item{
+			height:0.88rem;
+			background:#FFF;
+			width:100%;
+		}
+		#main .haveborder{
+			position:relative;
+		}
+		#main .haveborder:after{
+			border-bottom:1px solid #d9d9d9;
+			position: absolute;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			pointer-events:none;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+		}
+		#main .selectitem{
+			background:url(../../image/icon_arrow_down.png) no-repeat center right 0.23rem #FFF;
+			background-size: 0.35rem 0.19rem;
+		}
+		#main .current{
+			background:url(../../image/icon_arrow_up.png) no-repeat center right 0.23rem #FFF;
+			background-size: 0.35rem 0.19rem;
+		}
+		#main .sschool{
+			
+		}
+		#main .sclass{
+			position: relative;
+		}
+		#main .sclass:before{
+			border-top: 1px solid #d9d9d9;
+			position: absolute;
+			left:0;right:0;top:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+		}
+		#main .item .item-inner{
+			padding:0.2rem 0.23rem;
+		}
+		#main .item .item-inner img{
+			width:0.32rem;
+			height:0.42rem;
+			float:left;
+			margin-top:0.03rem;
+		}
+		#main .item .item-inner div{
+			float:left;
+			margin-left:0.2rem;
+			position:relative;
+		}
+		#main .item .item-inner div:after{
+			border-left: 1px solid #AAAAAA;
+			position: absolute;
+			left:0;top:0;bottom:0;
+			content:"";display:block;
+			pointer-events:none;
+			-webkit-transform: scaleX(0.5);
+			-webkit-transform-origin: 0 0;
+		}
+		#main .item .item-inner input{
+			outline: none;
+			height:0.48rem;
+			margin-left:0.2rem;
+		}
+		.longwidth{
+			width:6rem;
+		}
+		#main .item .btn-code{
+			position:absolute;
+			top:0.11rem;
+			right:0.23rem;
+			width:2rem;
+			height:0.66rem;
+			line-height:0.66rem;
+			text-align:center;
+			background:#1EBEB6;
+			font-size:0.28rem;
+			color:#FFF;
+			border-radius: 0.05rem;
+		}
+		#main .item .btn-code.active{
+			background:#1EAAB6;
+		}
+		.agreement{
+			margin-top:0.4rem;
+			height:0.6rem;
+			line-height:0.6rem;
+		}
+		.agreement .checkbox-span{
+			width:0.4rem;
+			height:0.4rem;
+			margin-top:0.1rem;	
+			margin-left: 0.4rem;
+			background: url(../../image/icon_checked.png) no-repeat right center;
+			background-size: 0.4rem 0.4rem;
+			float: left;
+		}
+		.agreement .confirmpo{
+			float: left;
+			font-size:0.24rem;
+			color:#999999;
+			margin-left:0.15rem;
+		}
+		.agreement .protocol{
+			color:#1EBEB6;
+			text-decoration: underline;
+		}
+		.btn-ok{
+			margin:0.6rem 0.23rem;
+			background: #1EBEB6;
+			height:0.98rem;
+			line-height:0.98rem;
+			text-align:center;
+			border-radius:0.05rem;
+			color:#FFF;
+			font-size:0.32rem;
+		}
+		.btn-ok.active{
+			background:#1EAAB6;
+		}
+		#schoollist{
+			z-index:2;
+			position: relative;
+			background:#fffcf0;
+			width:100%;
+		}
+		#schoollist:before{
+			border-top:1px solid #d9d9d9;
+			top: absolute;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+		}
+		#schoollist .schoolparent{
+			overflow-y: scroll;
+			max-height: 2.65rem;
+		}
+		#schoollist .schoolitem{
+			height:0.89rem;
+			line-height:0.89rem;
+			font-size: 0.28rem;
+			color:#333;
+			position: relative;
+		}
+		#schoollist .schoolitem:active{
+			color:#1EBEB6;
+		}
+		#schoollist .schoolitem:after{
+			border-bottom: 1px solid #d9d9d9;
+			position: absolute;
+			left:0;right:0;bottom:0;
+			content:"";display:block;
+			pointer-events:none;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+		}
+		#classlist{
+			position: relative;
+			background:#fffcf0;
+			z-index:2;
+			width:100%;
+		}
+		#classlist:before{
+			border-top:1px solid #d9d9d9;
+			top: absolute;
+			bottom:0;left:0;right:0;
+			content:"";display:block;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+		}
+		#classlist .classparent{
+			overflow-y: scroll;
+			max-height: 2.65rem;
+		}
+		#classlist .classitem{
+			height:0.89rem;
+			line-height:0.89rem;
+			font-size: 0.28rem;
+			color:#999;
+			position: relative;
+		}
+		#classlist .classitem:active{
+			color:#1EBEB6;
+		}
+		#classlist .classitem:after{
+			border-bottom: 1px solid #d9d9d9;
+			position: absolute;
+			left:0;right:0;bottom:0;
+			content:"";display:block;
+			pointer-events:none;
+			-webkit-transform: scaleY(0.5);
+			-webkit-transform-origin: 0 0;
+		}
+	</style>
+	</head>
+	<body>
+	<div id="wrap" class="flex-wrap flex-vertical">
+		<div id="header">
+			<a class="back-icon" tapmode="active" onclick="closeWin()" ></a>
+			<h1 id="title">新增注册</h1>
+			<a tapmode="active" class="btn_right" onclick="btnRight()" ></a>
+		</div>
+		<div id="main" class="flex-con">
+			<div class="item haveborder">
+				<div class="item-inner">
+					<img src="../../image/icon_register_phone.png" alt="" />
+					<div><input type="tel" placeholder="请输入手机号" class="input" /></div>
+				</div>
+			</div>
+			<div class="item haveborder">
+				<div class="item-inner">
+					<img src="../../image/icon_register_code.png" alt="" />
+					<div><input type="number" placeholder="请输入验证码" class="input code"  /></div>
+				</div>
+				<div tapmode="active" onclick="getCode()" class="btn-code" >
+				获取验证码
+				</div>
+			</div>
+			<div class="item haveborder">
+				<div class="item-inner">
+					<img src="../../image/icon_register_name.png" alt="" />
+					<div><input type="text" placeholder="请输入学生姓名" class="input" /></div>
+				</div>
+			</div>
+			<div class="item selectitem sschool" onclick="selectSchool(this)"><!--onclick="selectSchool(this)"-->
+				<div class="item-inner">
+					<img src="../../image/icon_register_school.png" alt="" />
+					<div><input type="text" placeholder="请选择学校,非进课堂学生不填写此项" class="input longwidth" readonly /></div>
+				</div>
+			</div>
+			<script type="text/x-dot-template" id="schoolparent_template">
+				{{ for(var i=0;i<it.length;i++){ }}
+				<div class="schoolitem" tapmode="active" onclick="selectSchoolOk('{{=it[i].institutionName}}',{{=it[i].id}})" >
+				{{=it[i].institutionName}}
+				</div>
+				{{ } }}
+			</script>
+			<div id="schoollist" style="display: none;overflow-x: hidden">
+				<div id="schoolparent" class="schoolparent" style="padding-left: 0.95rem;width: 100%;">
+				</div>
+			</div>
+			<div class="item selectitem sclass haveborder" onclick="selectClass(this)"><!--  onclick="selectClass(this)" --> 
+				<div class="item-inner">
+					<img src="../../image/icon_register_class.png" alt="" />
+					<div><input type="text" placeholder="请选择班级" class="input longwidth" readonly /></div>
+				</div>
+			</div>
+			<script type="text/x-dot-template" id="classparent_template">
+				{{ for(var i=0;i<it.length;i++){ }}
+				<div class="classitem" tapmode="active" onclick="selectClassOk('{{=it[i].className}}',{{=it[i].id}})" >
+				{{=it[i].className}}
+				</div>
+				{{ } }}
+			</script>
+			<div id="classlist" style="display: none;overflow-x: hidden">
+				<div id="classparent" class="classparent" style="padding-left: 0.95rem;width: 100%;">
+				</div>
+			</div>
+			<div class="agreement">
+				<span class="checkbox-span" onclick="exchangeCheckbox()" ></span>
+				<span class="confirmpo">家长已阅读用户协议并接受<a class="protocol">《中棋教育用户注册协议》</a></span>
+			</div>
+			<div tapmode="active" class="btn-ok" onclick="confirmRegister()">确 定</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript">
+	var inputs ;
+	var phoneOk=false;
+	var btnCode ;
+	var currentSchoolId = -1;
+	var currentClassId = -1;
+	imready = function(){
+		inputs = $api.domAll(".input")
+	 	btnCode = $api.dom(".btn-code");
+		handelVersionBelow4($api.dom(".btn_right").style)
+		inputs[0].onblur=function(){
+			if(!isMobile($api.trim(this.value))){
+	            phoneOk=false
+            }else{
+            	phoneOk=true
+            }
+       	}
+       	$api.dom(".protocol").onclick=function(){
+       		api.openWin({
+               name: 'userAgreementTitle',
+               url: '../setting/userAgreementTitle.html'
+           });
+       	}
+	};
+	
+	function getCode(){
+		if(window.timerid){
+			return;
+		}
+		inputs[0].blur();
+		if(!phoneOk){
+			alert("手机号码有误,请重新输入!")
+			return;
+		}
+		//测试
+		//先判断家长是否已经注册!:
+		api.showProgress({
+        });
+        var phoneNum = inputs[0].value
+        var body={
+        	method:"getStudentsByUserPhone",
+        	request:{
+        		"userPhone":phoneNum
+        	}
+        };
+        ajaxRequest(body,function(ret,err){
+        	api.hideProgress();
+        	console.log(JSON.stringify(ret))
+        	if(ret){
+        		if(ret.responseCode==0){
+//      			if(!ret.responseBody||ret.responseBody.length==0){
+//      				alert("该家长还未注册过学生,请先注册后再进行代购操作!")
+//      				return;
+//      			}else{
+//      				alert(JSON.stringify(ret))
+//      				fillStudentInfo(ret.responseBody);
+//      				requestCode(phoneNum);
+//      			}
+					alert("手机号已经注册!")
+        		}else if(ret.responseCode==10207&&ret.responseMsg=='手机号尚未注册'){
+        			// 还未注册过alert(ret.responseMsg)
+        			checkRequestIp(function(requestIp){
+        			requestCode(phoneNum,requestIp)
+        			})
+        		}else{
+        			alert(ret.responseMsg)
+        		}
+        	}else{
+        		alert(err.msg)
+        	}
+        })
+	}
+	
+	function requestCode(phoneNum,requestIp){
+		api.showProgress({
+        });
+		var body = {};
+		body.method="sendMessage"
+		body.request={
+		   	"smsTemplate":"StaffInsteadRegister",
+			"phoneNo":phoneNum,
+			"requestIp":requestIp
+		}
+		ajaxRequest(body,function(ret,err){
+			api.hideProgress();
+			if(ret){
+				//已发送后,显示倒计时
+		        btnCode.innerHTML="重新获取("+(60)+")"
+		        window.timerid = setInterval("showCountdown();",1000)
+		        
+		        window.currentCode = ret.responseBody.verificationCode;
+			}
+			else{
+				alert(err.msg)
+			}
+		})
+	}
+	
+	function confirmRegister(){
+		inputs[0].blur();
+		if(!phoneOk){
+			alert("手机号码有误,请重新输入!")
+			return;
+		}
+		var msgs = ["手机号","验证码","学生姓名","学校名称","班级"]
+		for(var i=0;i<3;i++){
+			if(!inputs[i].value){
+				alert("请输入"+msgs[i]+"!")
+				return;
+			}
+		}
+		if(!window.flag){
+			alert("请先确定家长已经阅读并接受注册协议!")
+			return;
+		}
+		if(inputs[1].value!=window.currentCode){
+			
+			return alert("验证码有误,请重新确认验证码!")	
+		}
+		api.showProgress();
+		var body = {};
+		body.method="studentRegister";
+		body.request={
+			"userId":api.getPrefs({sync:true,key:'userid'}),
+			"userPhone":inputs[0].value,
+			"className":inputs[4].value,
+			"schoolName":inputs[3].value,
+			"studentName":inputs[2].value,
+			"comeFrom":api.systemType=='ios'?1:2,
+			"classId":currentClassId,
+			"schoolId":currentSchoolId
+		}
+		console.log(JSON.stringify(body))
+		ajaxRequest(body,function(ret,err){
+			api.hideProgress();
+			if(ret){
+				if(ret.responseCode==0){
+					alert("恭喜,代注册成功,现在可以代办其他业务了!")
+					
+					closeWin();
+				}else{
+					alert(ret.responseMsg)
+				}
+			}else{
+				alert(err.msg)
+			}
+		})
+		
+	}
+	
+	var total=0;
+	function showCountdown(){
+		total+=1000;
+		if(total==60000){
+			clearInterval(window.timerid)
+			btnCode.innerHTML="获取验证码";
+			window.timerid=undefined 
+			total=0;
+			return;
+		}
+		btnCode.innerHTML="重新获取("+(60-total/1000)+")"
+	}
+	window.flag=true;
+	function exchangeCheckbox(){
+		var bg='url(../../image/icon_unchecked.png) no-repeat right center'
+		if(window.flag){
+			bg='url(../../image/icon_unchecked.png) no-repeat right center'
+		}else{
+			bg='url(../../image/icon_checked.png) no-repeat right center'
+		}
+		window.flag=!window.flag
+		$api.dom(".checkbox-span").style.background=bg
+		$api.dom(".checkbox-span").style.backgroundSize='0.4rem 0.4rem'
+	}
+	
+	function selectSchool(el){
+		var c = $api.dom(".current");
+		$api.removeCls(c, "current");
+		if(c==el){
+			$api.byId("schoollist").style.display='none'
+		}else{
+			api.showProgress();
+			var body = {
+				"method":"institutionSearch",
+				"request":{
+					"organizationId":api.getPrefs({sync:true,key:'organizationid'}),
+					"institutionType":1,//1,进课堂,2非进课堂
+					"page":1,
+					"pageSize":1000
+				}
+			}
+			ajaxRequest(body,function(ret,err){
+				api.hideProgress();
+				if(ret){
+					if(ret.responseCode==0){
+						$api.addCls(el, "current");
+						$api.byId("classlist").style.display='none'
+						$api.byId("schoollist").style.display='block'
+						getInnerByDot("schoolparent","schoolparent_template",ret.responseBody.rows)
+					}else{
+						alert(ret.responseMsg)
+					}
+				}else{
+					alert(err.msg)
+				}
+			})
+		}
+	}
+	
+	function selectSchoolOk(name,id){
+		inputs[3].value=name
+		if(currentSchoolId!=id){
+			inputs[4].value=""
+			currentClassId=-1;
+		}
+		currentSchoolId=id;
+		var c = $api.dom(".current");
+		$api.removeCls(c, "current");
+		setTimeout("$api.byId('schoollist').style.display='none'",200)
+		return;
+	}
+	
+	function selectClass(el){
+		if(currentSchoolId==-1){
+			api.toast({
+	            msg:'请先选择进课堂学校!',
+	            location:'middle'
+            });
+            return;
+		}
+		var c = $api.dom(".current");
+		$api.removeCls(c, "current");
+		if(c==el){
+			$api.byId("classlist").style.display='none'
+		}else{
+			api.showProgress();
+			var body = {
+				"method":"institutionClassSearch",
+				"request":{
+					"institutionId":currentSchoolId
+				}
+			}
+			ajaxRequest(body,function(ret,err){
+				api.hideProgress();
+				console.log(JSON.stringify(ret))
+				if(ret){
+					if(ret.responseCode==0){
+						var classlist = getRealClass(ret.responseBody)
+						$api.addCls(el, "current");
+						$api.byId("schoollist").style.display='none'
+						$api.byId("classlist").style.display='block'
+						getInnerByDot("classparent","classparent_template",classlist)
+					}else{
+						alert(ret.responseMsg)
+					}
+				}else{
+					alert(err.msg)
+				}
+			})
+		}
+	}
+	
+	function getRealClass(result){
+		var classlist = [];
+		for(var i=0;i<result.length;i++){
+			if(result[i].classType==1){//进课堂
+				classlist.push(result[i])
+			}else{//收费
+				
+			}
+		}
+		return classlist;
+	}
+	
+	function selectClassOk(name,id){
+		currentClassId=id
+		inputs[4].value=name
+		var c = $api.dom(".current");
+		$api.removeCls(c, "current");
+		setTimeout("$api.byId('classlist').style.display='none'",200)
+	}
+	
+	function btnRight(){
+//		var frameInfo={
+//			name:"registerHistory",
+//			url:"registerHistory.html"
+//		}
+//		openWinWithTitle("title_register_history'","历史记录",frameInfo)
+
+		openWin('registerHistory')
+//		var FNScanner = api.require('FNScanner');
+//		FNScanner.openScanner({
+//		    autorotation: true
+//		}, function(ret, err) {
+//		    if (ret) {
+//		    	if(ret.eventType=='success')
+//			        alert(JSON.stringify(ret));
+//		    } else {
+//		        alert(JSON.stringify(err));
+//		    }
+//		});
+
+	}
+	
+</script>
+</html>

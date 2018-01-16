@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<style>
+			.h-right {
+				text-align: right;
+				margin-right: 0.23rem;
+				-webkit-flex: 0.3; /* Chrome */
+				-ms-flex: 0.3; /* IE 10 */
+				flex: 0.3; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 0.3; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 0.3;
+			}
+			.h-left {
+				margin-left: 0.23rem;
+				text-align: left;
+				-webkit-flex: 0.3; /* Chrome */
+				-ms-flex: 0.3; /* IE 10 */
+				flex: 0.3; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 0.3; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 0.3;
+			}
+			.h-left img {
+				margin-top: 0.215rem;
+				width: 0.25rem;
+				height: 0.45rem;
+				background: url(../../image/setting/icon-back.png);
+				background-size: cover;
+				margin-left: 0;
+			}
+			/****************************************************************************************************************/
+			.setbox {
+				background: #ffffff;
+				height: 1.67rem;
+				line-height: 1.67rem;
+				display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+				display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+				display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+				display: -moz-box; /* 老版本语法: Firefox (buggy) */
+				display: -ms-flexbox; /* 混合版本语法: IE 10 */
+			}
+			.setleft {
+				text-align: center;
+				display: block;
+				background: #FF8344;
+				margin-left: 0.23rem;
+				margin-top: 0.29rem;
+				line-height: 0.3rem;
+				height: 1.1rem;
+				width: 1.1rem;
+				color: #333333;
+				font-size: 0.26rem;
+				color: #FFFFFF;
+				padding-left: 0.11rem;
+				padding-top: 0.27rem;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+				border-radius: 0.02rem;
+				border-radius: 0.03rem;
+			}
+			.desetleft {
+				text-align: center;
+				background: #666666;
+				display: block;
+				margin-left: 0.23rem;
+				margin-top: 0.29rem;
+				line-height: 0.3rem;
+				height: 1.1rem;
+				width: 1.1rem;
+				color: #333333;
+				font-size: 0.26rem;
+				color: #FFFFFF;
+				padding-left: 0.11rem;
+				padding-top: 0.27rem;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+				border-radius: 0.03rem;
+			}
+			.setcon {
+				overflow: hidden;
+				text-align: right;
+				margin-left: 0.2rem;
+				font-size: 0.26rem;
+				-webkit-flex: 1; /* Chrome */
+				-ms-flex: 1; /* IE 10 */
+				flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 1;
+				margin-right: 0.23rem;
+			}
+			.setright {
+				width: 0.16rem;
+				height: 0.28rem;
+				margin-right: 0.23rem;
+				background: url(../../image/setting/icon-todo.png);
+				background-size: cover;
+				margin-top: 0.695rem;
+			}
+			.y-line {
+				width: 1px;
+				height: 1.1rem;
+				margin-top: 0.29rem;
+				position: relative;
+			}
+			.y-line:after {
+				border-right: 1px solid #d9d9d9;
+				content: "";
+				display: block;
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				top: 0;
+				-webkit-transform-origin: 0 0;
+				-webkit-transform: scaleX(0.5);
+			}
+			.txtbox {
+				display: block;
+				margin-top: 0.29rem;
+				margin-left: 0.3rem;
+				margin-bottom: 0.23rem;
+				-webkit-flex: 1; /* Chrome */
+				-ms-flex: 1; /* IE 10 */
+				flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 1; /* OLD - Firefox 19- */
+			}
+			.txtbox div {
+				text-align: left;
+				color: #666666;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				word-break: keep-all;
+				font-size: 0.28rem;
+				line-height: 0.4rem;
+			}
+			.txtbox p {
+				display: inline-block;
+				color: #333333;
+			}
+			.center {
+				display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+				display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+				display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+				display: -moz-box; /* 老版本语法: Firefox (buggy) */
+				display: -ms-flexbox; /* 混合版本语法: IE 10 */
+			}
+			.txt {
+				display: inline-block;
+			}
+			.off {
+				display: none;
+			}
+			.line {
+				position: relative;
+			}
+			.line:after {
+				border-bottom: 1px solid #d9d9d9;
+				content: "";
+				display: block;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				-webkit-transform-origin: 0 0;
+				-webkit-transform: scaleY(0.5);
+			}
+			.xline {
+				margin-left: 0.23rem;
+			}
+			.addbox {
+				background: #ffffff;
+				height: 0.88rem;
+				overflow: hidden;
+				width: 100%;
+			}
+			.addpic {
+				background: url(../../image/teaching/icon-add.png);
+				background-size: cover;
+				height: 0.32rem;
+				width: 0.32rem;
+				margin-top: 0.28rem;
+				float: right;
+			}
+			.buttontxt {
+				font-size: 0.28rem;
+				color: #FF8344;
+				height: 0.88rem;
+				line-height: 0.88rem;
+				margin: 0 auto;
+				max-width: 1.7rem;
+			}
+			.t {
+				position: relative;
+			}
+			.t:after {
+				border-bottom: 1px solid #cccccc;
+				content: "";
+				display: block;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				-webkit-transform-origin: 0 0;
+				-webkit-transform: scaleY(0.5);
+			}
+			textarea {
+				height: 1.92rem;
+				background: #FFFFFF;
+				padding-top: 0.2rem;
+				padding-left: 0.23rem;
+				padding-right: 0.23rem;
+				width: 100%;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+				color: #333333;
+				font-size: 0.28rem;
+			}
+			.textbox {
+				position: relative;
+			}
+			#txttips {
+				position: absolute;
+				color: #666666;
+				font-size: 0.22rem;
+				right: 0.23rem;
+				bottom: 0.23rem;
+			}
+			.endtab {
+				position: fixed;
+				bottom: 0;
+				height: 0.98rem;
+				background: #cccccc;
+				border-top-color: #EEEEEE;
+				text-align: center;
+				line-height: 0.98rem;
+				width: 100%;
+				border-top: #EEEEEE solid 0.01rem;
+				margin-bottom: 0;
+				color: #FFFFFF;
+				font-size: 0.32rem;
+			}
+			.osetbox {
+				background: #ffffff;
+				height: 0.88rem;
+				line-height: 0.88rem;
+				width: 100%;
+				display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+				display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+				display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+				display: -moz-box; /* 老版本语法: Firefox (buggy) */
+				display: -ms-flexbox; /* 混合版本语法: IE 10 */
+			}
+			.osetleft {
+				display: inline-block;
+				margin-left: 0.23rem;
+				line-height: 0.88rem;
+				text-align: left;
+				color: #333333;
+				font-size: 0.26rem;
+			}
+			.osetcon {
+				text-align: left;
+				margin-left: 0.23rem;
+				color: #1EBEB6;
+				font-size: 0.26rem;
+				-webkit-flex: 1; /* Chrome */
+				-ms-flex: 1; /* IE 10 */
+				flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 1;
+				margin-right: 0.23rem;
+			}
+			.osetright {
+				width: 0.3rem;
+				height: 0.3rem;
+				margin-right: 0.23rem;
+				background: url(../../image/teaching/icon-delete.png);
+				background-size: cover;
+				margin-top: 0.29rem;
+			}
+			.default {
+				background: url(../../image/teaching/checkboxf.png);
+				background-size: cover;
+			}
+			.x {
+				margin-left: 0.23rem;
+			}
+			#atticon {
+				display: block;
+				width: 0.79rem;
+				height: 0.51rem;
+				margin-left: 0.055rem;
+			}
+			.p1 div {
+				display: inline-block;
+			}
+			.p2 div {
+				display: inline-block;
+			}
+			.p3 div {
+				display: inline-block;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="flex-wrap flex-vertical">
+			<header>
+				<div class="h-left" onclick="closeWin();"><img src="../../image/setting/icon-back.png" />
+				</div>
+				<div class="h-conter">
+					发布作业
+				</div>
+				<div class="h-right"></div>
+			</header>
+			<div class="flex-con">
+				<div class="setbox"  tapmode='touch'>
+					<div  {{ if( it[i].num == 0){ }}
+					class="setleft"
+					{{  }else if( it[i].num == 1){ }}
+					class="desetleft"
+					{{ } }}><img id='atticon' src="../../image/teaching/icon-attenticon.png" />
+					</div>
+					<div class="setcon">
+						<div class="center">
+							<div class="y-line"></div>
+							<div class="txtbox">
+								<div class="p1">
+									<p>
+										班级：
+									</p>
+									{{=it[i].cls}}
+								</div>
+								<div class="p2">
+									<p>
+										课程：
+									</p>
+									{{=it[i].less}}
+								</div>
+								<div class="p3">
+									<p>
+										课时
+									</p>
+									：{{=it[i].lesson}}
+								</div>
+							</div>
+							<div class="off" {{ if( it[i].lesson == 0){ }}
+							class="state"
+							{{  }else if( it[i].lesson == 1){ }}
+							class="destate"
+							{{ } }}>
+								{{=it[i].state}}
+							</div>
+						</div>
+					</div>
+					<div class="setright " style="display: none"></div>
+				</div>
+				<div class="line"></div>
+				<div class="homework"></div>
+				<!--	<div class="line"></div>-->
+				<!--	<div class="addbox" onclick="openwork()">
+				<div class="buttontxt" >
+				点击添加
+				<div class="addpic"></div>
+				</div>
+				</div>-->
+				<div class="line"></div>
+				<div class="textbox">
+					<textarea  onkeydown="checkLen(this)" onkeyup="checkLen(this)">老师留言：</textarea>
+					<div id='txttips'>
+						<span id="count">200</span>字
+					</div>
+				</div>
+				<div class="line"></div>
+				<div class="endtab">
+					发布作业
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="template" id="dotTmpl">
+		{{for(var i = 0 ; i<it.length;i++){ }}
+		<div class="osetbox" >
+		<div class="osetleft ">作业：</div>
+		<div class="osetcon">{{=it[i]}}</div>
+		<div class="osetright sp" onclick="mremove('{{=i}}')"></div>
+		</div>
+		<div class="line x"></div>
+		{{}}}
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.1.1.js"></script>
+	<script type="text/javascript">
+		var isOne = true;
+		function checkLen(obj) {
+			var maxChars = 205;
+			//最多字符数
+			if (obj.value.length > maxChars)
+				obj.value = obj.value.substring(0, maxChars);
+			var curr = maxChars - obj.value.length;
+			$api.dom('#count').innerHTML = curr.toString();
+			if (curr <= 0) {
+				api.toast({
+					msg : '最多输入200个字'
+				});
+			} else if (curr < 200 > 0) {
+				$api.css($api.dom('.endtab'), 'background:#ff8344;');
+				//发布作业TODO
+				if (isOne) {
+					$api.one($api.dom('.endtab'), 'click', function() {
+						//发布作业
+						var data = {};
+						data.method = "pushHomework";
+						data.request = {
+							"timeTableId" : api.pageParam.id,
+							"content" : $api.val($api.dom("textarea"))
+						}
+						console.log("作业提交pushHomework请求数据" + JSON.stringify(data));
+						api.showProgress();
+						ajaxRequest(data, function(ret, err) {
+							api.hideProgress();
+							if (ret) {
+								console.log("作业提交pushHomework返回数据" + JSON.stringify(ret))
+								if (ret.responseBody) {
+									api.alert({
+										title : '提示',
+										msg : '恭喜，发布成功！',
+									}, function(ret, err) {
+										closeWin();
+									});
+								}
+							} else {
+								console.log("作业提交pushHomework返回失败数据" + JSON.stringify(ret))
+								api.alert({
+										title : '提示',
+										msg : '发布失败，请稍后重试！',
+									}, function(ret, err) {
+										closeWin();
+									});
+							}
+						})
+					});
+					isOne = false;
+				} else {
+					return;
+				}
+			} else if (curr >= 200) {
+				$api.css($api.dom('.endtab'), 'background:#cccccc;');
+			}
+			//$('textarea').bind('input propertychange', function() {
+			//  $('#count').html(205-$(this).val().length);
+			//	    if((205-$(this).val().length)==0){
+			//	    api.toast({
+			//	        msg:'最多可输入200字'
+			//      });
+			//	    }else if((205-$(this).val().length)>5){
+			//	    $api.css($api.dom('.endtab'),'background: #ff8344;');
+			//	    $api.one($api.dom('.endtab'), 'click', function(){
+			//
+			//
+			//
+			//	    });
+			//  }
+			//});
+		}
+
+		function mremove(i) {
+			api.confirm({
+				title : '警告',
+				msg : '确认删除？',
+				buttons : ['确定', '取消']
+			}, function(ret, err) {
+				var index = ret.buttonIndex;
+				if (index == 1) {
+					date.splice(i, 1);
+					$api.css($api.domAll('.osetbox')[i], 'display:none;');
+				}
+			});
+		}
+
+		function openwork() {
+			$api.css($api.dom('.endtab'), 'background: #cccccc;');
+			api.openWin({
+				name : 'homework',
+				url : 'homeworkopen.html'
+			});
+		}
+
+		var date = [];
+		function json() {
+			var tmpl = doT.template($api.text($api.dom("#dotTmpl")));
+			$api.html($api.dom(".homework"), tmpl(date));
+		}
+
+		function lode() {
+			var info = api.pageParam;
+			//			$api.text($api.dom('.person'), '班级人数' + info.person);
+			$api.text($api.dom('.p1'), info.cls);
+			$api.text($api.dom('.p2'), info.less);
+			$api.text($api.dom('.p3'), info.lesson);
+		}
+
+		function httpOpen() {
+		}
+
+		//广播监听事件
+		function listen() {
+			api.addEventListener({
+				name : 'homework'
+			}, function(ret, err) {
+				$api.css($api.dom('.endtab'), 'background:#ff8344;');
+				$api.addEvt($api.dom('.endtab'), 'click', function() {
+					//发布作业
+				});
+				var info = ret.value.key1;
+				date = date.concat(info);
+				json();
+			});
+		}
+
+		imready = function() {
+			$api.fixStatusBar($api.dom('header'));
+			lode();
+			listen();
+		};
+	</script>
+</html>

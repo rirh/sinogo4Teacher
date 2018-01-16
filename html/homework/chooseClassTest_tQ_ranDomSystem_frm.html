@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<!-- 此页面Vue工作模板-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>chooseClassTest_tQ_ranDomSystem_frm</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+
+    <style scoped>
+        /****************************模板导入***********************************************/
+
+        .h-right {
+            text-align: right;
+            margin-right: .23rem;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left {
+            margin-left: .23rem;
+            text-align: left;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left img {
+            margin-top: .215rem;
+            width: .25rem;
+            height: .45rem;
+            background: url(../../image/setting/icon-back.png);
+            background-size: cover;
+            margin-left: 0;
+        }
+        /*****************************************************************************************/
+
+        [v-cloak] {
+            display: none;
+        }
+
+        p {
+            height: .86rem;
+            padding-left: .32rem;
+            line-height: .86rem;
+            background: #fff;
+            font-size: .28rem;
+            color: #1ebeb6;
+        }
+
+        p img {
+            width: .32rem;
+            height: .23rem;
+            margin-left: .23rem
+        }
+
+        dl dd {
+            height: .8rem;
+            border-bottom: solid #e9e9e9 1px;
+            position: relative;
+        }
+
+        dl dd span img {
+            height: .42rem;
+            width: .42rem;
+            margin-left: .45rem;
+            margin-top: .19rem;
+        }
+
+        dl dd span strong {
+            margin-left: .23rem;
+            float: right;
+            line-height: .8rem;
+            color: #666;
+            font-size: .26rem;
+        }
+
+        dd div {
+            position: absolute;
+            top: .035rem;
+            right: .32rem;
+            width: 2.36rem;
+            height: .67rem;
+            background: #fff;
+            border-radius: .1rem;
+            border: solid 1px #d9d9d9;
+        }
+
+        dd div span {
+            height: .67rem;
+            width: .58rem;
+            line-height: .67rem;
+            text-align: center;
+            color: #666;
+            font-size: .34rem;
+            float: left;
+        }
+
+        dd div strong {
+            font-size: .34rem;
+            color: #333;
+            width: 1.14rem;
+            height: .67rem;
+            line-height: .67rem;
+            text-align: center;
+            border-left: solid 1px #d9d9d9;
+            border-right: solid 1px #d9d9d9;
+            float: left;
+        }
+
+        .active {
+            background: #eee;
+        }
+
+        a {
+            height: .8rem;
+            line-height: .8rem;
+            color: #666;
+            font-size: .28rem;
+            margin-left: .32rem;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="flex-wrap flex-vertical">
+        <div class="flex-con" id="main">
+            <p @click="getPro">{{proTips}}<span>{{pro}}</span><img :src="proimgTips" alt=""></p>
+            <a>{{tips}}</a>
+            <dl v-cloak>
+                <dd v-for="(topic,index) in topicTypes">
+                    <span @click="switchController(index)"><img :src="topic.img"/><strong>{{topic.KnowledgeName}}</strong></span>
+                    <div>
+                        <span @click="countChange(index,1)" tapmode="active">+</span>
+                        <strong @click="openInput(index)">{{topic.count}}</strong>
+                        <span @click="countChange(index,2)" tapmode="active">-</span>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+
+    </div>
+</body>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+
+<script>
+    var topicTypeSwitch; //全局控制器Controller
+    initVue = function() { //初始化Vue需要的是双向数据绑定 当改变数据以后view会做相应的改变
+        var date = vueDateManager();
+        var methods = vueMethodsManager();
+        topicTypeSwitch = new Vue({
+            el: '#main', //绑定元素
+            data: date, //本页面的静态动态全部数据
+            methods: methods, //本页面的全部方法
+
+        })
+    }
+
+    vueDateManager = function() {
+        //初始化Vue数据date为一个json数组
+        var date = {};
+        date.Programmes = [];
+        date.Programmeid;
+        date.topicTypes = [];
+        date.dialogBox; //自定义弹出框
+        date.pro = "";
+        date.isOneSendFalse = true;
+        date.proimgTips = "../../image/homework_img/proimgTips.png"
+        date.tips = "选择出题范围";
+        date.proTips = "选择教学大纲:";
+        for (var i = 0; i < date.topicTypes.length; i++) {
+            var topicType = {};
+            topicType.img = "../../image/icon_unchecked.png";
+            topicType.imgSwitch = false;
+            topicType.count = 0;
+            topicType.knowledgeQuantity = 12;
+            topicType.KnowledgeName = "虎口";
+            topicType.id;
+            date.topicTypes.push(topicType);
+        }
+
+        console.log("数据管理者" + JSON.stringify(date));
+        return date;
+
+    }
+    vueMethodsManager = function() {
+        //时间管理中心 每个Vue事件的处理都可以在这管理
+        var methods = {};
+
+
+        methods.RefreshList = function(id) {
+            var userid = api.getPrefs({
+                sync: true,
+                key: 'userid'
+            })
+            var data = {};
+            data.method = "getKnowledgesQuantity";
+            data.request = {
+                "programmeId": id, //科目id
+                "createUser": userid
+            };
+            console.log(api.frameName + "getKnowledgesQuantity选择班级请求数据：" + JSON.stringify(data));
+            api.showProgress();
+            ajaxRequest(data, function(ret, err) {
+                api.hideProgress();
+                console.log(api.frameName + "getKnowledgesQuantity成功返回数据：" + JSON.stringify(ret));
+
+                if (ret) {
+                    if (ret.responseCode == 0) {
+                        if (ret.responseBody.length < 0) {
+                            alert("该大纲没有知识点，请重新选择");
+                            return;
+                        }
+                        var cache = []
+                        for (var i = 0; i < ret.responseBody.length; i++) {
+                            var topicType = {};
+                            topicType.img = "../../image/icon_unchecked.png";
+                            topicType.imgSwitch = false;
+                            topicType.count = 0;
+                            topicType.knowledgeQuantity = ret.responseBody[i].knowledgeQuantity;
+                            topicType.KnowledgeName = ret.responseBody[i].knowledgeName;
+                            topicType.id = ret.responseBody[i].knowledgeId;
+                            cache.push(topicType);
+                        };
+                        topicTypeSwitch.topicTypes = cache;
+                    } else {
+                        alert(ret.responseMsg);
+                    }
+                } else {
+                    alert(err.responseMsg);
+
+
+                }
+
+            })
+
+
+        };
+        methods.init = function() { //初始化代码的时候默人选择的是第一个大纲 如果没有的话提示大纲为空
+            var mdata = {};
+            mdata.method = "getProgrammes";
+            mdata.request = {
+                "courseCategoryId": api.pageParam.school.courseCategory, //科目id
+            };
+            console.log(api.frameName + "getProgrammes请求数据：" + JSON.stringify(mdata));
+            api.showProgress();
+            ajaxRequest(mdata, function(ret, err) {
+                api.hideProgress();
+                if (ret) {
+                    console.log(api.frameName + "getProgrammes成功返回数据：" + JSON.stringify(ret));
+                    if (ret.responseCode == 0) {
+                        if (ret.responseBody.length > 0) {
+                            topicTypeSwitch.pro = ret.responseBody[0].programmeName;
+                            topicTypeSwitch.Programmeid = ret.responseBody[0].id;
+                            topicTypeSwitch.Programmes = ret.responseBody;
+                            var data = {};
+                            var userid = api.getPrefs({
+                                sync: true,
+                                key: 'userid'
+                            })
+                            data.method = "getKnowledgesQuantity";
+                            data.request = {
+                                "programmeId": topicTypeSwitch.Programmes[0].id, //科目id
+                                "createUser": userid
+                            };
+                            console.log(api.frameName + "getKnowledgesQuantity选择班级请求数据：" + JSON.stringify(data));
+                            api.showProgress();
+                            ajaxRequest(data, function(ret, err) {
+                                api.hideProgress();
+                                if (ret) {
+                                    console.log(api.frameName + "getKnowledgesQuantity选择班级请求数据：" + JSON.stringify(ret));
+                                    if (ret.responseCode == 0) {
+                                        if (ret.responseBody.length < 0) {
+                                            alert("大纲还没有内容");
+                                            return;
+                                        }
+                                        var cache = []
+                                        for (var i = 0; i < ret.responseBody.length; i++) {
+                                            var topicType = {};
+                                            topicType.img = "../../image/icon_unchecked.png";
+                                            topicType.imgSwitch = false;
+                                            topicType.count = 0;
+                                            topicType.knowledgeQuantity = ret.responseBody[i].knowledgeQuantity;
+                                            topicType.KnowledgeName = ret.responseBody[i].knowledgeName;
+                                            topicType.id = ret.responseBody[i].knowledgeId;
+                                            cache.push(topicType);
+                                        };
+                                        topicTypeSwitch.topicTypes = cache;
+                                    }
+
+                                } else {
+                                    alert(err.responseMsg)
+                                }
+                            })
+                        }
+                    } else {
+                        api.toast({
+                            msg: ret.responseMsg,
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                } else {
+                    api.toast({
+                        msg: ret.responseMsg,
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                }
+            })
+        };
+        methods.getPro = function() { //教学大纲选择
+            var mtitle = "教学大纲选择";
+            var value = [];
+            for (var i = 0; i < topicTypeSwitch.Programmes.length; i++) {
+                var valuetext = {};
+                valuetext.text = topicTypeSwitch.Programmes[i].programmeName;
+                valuetext.id = topicTypeSwitch.Programmes[i].id;
+                value.push(valuetext);
+            };
+            topicTypeSwitch.customAlert(mtitle, value, function(ret, err) { //改变名称重新渲染列表 获取id 发送广播关闭选项谈粗哈框
+                topicTypeSwitch.pro = topicTypeSwitch.Programmes[ret.index].programmeName;
+                topicTypeSwitch.RefreshList(topicTypeSwitch.Programmes[ret.index].id);
+                topicTypeSwitch.Programmeid = topicTypeSwitch.Programmes[ret.index].id;
+                topicTypeSwitch.refreshBoat(); //发送广播
+                topicTypeSwitch.dialogBox.close({
+                    dialogName: 'scene'
+                });
+            });
+
+
+        };
+        methods.customAlert = function(mtitle, value, callBack) { //自定义弹出框 中间部分的选择教学大纲和选择知识点的公共方法
+            var height; //弹出框的宽高设置最高为四百
+            if (value.length > 5) {
+                height = 400;
+            } else {
+                height = (value.length+1) * 48;
+            };
+            console.log("作业弹出框的参数：" + JSON.stringify(value) + "作业弹出框的标题：" + mtitle);
+            topicTypeSwitch.dialogBox = api.require('dialogBox');
+            topicTypeSwitch.dialogBox.scene({
+                rect: {
+                    w: 280,
+                    h: height
+                },
+                corner: 10,
+                texts: {
+                    title: mtitle
+                },
+                styles: {
+                    bg: '#fff',
+                    title: {
+                        bg: '#1ebeb6',
+                        h: 44,
+                        size: 14,
+                        color: '#fff',
+                    },
+                },
+                optionDatas: value
+            }, function(ret, err) {
+                callBack(ret, err);
+            });
+        }
+        methods.openInput = function(sub) {
+            api.prompt({
+                title: "请输入数量，最大值：" + topicTypeSwitch.topicTypes[sub].knowledgeQuantity,
+                type: "number",
+                buttons: ['确定', '取消']
+            }, function(ret, err) {
+                var index = ret.buttonIndex;
+                var text = ret.text;
+                switch (index) {
+                    case 1: //确定
+                        if (text < topicTypeSwitch.topicTypes[sub].knowledgeQuantity) {
+                            console.log(topicTypeSwitch.topicTypes[sub].count + ":" + topicTypeSwitch.topicTypes[sub].knowledgeQuantity)
+                            topicTypeSwitch.topicTypes[sub].count = Number(text);
+                            topicTypeSwitch.refreshBoat();
+                        } else {
+                            alert("不能超过最大值");
+                            topicTypeSwitch.topicTypes[sub].count = topicTypeSwitch.topicTypes[sub].knowledgeQuantity;
+                            topicTypeSwitch.refreshBoat();
+                        }
+                        break;
+                    case 2: //取消
+
+                        break;
+                    default:
+
+                }
+            });
+
+
+        };
+        methods.countChange = function(index, Stats) {
+            switch (Stats) {
+                case 1:
+                    if (topicTypeSwitch.topicTypes[index].count < topicTypeSwitch.topicTypes[index].knowledgeQuantity) {
+                        topicTypeSwitch.topicTypes[index].count++;
+                        topicTypeSwitch.refreshBoat();
+                    } else {
+                        api.alert({
+                            title: '提示',
+                            msg: '不能再多了！',
+                        }, function(ret, err) {
+                            if (ret) {
+                                topicTypeSwitch.topicTypes[index].count = topicTypeSwitch.topicTypes[index].knowledgeQuantity;
+                            } else {
+                                alert(JSON.stringify(err));
+                            }
+                        });
+                    }
+
+                    break;
+                case 2:
+                    if (topicTypeSwitch.topicTypes[index].count > 0) {
+                        topicTypeSwitch.topicTypes[index].count--;
+                        topicTypeSwitch.refreshBoat();
+                    } else {
+                        api.alert({
+                            title: '提示',
+                            msg: '不能再少了！',
+                        }, function(ret, err) {
+                            if (ret) {
+                                topicTypeSwitch.topicTypes[index].count = 0;
+                            } else {
+                                alert(JSON.stringify(err));
+                            }
+                        });
+                    }
+                    break;
+                default:
+            }
+        };
+        methods.switchController = function(index) { //
+            //TODO
+            topicTypeSwitch.topicTypes[index].imgSwitch ? topicTypeSwitch.topicTypes[index].imgSwitch = false : topicTypeSwitch.topicTypes[index].imgSwitch = true;;
+            if (topicTypeSwitch.topicTypes[index].imgSwitch) {
+                topicTypeSwitch.topicTypes[index].img = "../../image/icon_checked.png"
+            } else {
+                topicTypeSwitch.topicTypes[index].img = "../../image/icon_unchecked.png"
+            };
+            topicTypeSwitch.refreshBoat();
+        }
+        methods.refreshBoat = function() { //发送广播获取现在的两个值 第一个为是否能够提交 第二个事请求的数据
+            var cache = new Array();
+            cache = [];
+            for (var i = 0; i < topicTypeSwitch.topicTypes.length; i++) {
+                if (topicTypeSwitch.topicTypes[i].imgSwitch) {
+                    var list = {};
+                    list.knowledgeId = topicTypeSwitch.topicTypes[i].id;
+                    list.questionQuantity = topicTypeSwitch.topicTypes[i].count;
+                    list.Programmeid = topicTypeSwitch.Programmeid;
+                    cache.push(list);
+                }
+            }
+            if (cache.length > 0) {
+                topicTypeSwitch.sendEvent(true, cache);
+            } else {
+                cache = [];
+                topicTypeSwitch.sendEvent(false, cache);
+
+
+            };
+
+
+        }
+        methods.sendEvent = function(key1, key2) {
+            c(key1, key2);
+            api.sendEvent({
+                name: 'istopicTypes',
+                extra: {
+                    key1: key1,
+                    key2: key2,
+                }
+            });
+
+
+
+
+
+        }
+        console.log("事件管理者：" + JSON.stringify(methods));
+        return methods;
+    }
+    imready = function() {
+        // api.parseTapmode(); //默认页面加载完成后，引擎会对 dom 里面的元素进行 tapmode 属性解析，若是之后用代码创建的 dom 元素，则需要调用该方法后 tapmode 属性才会生效
+        // $api.fixStatusBar($api.dom('header'));
+        initVue();
+        topicTypeSwitch.init();
+    };
+</script>
+
+</html>

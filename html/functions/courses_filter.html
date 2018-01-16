@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <style>
+    	html,body{
+    		width:100%;
+    		height:100%;
+    		text-align: center;
+    		background:url(../../image/icon_bg_dialog.png);
+    		overflow: hidden;
+    	}
+		#content{
+			height:7.22rem;
+			background:#FFF;
+		}
+		#content #left{
+			width:100%;
+			float: left;
+			height:7.22rem;
+			overflow: auto;
+		}
+		#content #left div{
+			height:0.8rem;
+			line-height:0.8rem;
+			text-align:left;
+			font-size:0.28rem;
+			color:#333333;
+			padding-left: 0.23rem;
+			position: relative;
+		}
+		#content #left div:before{
+    		border-bottom: 1px solid #d9d9d9;
+    		position:absolute;
+    		content:"";
+    		display:block;
+    		bottom:0;left:0;right:0;
+    		-webkit-transform-origin: 0 0;
+    		-webkit-transform:scaleY(0.5);
+    	}
+		#content #left div.current{
+			color:#FF8344; 
+			background:#fff;
+		}
+		#content #right{
+			width:55.9%;
+			float: right;
+			display:none;
+			height:7.22rem;
+			overflow: auto;
+		}
+		#content #right div{
+			height:0.7rem;
+			line-height:0.7rem;
+			text-align:left;
+			font-size:0.24rem;
+			color:#666;
+			padding-left: 0.36rem;
+			position:relative;
+		}
+		#content #right div:before{
+    		border-bottom: 1px solid #d9d9d9;
+    		position:absolute;
+    		content:"";
+    		display:block;
+    		bottom:0;left:0;right:0;
+    		-webkit-transform-origin: 0 0;
+    		-webkit-transform:scaleY(0.5);
+    	}
+		#content #right div.active{
+			color:#FF8344; 
+			background:#fff;
+		}
+		#content #right div.current{
+			color:#FF8344; 
+			background:#fff;
+		}
+    </style>
+</head>
+<body>
+	<div id="main">
+		<script type="text/x-dot-template" id="left-template">
+			<div class="current all" onclick="getAll(this)">全部</div>
+			{{ for(var i=0;i<it.length;i++){ }}
+				<div onclick="getChildren(this,'{{=i}}')" >{{=it[i].parentname}}</div>
+			{{ } }}
+		</script>
+		<script type="text/x-dot-template" id="right-template">
+			<div onclick="goFilter(null)">全部</div>
+			{{ for(var i=0;i<it.length;i++){ }}
+				<div tapmode='active' onclick="goFilter('{{=it[i].childid}}')">{{=it[i].childname}}</div>
+			{{ } }}
+		</script>
+		<div id="content">
+			<div id="left">
+				
+			</div>
+			<div id="right">
+				
+			</div>
+		</div>
+	</div>
+	<div id="footer" style="height: 100%"></div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript">
+
+	window.list=[];
+	imready = function(){
+		filter(api.pageParam.type)
+		$api.byId("footer").onclick=function(){
+			api.sendEvent({
+	            name:'filterClose'
+            });
+			api.closeFrame({
+				name:'courses_filter'
+            });
+		}
+	};
+	
+	function init(){
+		left.style.width="100%"
+		left.style.background="#FFF"
+		right.style.display="none"
+	}
+	
+	function filter(type){
+		init();
+		window.current=type
+		switch(type){
+			case 'category':
+			getCategory();
+			break;
+			case 'school':
+			getSchool();
+			break;
+			case 'place':
+			getPlace();
+			break;
+		}
+	}
+	
+	function getCategory(){
+		var categorylist = 
+		[{
+			parentname:'棋类',
+			parentid:'qilei',
+			data:[{
+					childid:'weiqi',
+					childname:'围棋',
+				},{
+					childid:'xiangqi',
+					childname:'象棋',
+				},{
+					childid:'wuziqi',
+					childname:'五子棋',
+				}
+			]
+		},{
+			parentname:'美术类',
+			parentid:'qilei',
+			data:[{
+					childid:'youhua',
+					childname:'油画',
+				},{
+					childid:'sumiao',
+					childname:'素描',
+				},{
+					childid:'haiyousha',
+					childname:'不知道',
+				}
+			]
+		}]
+		getInnerByDot("left","left-template",categorylist)
+		window.list.category=categorylist;
+		$api.dom(".all").innerHTML="全部类别"
+	}
+	
+	function getSchool(){
+		var schoollist = 
+		[]
+		getInnerByDot("left","left-template",schoollist)
+		window.list.school=schoollist;
+		$api.dom(".all").innerHTML="当前机构"
+	}
+	
+	function getPlace(){
+		var placelist = 
+		[]
+		getInnerByDot("left","left-template",placelist)
+		window.list.place=placelist;
+		$api.dom(".all").innerHTML="当前地区"
+	}
+	
+	function getChildren(e,i){
+		var list = window.list[window.current];
+		window.pid = list[i].parentid;
+		
+		if(window.current=='school'){
+			goFilter(null)
+			return;
+		}
+		left.style.width="40.1%"
+		left.style.background="#eeeeee"
+		right.style.display="block"
+		
+		$api.removeCls($api.dom("#left .current"), "current");
+		$api.addCls(e, "current");
+		
+		getInnerByDot("right","right-template",list[i].data)
+		
+	}
+	
+	function getAll(type){
+		var allType = type.innerHTML
+		if(allType=='全部类别'){
+			
+		}else if(allType=='当前地区'){
+			
+		}else if(allType=='当前机构'){
+			
+		}
+		api.execScript({
+			name:'coursesList',
+	        script: 'filterClose();'
+        });
+		api.closeFrame({
+			name:'courses_filter'
+        });
+		
+		$api.removeCls($api.dom("#left .current"), "current");
+		$api.addCls(type, "current");
+		
+		left.style.width="100%"
+		left.style.background="#FFF"
+		right.style.display="none"
+	}
+	
+	function goFilter(id){
+		api.execScript({
+			name:'coursesList',
+	        script: 'filterClose();'
+        });
+		api.closeFrame({
+				name:'courses_filter'
+            });
+//          alert(window.current+"---"+window.pid+"---"+id)
+	}
+	
+</script>
+</html>

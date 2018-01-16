@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <style>
+     .h-right{
+		     text-align:right;
+		     margin-right:0.23rem;
+	        -webkit-flex: 0.3;        /* Chrome */  
+		    -ms-flex:  0.3 ;            /* IE 10 */  
+		    flex:  0.3;                /* NEW, Spec - Opera 12.1, Firefox 20+ */
+		    -webkit-box-flex:  0.3 ;    /* OLD - iOS 6-, Safari 3.1-6 */  
+		    -moz-box-flex:  0.3;  
+	   }
+     .h-left{
+     	    margin-left: 0.23rem;
+	        text-align:left;
+	       -webkit-flex: 0.3;        /* Chrome */  
+		    -ms-flex:  0.3 ;            /* IE 10 */  
+		    flex:  0.3;                /* NEW, Spec - Opera 12.1, Firefox 20+ */
+		    -webkit-box-flex:  0.3 ;    /* OLD - iOS 6-, Safari 3.1-6 */  
+		    -moz-box-flex:  0.3;  
+	   }
+	   .h-left img{
+	    	margin-top: 0.215rem;
+	        width: 0.25rem;
+	    	height: 0.45rem;
+	    	background: url(../../image/setting/icon-back.png);
+	    	background-size: cover;
+	    	margin-left: 0;
+	   }
+	   
+	   
+    	/****************************************************************************************************************/
+     .tab div{
+     display: block;
+     float: left
+     }
+     
+      .tab{
+        height:0.84rem;
+        background:#f6f6f6;
+        font-size: 0.28rem;
+        line-height: 0.84rem;
+        border:#CCCCCC solid 1px; 
+        position: relative; 
+      
+         }	
+      .tab:after{
+			border-right: 1px solid #eeeeee;
+    		content:"";
+    		display:block;
+    		position:absolute;
+    		bottom:0;right:0;top:0;
+    		-webkit-transform-origin: 0 0;
+    		-webkit-transform:scaleX(0.5);
+			}
+      .mtab{
+         display:inline-block;
+      }
+      header div{
+    
+      
+      }
+      .hic{ width: 16%; text-align: center;}
+      .name{ width: 16%; text-align: center;}
+      .sex{ width: 16%; text-align: center;}
+      .less{ width: 25%;text-align: center;}
+      .tel{ width: 26%;text-align: center;}
+    </style>
+</head>
+<body>
+	<div class="flex-wrap flex-vertical">
+		<header>
+			<div class="h-left" onclick="closeWin();"><img src="../../image/setting/icon-back.png" /></div>
+			<div class="h-conter">学员列表</div>
+			<div class="h-right"></div>
+		</header>
+			<div class="tab">
+			<div class="hic">头像</div>
+			<div class="name">姓名</div>
+			<div class="sex">性别</div>
+			<div class="less">剩余课次</div>
+			<div class="tel">家长电话</div>
+			</div>
+		</div>
+
+</body>
+<script type="template" id="dotTmpl">
+
+			
+			
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript">
+ 
+	imready = function(){
+	$api.fixStatusBar($api.dom('header'));
+	api.openFrame({
+	    name: 'classstudent',
+	    url: 'classstudent.html',
+	    pageParam:api.pageParam,
+	    bounces:true,
+	    rect: {
+		    x:0,
+		    y:$api.dom('header').offsetHeight+$api.dom('.tab').offsetHeight,
+		    w:api.frameWidth,
+		    h:api.frameHeight-$api.dom('header').offsetHeight-$api.dom('.tab').offsetHeight
+	    }
+    });
+	};
+
+	
+	
+	
+</script>
+</html>

@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>作业列表</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+
+    <style scoped>
+        .h-right {
+            text-align: right;
+            margin-right: .23rem;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left {
+            margin-left: .23rem;
+            text-align: left;
+            -webkit-flex: .3;
+            /* Chrome */
+            -ms-flex: .3;
+            /* IE 10 */
+            flex: .3;
+            /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex: .3;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: .3;
+            width: 0%;
+            display: block;
+        }
+
+        .h-left img {
+            margin-top: .215rem;
+            width: .25rem;
+            height: .45rem;
+            background: url(../../image/setting/icon-back.png);
+            background-size: cover;
+            margin-left: 0;
+        }
+        /*****************************************************************************************/
+
+        .classAssigmentbox {
+            height: 3rem;
+            background: #f6f6f6;
+        }
+
+        .classAssigmentbox>p {
+            height: 0.88rem;
+            font-size: .3rem;
+            color: #333;
+            margin-left: .34rem;
+            line-height: 0.88rem;
+        }
+
+        .classAssigmentbox dl {
+            height: 2.22rem;
+            width: 6.81rem;
+            margin: 0 .34rem .53rem .34rem;
+            background: #fffff8;
+            position: relative;
+        }
+
+        .classAssigmentbox dl dd {
+            line-height: .74rem;
+            margin-left: 0.32rem;
+            color: #666;
+            font-size: 0.28rem;
+        }
+
+        .classAssigmentbox dl div {
+            position: absolute;
+            top: .5rem;
+            right: .32rem;
+        }
+
+        .classAssigmentbox dl div button {
+            height: .5rem;
+            width: 1.03rem;
+            color: #fff;
+            font-size: 0.3rem;
+            background: #a05150;
+            border-radius: 0.05rem;
+            border: solid 1px #884643;
+            display: block;
+            margin-top: 0.22rem;
+        }
+
+        .classAssigmentbox dl dd span img {
+            height: 0.28rem;
+            width: 0.29rem;
+            margin: 0.29rem 0 0 0.18rem;
+        }
+
+        #editTask {
+            background: #1ebeb6;
+        }
+
+        .consolidationWorkbox {
+            width: 100%;
+            background: #fff;
+            margin-top: .58rem;
+        }
+
+        .consolidationWorkbox>p {
+            height: 0.88rem;
+            font-size: .28rem;
+            color: #333;
+            margin-left: .34rem;
+            line-height: 0.88rem;
+        }
+
+        .consolidationWorkbox ul {
+            margin-bottom: 0.53rem;
+            height: .84rem;
+        }
+
+        .consolidationWorkbox ul li {
+            height: .84rem;
+            width: 3.26rem;
+            float: left;
+            list-style: none;
+            background: #fffff8;
+            font-size: 0.24rem;
+            border: solid #999 1px;
+            border-radius: 0.03rem;
+            margin-left: .34rem;
+        }
+
+        .consolidationWorkbox ul li span {
+            line-height: .84rem;
+            font-size: .26rem;
+            color: #a04f51;
+            margin-left: 0.15rem;
+        }
+
+        .consolidationWorkbox ul li img {
+            width: .39rem;
+            height: .19rem;
+            margin: .325rem .19rem 0 0;
+            float: right;
+        }
+
+        .consolidationWorkbox dl {
+            clear: both;
+            margin-top: .53rem;
+            border-top: solid #e9e9e9 1px;
+            border-bottom: solid #e9e9e9 1px;
+        }
+
+        .consolidationWorkbox dl dd {
+            height: .86rem;
+            width: 100%;
+            background: #fff;
+        }
+
+        .consolidationWorkbox dl dd span {
+            margin-left: .34rem;
+            font-size: .28rem;
+            color: #666;
+            line-height: .86rem;
+        }
+
+        .consolidationWorkbox dl dd img {
+            width: .19rem;
+            height: .35rem;
+            margin: .255rem .35rem 0 0;
+            float: right;
+        }
+
+        .active {
+            background: #efefef;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            height: .98rem;
+            background: #fff;
+        }
+
+        footer>button {
+            width: 2.5rem;
+            float: right;
+            background: #ff8344;
+            text-align: center;
+            font-size: 0.28rem;
+            height: .98rem;
+            color: #fff;
+        }
+
+        footer>div {
+            width: 5rem;
+            float: left;
+            background: #fff;
+            text-align: right;
+        }
+
+        footer div p {
+            height: .49rem;
+            line-height: .49rem;
+            margin-right: .32rem;
+        }
+
+        footer div p em {
+            color: #1ebeb6;
+            font-size: .32rem;
+        }
+
+        footer div p strong {
+            color: #666;
+            font-size: .26rem;
+        }
+
+        footer div p span:nth-child(1) {
+            margin-right: .23rem;
+            line-height: .49rem;
+            color: #333;
+            font-size: .30rem;
+        }
+
+        footer div p span:nth-child(2) {
+            line-height: .49rem;
+            color: #666;
+        }
+
+        footer div p img {
+            height: 0.28rem;
+            width: 0.29rem;
+            margin: 0.1rem 0 0 0.18rem;
+        }
+
+        .choose {
+            background: #eee;
+        }
+
+        .tapmode {
+            background: #f4f4f4;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex-wrap flex-vertical">
+        <header>
+            <div class="h-left" onclick="closeWin();"><img src="../../image/setting/icon-back.png" />
+            </div>
+            <div class="h-conter">
+                选择习题
+            </div>
+            <div class="h-right"></div>
+        </header>
+        <div class="flex-con" id="main">
+            <class-assigment v-show="isfindHomeWorkByTeacherAndClassBack" :tips="classAssigment.tips" :class-hour="classAssigment.classHour" :star-tips="classAssigment.starTips" :star-number="classAssigment.starNumber" :dif-statistical="classAssigment.difStatistical"
+                :remove-all="classAssigment.removeAll" :edit-task="classAssigment.editTask"></class-assigment>
+            <consolidation-work :tips="consolidationWork.tips" :teach-progarm="consolidationWork.teachProgarm" :knowledges="consolidationWork.knowledges" :question-bank="consolidationWork.questionBank" :mine-ques-bank="consolidationWork.mineQuesBank" :my-collection="consolidationWork.myCollection"
+                :mine-homework="consolidationWork.mineHomework" :error-highlights="consolidationWork.errorHighlights"></consolidation-work>
+            <submit-job v-show="isSubmitJob" :job-count="submitJob.jobCount" :stop-time="submitJob.stopTime" :start-count="submitJob.startCount" :is-choose="submitJob.isChoose">
+            </submit-job>
+        </div>
+    </div>
+</body>
+<!-- //随堂作业 -->
+<template id="classAssigment" style="display:none">
+  <div class="classAssigmentbox">
+    <p>{{tips}}</p>
+    <dl>
+      <dd style="font-size:0.3rem; color:#1ebeb6">
+        {{classHour}}
+      </dd>
+      <dd>
+        <strong >{{starTips}}</strong>
+        <span>
+          <img class='templateStar'  v-for='star in starNumber' src='../../image/homework_img/icon_start.png' />
+        </span>
+      </dd>
+      <dd>
+        {{difStatistical}}
+      </dd>
+      <div>
+         <button id="removeAll" tapmode="active"@click="removeAlls">{{removeAll}}</button>
+         <button id="editTask" tapmode="active" @click="editTasks">{{editTask}}</button>
+      </div>
+    </dl>
+    </div>
+  </div>
+</template>
+<!-- 巩固作业 -->
+<template id="consolidationWork" style="display:none">
+  <div class="consolidationWorkbox">
+    <p>{{tips}}</p>
+    <ul>
+    <li @click="teachProgarms('getProgrammes')" tapmode="tapmode"><span>{{teachProgarm}}</span><img src="../../image/icon_arrow_down.png"></li>
+    <li @click="teachProgarms('getKnowledges')" tapmode="tapmode"><span>{{knowledges}}</span><img src="../../image/icon_arrow_down.png"></li>
+  </ul>
+     <dl>
+       <dd @click="questionBanks('questionBank')" tapmode="active"><span>{{questionBank}}</span><img src="../../image/icon_arrow_right_1.png"></dd>
+       <hr style="height:1px;background:#e9e9e9; wight:95%;margin-left:.375rem;"/>
+       <dd @click="questionBanks('mineQuesBank')" tapmode="active"><span>{{mineQuesBank}}</span><img src="../../image/icon_arrow_right_1.png"></dd>
+       <hr style="height:1px;background:#e9e9e9; wight:95%;margin-left:.375rem;"/>
+       <!--  新增我的作业-->
+       <dd @click="questionBanks('mineHomework')" tapmode="active"><span>{{mineHomework}}</span><img src="../../image/icon_arrow_right_1.png"></dd>
+       <hr style="height:1px;background:#e9e9e9; wight:95%;margin-left:.375rem;"/>
+       <dd @click="questionBanks('myCollection')" tapmode="active"><span>{{myCollection}}</span><img src="../../image/icon_arrow_right_1.png"></dd>
+       <hr style="height:1px;background:#e9e9e9; wight:95%;margin-left:.375rem;"/>
+       <dd @click="questionBanks('errorHighlights')" tapmode="active"><span>{{errorHighlights}}</span><img src="../../image/icon_arrow_right_1.png"></dd>
+     </dl>
+    </div>
+  </div>
+</template>
+<!-- 提交作业-->
+<template id="submitJob" style="display:none">
+  <footer class="submitJobbox">
+    <div>
+      <p>已经选择&nbsp<em>{{jobCount}}</em>&nbsp题</p>
+        <p> <strong>平均难度</strong>
+          <span>
+            <img class='templateStar'  v-for='star in startCount' src='../../image/homework_img/icon_start.png' />
+          </span>
+        </P>
+    </div>
+    <button  @click="submit()" :class="{'choose':isChoose}" >选好了去查看</button>
+  </footer>
+</template>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script>
+    var chooseTask; //全局控制器Controller
+    initVue = function() { //初始化Vue需要的是双向数据绑定 当改变数据以后view会做相应的改变
+        var date = vueDateManager();
+        var methods = vueMethodsManager();
+        var components = vueComponentsManager();
+        chooseTask = new Vue({
+            el: '#main', //绑定元素
+            data: date, //本页面的静态动态全部数据
+            methods: methods, //本页面的全部方法
+            components: components,
+        });
+    }
+    vueDateManager = function() {
+        //初始化Vue数据date为一个json数组
+        var date = {};
+        date.classAssigment = {};
+        date.isfindHomeWorkByTeacherAndClassBack = false; //是否有随堂作业
+        date.findHomeWorkByTeacherAndClass;
+        date.isSubmitJob = false; //提交按钮
+        date.getProgrammes = []; //科目大纲
+        date.getKnowledges = []; //只是点
+        date.questionIds; //问题id列表
+        date.programmeId = null; //知识点id
+        date.getKnowledgeId = null; //科目id
+        date.dialogBox;
+        date.classAssigment.tips = "随堂作业";
+        date.classAssigment.classHour = "第一课时";
+        date.classAssigment.starTips = "难度";
+        date.classAssigment.starNumber = Math.floor(Math.random() * 6);
+        date.classAssigment.difStatistical = "共计13题，预计用时20分钟";
+        date.classAssigment.removeAll = "全移除";
+        date.classAssigment.editTask = "编辑";
+        date.consolidationWork = {};
+        date.consolidationWork.tips = "测试习题";
+        date.consolidationWork.teachProgarm = "选择教学大纲";
+        date.consolidationWork.knowledges = "选择知识点大纲";
+        date.consolidationWork.questionBank = "系统题库";
+        date.consolidationWork.mineHomework = "我的作业";
+        date.consolidationWork.mineQuesBank = "我的题库";
+        date.consolidationWork.myCollection = "我的收藏";
+        date.consolidationWork.errorHighlights = "错题集锦";
+        date.submitJob = {};
+        date.submitJob.jobCount = 0;
+        date.submitJob.startCount = 0;
+        date.submitJob.isChoose = true;
+        console.log("数据管理者" + JSON.stringify(date));
+        return date;
+
+    }
+    vueMethodsManager = function() {
+        //时间管理中心 每个Vue事件的处理都可以在这管理
+        var methods = {};
+        methods.init = function() {
+            //根据课时id获取随堂作业
+            $api.setStorage('classInfo', api.pageParam.school);
+            var data = {};
+            data.method = "courseQuestions";
+            data.request = {
+                "courseId": api.pageParam.school.courseId, //科目id
+                "classId": api.pageParam.school.classId,
+            };
+            console.log("courseQuestions请求数据：" + JSON.stringify(data));
+            api.showProgress();
+            ajaxRequest(data, function(ret, err) {
+                api.hideProgress();
+                if (ret) {
+                    if (ret.responseCode == 0) {
+                        console.log("courseQuestions成功返回数据：" + JSON.stringify(ret));
+                        //TODO
+                        if (ret.responseBody != null) {
+                            //改变上面巩固作业的三个属性
+                            chooseTask.classAssigment.classHour = ret.responseBody.coursePeriodName
+                            chooseTask.classAssigment.starNumber = ret.responseBody.questionsDifficulty;
+                            chooseTask.classAssigment.difStatistical = "共计" + ret.responseBody.questionsCount + "题";
+                            //显示上面的随堂作业和下面的按钮
+                            chooseTask.isfindHomeWorkByTeacherAndClassBack = true;
+                            chooseTask.isSubmitJob = true;
+                            //改变下面的提交的数据
+                            chooseTask.submitJob.isChoose = false; //显示为可提交状态true
+                            chooseTask.submitJob.jobCount = ret.responseBody.questionsCount;
+                            chooseTask.submitJob.startCount = ret.responseBody.questionsDifficulty;
+                            $api.setStorage('courseQuestionsQuest', ret.responseBody.coursePeriod);
+                            chooseTask.jobBox(ret.responseBody.questionIds);
+                        }
+                    } else {
+                        api.toast({
+                            msg: ret.responseMsg,
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                    console.log(JSON.stringify(ret));
+                } else {
+                    console.log("courseQuestions失败返回数据：" + JSON.stringify(err));
+                    alert(err.responseMsg);
+
+                }
+            });
+        };
+        methods.jobBox = function(questionIds) { //存储随堂作业的作业详情
+            var data = {};
+            data.method = "getQuestionList";
+            data.request = questionIds //科目id
+            console.log(api.frameName + "getQuestionList请求数据：" + JSON.stringify(data));
+            api.showProgress();
+            ajaxRequest(data, function(ret, err) {
+                console.log(api.frameName + "getQuestionList成功返回数据：" + JSON.stringify(ret));
+                api.refreshHeaderLoadDone()
+                api.hideProgress();
+                if (ret.responseCode == 0) {
+                    $api.setStorage('courseQuestions', ret.responseBody);
+                }
+            });
+
+        }
+        methods.customAlert = function(mtitle, value, callBack) { //自定义弹出框 中间部分的选择教学大纲和选择知识点的公共方法
+            var height; //弹出框的宽高设置最高为四百
+            if (value.length * 60 > 400) {
+                height = 400;
+            } else if (value.length == 1) {
+                height = value.length * 100;
+            } else {
+                height = value.length * 70;
+            };
+            console.log("作业弹出框的参数：" + JSON.stringify(value) + "作业弹出框的标题：" + mtitle);
+            chooseTask.dialogBox = api.require('dialogBox');
+            chooseTask.dialogBox.scene({
+                rect: {
+                    w: 280,
+                    h: height
+                },
+                tapClose: true,
+                corner: 10,
+                texts: {
+                    title: mtitle
+                },
+                styles: {
+                    bg: '#fff',
+                    title: {
+                        bg: '#1ebeb6',
+                        h: 44,
+                        size: 14,
+                        color: '#fff',
+                    },
+                },
+                optionDatas: value
+            }, function(ret, err) {
+                callBack(ret, err);
+            });
+        }
+        console.log("事件管理者：" + JSON.stringify(methods)); //事件追踪
+        return methods;
+    }
+    vueComponentsManager = function() {
+        var components = {};
+        components.classAssigment = {}; //星星组件
+        components.classAssigment.template = "#classAssigment";
+        components.classAssigment.props = [];
+        components.classAssigment.props.push("tips"); //要传入的数据
+        components.classAssigment.props.push("classHour"); //要传入的数据
+        components.classAssigment.props.push("starTips"); //要传入的数据
+        components.classAssigment.props.push("starNumber"); //要传入的数据
+        components.classAssigment.props.push("difStatistical"); //要传入的数据
+        components.classAssigment.props.push("removeAll"); //要传入的数据
+        components.classAssigment.props.push("editTask"); //要传入的数据
+        components.classAssigment.methods = {};
+        //全移除
+        components.classAssigment.methods.removeAlls = function() {
+            chooseTask.isfindHomeWorkByTeacherAndClassBack = false;
+            chooseTask.isSubmitJob = false;
+            $api.rmStorage('courseQuestions') //移除随堂作业储存数据
+        };
+        //编辑
+        components.classAssigment.methods.editTasks = function() {
+            api.openWin({
+                name: 'chooseClass_jobDetailsWin',
+                url: 'chooseClass_jobDetailsWin.html',
+                pageParam: {
+                    'courseQuestions': $api.getStorage('courseQuestions')
+                }
+            });
+        }
+        components.consolidationWork = {}; //巩固作业控件
+        components.consolidationWork.template = "#consolidationWork";
+        components.consolidationWork.props = [];
+        components.consolidationWork.props.push("tips");
+        components.consolidationWork.props.push("teachProgarm");
+        components.consolidationWork.props.push("knowledges");
+        components.consolidationWork.props.push("questionBank");
+        components.consolidationWork.props.push("mineQuesBank");
+        components.consolidationWork.props.push("myCollection");
+        components.consolidationWork.props.push("mineHomework");
+        components.consolidationWork.props.push("errorHighlights");
+        components.consolidationWork.methods = {};
+        components.consolidationWork.methods.teachProgarms = function(tag) {
+            switch (tag) {
+                case 'getProgrammes':
+                    var mdata = {};
+                    mdata.method = "getProgrammes";
+                    mdata.request = {
+                        "courseCategoryId": api.pageParam.school.courseCategory, //科目id
+                    };
+                    console.log(api.frameName + "getProgrammes请求数据：" + JSON.stringify(mdata));
+                    api.showProgress();
+                    ajaxRequest(mdata, function(ret, err) {
+                        api.hideProgress();
+                        if (ret) {
+                            console.log(api.frameName + "getProgrammes成功返回数据：" + JSON.stringify(ret));
+                            //TODO
+                            if (ret.responseCode == 0) {
+                                if (ret.responseBody.length > 0) {
+                                    //TODO
+                                    chooseTask.getProgrammes = [];
+                                    //为大纲选择界面创建弹出数据
+                                    var title = "教学大纲选择";
+                                    var value = [];
+                                    for (var i = 0; i < ret.responseBody.length; i++) {
+                                        var valuetext = {};
+                                        chooseTask.getProgrammes.push(ret.responseBody);
+                                        valuetext.text = ret.responseBody[i].programmeName;
+                                        valuetext.id = ret.responseBody[i].id;
+                                        value.push(valuetext);
+                                    }
+                                    // chooseTask.customAlert(title, value, 'getProgrammes');
+                                    chooseTask.customAlert(title, value, function(ret, err) {
+                                        if (ret) {
+                                            chooseTask.consolidationWork.teachProgarm = value[ret.index].text;
+                                            chooseTask.programmeId = value[ret.index].id;
+                                            chooseTask.consolidationWork.knowledges = "选择知识点大纲";
+                                            chooseTask.dialogBox.close({
+                                                dialogName: 'scene'
+                                            });
+                                        }
+
+                                    });
+                                } else {
+                                    alert("大纲暂时没有内容");
+                                }
+                            } else {
+                                api.toast({
+                                    msg: ret.responseMsg,
+                                    duration: 2000,
+                                    location: 'bottom'
+                                });
+                            }
+
+                        } else {
+                            console.log(api.frameName + "getProgrammes失败返回数据：" + JSON.stringify(err));
+                        }
+                    });
+
+
+
+                    break;
+                case 'getKnowledges':
+                    if (chooseTask.programmeId == null) {
+                        api.toast({
+                            msg: "请先选择教学大纲",
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                        return;
+                    }
+                    var data = {};
+                    data.method = "getKnowledges";
+                    data.request = {
+                        "programmeId": chooseTask.programmeId, //科目id
+                    };
+                    console.log(api.frameName + "getKnowledges选择班级请求数据：" + JSON.stringify(data));
+                    api.showProgress();
+                    ajaxRequest(data, function(ret, err) {
+                        api.hideProgress();
+                        if (ret) {
+                            console.log(api.frameName + "getKnowledges成功返回数据：" + JSON.stringify(ret));
+                            //TODO
+                            if (ret.responseCode == 0) {
+                                if (ret.responseBody.length > 0) {
+                                    chooseTask.getKnowledges = [];
+                                    //TODO
+                                    var title = "知识点大纲选择";
+                                    var value = [];
+                                    for (var i = 0; i < ret.responseBody.length; i++) {
+                                        var valuetext = {};
+                                        chooseTask.getKnowledges.push(ret.responseBody);
+                                        valuetext.text = ret.responseBody[i].knowledgeName;
+                                        valuetext.id = ret.responseBody[i].id;
+                                        value.push(valuetext);
+                                    }
+                                    chooseTask.customAlert(title, value, function(ret, err) {
+                                        if (ret) {
+                                            chooseTask.consolidationWork.knowledges = value[ret.index].text;
+                                            chooseTask.getKnowledgeId = value[ret.index].id;
+                                            chooseTask.dialogBox.close({
+                                                dialogName: 'scene'
+                                            });
+                                        }
+                                    });
+
+                                } else {
+                                    alert("大纲暂时没有内容");
+                                }
+                            } else {
+                                api.toast({
+                                    msg: ret.responseMsg,
+                                    duration: 2000,
+                                    location: 'bottom'
+                                });
+                            }
+                        } else {
+                            console.log(api.frameName + "getKnowledges失败返回数据：" + JSON.stringify(err));
+                        }
+                        //TODO
+                    });
+                    break;
+                default:
+
+            }
+
+        };
+        components.consolidationWork.methods.questionBanks = function(tag) {
+            switch (tag) {
+                case 'questionBank': //系统题库
+                    if (chooseTask.programmeId == null || chooseTask.getKnowledgeId == null) {
+                        alert("请先选择大纲！");
+                    } else {
+                        api.openWin({
+                            name: 'chooseClass_questionBank_win',
+                            url: 'chooseClass_questionBank_win.html',
+                            pageParam: {
+                                'programmeId': chooseTask.programmeId,
+                                'getKnowledgeId': chooseTask.getKnowledgeId,
+                            }
+                        });
+                    }
+                    break;
+
+                case 'mineQuesBank': //我的题库
+                    if (chooseTask.programmeId == null || chooseTask.getKnowledgeId == null) {
+                        alert("请先选择大纲！");
+                    } else {
+                        api.openWin({
+                            name: 'chooseClass_mineQuesBank_win',
+                            url: 'chooseClass_mineQuesBank_win.html',
+                            pageParam: {
+                                'programmeId': chooseTask.programmeId,
+                                'getKnowledgeId': chooseTask.getKnowledgeId,
+                            }
+                        });
+                    }
+                    break;
+                    case 'mineHomework': //我的作业
+                        if (chooseTask.programmeId == null || chooseTask.getKnowledgeId == null) {
+                            alert("请先选择大纲！");
+                        } else {
+                            api.openWin({
+                                name: 'chooseClass_questionBank_win',
+                                url: 'chooseClass_questionBank_win.html',
+                                pageParam: {
+                                    'programmeId': chooseTask.programmeId,
+                                    'getKnowledgeId': chooseTask.getKnowledgeId,
+                                }
+                            });
+                        }
+                        break;
+                case 'myCollection': //我的收藏
+                    api.openWin({
+                        name: 'chooseClass_collection_win',
+                        url: 'chooseClass_collection_win.html',
+                        pageParam: {
+                            'school': api.pageParam.school
+                        }
+                    });
+                    break;
+                case 'errorHighlights': //错题集锦
+                    api.openWin({
+                        name: 'chooseClass_errorHighlights_win',
+                        url: 'chooseClass_errorHighlights_win.html',
+                        pageParam: {
+                            'school': api.pageParam.school,
+                        }
+                    });
+                    break;
+                default:
+                    break;
+
+
+            }
+        };
+        components.submitJob = {}; //提交查看控件
+        components.submitJob.template = "#submitJob";
+        components.submitJob.props = [];
+        components.submitJob.props.push("jobCount");
+        components.submitJob.props.push("startCount");
+        components.submitJob.props.push("isChoose");
+        components.submitJob.methods = {};
+        components.submitJob.methods.submit = function() {
+            if (!chooseTask.submitJob.isChoose)
+                api.openWin({
+                    name: 'chooseClass_jobDetailsWin',
+                    url: 'chooseClass_jobDetailsWin.html',
+                    pageParam: {
+                        'courseQuestions': $api.getStorage('courseQuestions')
+                    }
+                });
+
+        };
+        console.log("组件管理者：" + JSON.stringify(components));
+        return components;
+
+    }
+    vueFilterManager = function() {
+        var filters = {};
+        filters.changeColor = function(value) {
+            return "已经选择<strong class = 'changeColor'>" + value.replace(/[^0-9]/ig, "") + "</strong>题";
+        }
+        console.log("过滤器管理者" + JSON.stringify(filters)); //事件追踪
+        return filters;
+    };
+    imready = function() {
+        $api.fixStatusBar($api.dom('header'));
+        console.log(api.frameName + "传入数据：" + JSON.stringify(api.pageParam));
+        initVue();
+        // chooseTask.init();
+    };
+</script>
+
+</html>

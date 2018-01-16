@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<style>
+			.h-right {
+				text-align: right;
+				margin-right: 0.23rem;
+				-webkit-flex: 0.3; /* Chrome */
+				-ms-flex: 0.3; /* IE 10 */
+				flex: 0.3; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 0.3; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 0.3;
+			}
+			.h-left {
+				margin-left: 0.23rem;
+				text-align: left;
+				-webkit-flex: 0.3; /* Chrome */
+				-ms-flex: 0.3; /* IE 10 */
+				flex: 0.3; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 0.3; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 0.3;
+			}
+			.h-left img {
+				margin-top: 0.215rem;
+				width: 0.25rem;
+				height: 0.45rem;
+				background: url(../../image/setting/icon-back.png);
+				background-size: cover;
+				margin-left: 0;
+			}
+			/****************************************************************************************************************/
+			.setbox {
+				background: #ffffff;
+				height: 0.88rem;
+				line-height: 0.88rem;
+				display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+				display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+				display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+				display: -moz-box; /* 老版本语法: Firefox (buggy) */
+				display: -ms-flexbox; /* 混合版本语法: IE 10 */
+			}
+			.setleft {
+				display: block;
+				margin-left: 0.23rem;
+				line-height: 0.88rem;
+				text-align: left;
+				color: #333333;
+				font-size: 0.28rem;
+			}
+			.setcon {
+				text-align: right;
+				margin-left: 0.2rem;
+				color: #666666;
+				font-size: 0.26rem;
+				-webkit-flex: 1; /* Chrome */
+				-ms-flex: 1; /* IE 10 */
+				flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 1;
+				margin-right: 0.23rem;
+			}
+			.setright {
+				width: 0.16rem;
+				height: 0.28rem;
+				margin-right: 0.23rem;
+				background: url(../../image/setting/icon-todo.png);
+				background-size: cover;
+				margin-top: 0.3rem;
+			}
+			.sp {
+				height: 0;
+				width: 0;
+			}
+			.dp {
+				margin-top: 0.77rem;
+			}
+			.line {
+				margin-left: 0.23rem;
+				position: relative;
+			}
+			.line:after {
+				border-bottom: 1px solid #d9d9d9;
+				content: "";
+				display: block;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				-webkit-transform-origin: 0 0;
+				-webkit-transform: scaleY(0.5);
+			}
+			.start {
+				position: relative;
+			}
+			.start:after {
+				border-bottom: 1px solid #cccccc;
+				content: "";
+				display: block;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				-webkit-transform-origin: 0 0;
+				-webkit-transform: scaleY(0.5);
+			}
+			.person {
+				height: 1.82rem;
+				line-height: 1.82rem;
+			}
+			.perleft {
+				text-align: left;
+				-webkit-flex: 1; /* Chrome */
+				-ms-flex: 1; /* IE 10 */
+				flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 1;
+			}
+			.per {
+				display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+				display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+				display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+				display: -moz-box; /* 老版本语法: Firefox (buggy) */
+				display: -ms-flexbox; /* 混合版本语法: IE 10 */
+				overflow: hidden;
+				display: block;
+			}
+			.hicp {
+				float: right;
+				height: 0.90rem;
+				width: 0.9rem;
+				border-radius: 50%;
+				background: url(../../image/setting/icon-icon.png);
+				background-size: 100%;
+				margin-top: 0.46rem;
+			}
+			.school {
+				color: #666666;
+				font-size: 0.26rem;
+				margin-left: 0.23rem;
+			}
+			.remark {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				word-break: keep-all;
+			}
+			.flex-wrap {
+				height: 100%;
+			}
+			#empty {
+				width: 100%;
+				height: 100%;
+				text-align: center;
+			}
+			#empty .errnet {
+				height: 30%;
+				background: url(../../image/icon_net_err.png) no-repeat center bottom;
+				background-size: 2.5rem 2.5rem;
+			}
+			#empty label {
+				margin-top: 0.5rem;
+				color: #666666;
+				font-size: 0.34rem;
+			}
+			#empty .try {
+				margin: 0.3rem auto;
+				width: 1.8rem;
+				height: 0.6rem;
+				color: #1A9973;
+				font-size: 0.34rem;
+				line-height: 0.6rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="flex-wrap flex-vertical">
+			<header>
+				<div class="h-left" onclick="closeWin();"><img src="../../image/setting/icon-back.png" />
+				</div>
+				<div class="h-conter">
+					个人信息
+				</div>
+				<div class="h-right" onclick="save()">
+					保存
+				</div>
+			</header>
+			<div class="flex-con" ></div>
+			<div id="empty" style="display:none">
+				<div class="errnet"></div>
+				<label class="errmsg">网络连接异常</label>
+				<div class="try" onclick="tryAgain()">
+					再试一次
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="template" id="dotTmpl">
+		<div class="setbox person" onclick="set(1)">
+		<div class="setleft person">头像</div>
+		<div class="setcon per">
+		<div class="hicp"></div>
+		</div>
+		<div class="setright dp"></div>
+		</div>
+		<div class="start"></div>
+		<div class="setbox" onclick="set(2)">
+		<div class="setleft general">姓名</div>
+		<div class="setcon">{{=it[0].name}}</div>
+		<div class="setright sp"></div>
+		</div>
+		<div class="line"></div>
+		<div class="setbox" onclick="set(3)">
+		<div class="setleft about">账号</div>
+		<div class="setcon">{{=it[0].username}}</div>
+		<div class="setright sp"></div>
+		</div>
+		<div class="line"></div>
+		<div class="setbox" onclick="set(4)">
+		<div class="setleft about">联系电话</div>
+		<div class="setcon tel">{{=it[0].tel}}</div>
+		<div class="setright sp"></div>
+		</div>
+		<div class="line"></div>
+		<div class="setbox" onclick="set(5)">
+		<div class="setleft about">性别</div>
+		<div class="setcon sex">{{=it[0].sex}}</div>
+		<div class="setright"></div>
+		</div>
+		<div class="line"></div>
+		<div class="setbox" onclick="set(6)">
+		<div class="setleft about">生日</div>
+		<div class="setcon birthday">{{=it[0].birthday}}</div>
+		<div class="setright"></div>
+		</div>
+		<div class="line"></div>
+		<div class="setbox" onclick="set(7)">
+		<div class="setleft about">签名</div>
+		<div class="setcon remark">{{=it[0].paint}}</div>
+		<div class="setright"></div>
+		</div>
+		<div class="line"></div>
+		<div class="start"></div>
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript">
+		var imagepath;
+		var userid;
+		var imageUrl;
+		var sex = ['男', '女'];
+		function save() {
+			//上传头像获得返回值网络地址
+			console.log(imagepath.substring(0, 4));
+			if (imagepath.substring(0, 4) != '/emp') {
+				var date = {};
+				date.values = {
+					"uploadType" : 1
+				}
+				date.files = {
+					"multipartFile" : imagepath
+				}
+				//获取总服务器地址
+				serviceUrl = api.getPrefs({
+					sync : true,
+					key : 'serviceUrl'
+				});
+				//http://api.sinogo.net.cn:8085
+				console.log(serviceUrl)
+				var splits = serviceUrl.split(":");
+				console.log(splits)
+				var imageUpdate = splits[0]+":"+splits[1] + ':8086/user/image/upload';
+				api.showProgress();
+		
+				console.log("上传图片请求数据"+imageUpdate);
+				api.ajax({
+					url : imageUpdate,
+					method : 'post',
+					data : date
+				}, function(ret, err) {
+					console.log(JSON.stringify(ret) + '上传图片返回值-----' + JSON.stringify(err));
+					api.hideProgress();
+					console.log(JSON.stringify(err.body));
+					imagepath = err.body;
+					api.setPrefs({
+						key : 'userimage',
+						value : imagepath
+					});
+					api.sendEvent({
+						name : 'userheaderchanged'
+					});
+					updateinfo();
+				});
+			} else {
+				updateinfo();
+//				api.closeToWin({
+//					name : 'setting'
+//				});
+			}
+		}
+
+
+		function updateinfo() {
+			//获取已经设置了的电话 性别 头像 生日 和图片
+			var tel = $api.text($api.dom('.tel'));
+			var sex;
+			if ($api.text($api.dom('.sex')) == '男') {
+				sex = 0;
+			} else {
+				sex = 1;
+			}
+			var birthday = $api.text($api.dom('.birthday'));
+			var remark = $api.text($api.dom('.remark'));
+			console.log('上传图片地址:' + imagepath)
+			//上传数据
+			if (userid != null) {
+				if (imagepath.length > 70) {
+					imagepath = api.getPrefs({
+						sync : true,
+						key : 'userimage'
+					});
+				}
+				var mdata = {};
+				mdata.method = "employeeEdit";
+				mdata.request = {
+					"employeeImage" : imagepath,
+					"employeePhone" : tel,
+					"employeeGender" : sex,
+					"employeeBirthday" : birthday,
+					"remark" :remark,
+					'id' : userid
+				};
+				console.log("保存信息请求数据：" + JSON.stringify(mdata));
+				ajaxRequest(mdata, function(ret, err) {
+					api.hideProgress();
+					if (ret) {
+						console.log('保存信息返回数据：' + JSON.stringify(ret));
+						api.closeToWin({
+							name : 'setting'
+						});
+					} else {
+					
+					}
+				});
+			}
+			
+		}
+
+		//按钮总开关
+		function set(tag) {
+			switch(tag) {
+				//选择头像
+				case 1:
+					api.actionSheet({
+						cancelTitle : "取消",
+						buttons : ["拍照", "从手机相册选择", "查看大图"]
+					}, function(ret, err) {
+						var index = ret.buttonIndex;
+						handpic(index);
+					});
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				case 4:
+					//	   api.prompt({
+					//	   type:'number',
+					//	    buttons: ['确定', '取消']
+					//		}, function(ret, err) {
+					//		    var index = ret.buttonIndex;
+					//		    var text = ret.text;
+					//		    if(text.length!=11){
+					//		    api.toast({
+					//	            msg:'请输入正确的手机号！'
+					//          });
+					//		    }else{
+					//		    $api.text($api.dom('.tel'),text);
+					//		    }
+					//		});
+					break;
+				case 5:
+					api.actionSheet({
+						cancelTitle : "取消",
+						buttons : ["男", "女"]
+					}, function(ret, err) {
+						var index = ret.buttonIndex;
+						if (index == 1) {
+							$api.text($api.dom('.sex'), '男');
+						} else if (index == 2) {
+							$api.text($api.dom('.sex'), '女');
+						}
+					});
+					break;
+				case 6:
+					api.openPicker({
+						type : 'date',
+						date : '',
+						title : '选择时间'
+					}, function(ret, err) {
+						if (ret) {
+							if (ret.month < 10) {
+								ret.month = "0" + ret.month;
+							}
+							if (ret.day < 10) {
+								ret.day = "0" + ret.day;
+							}
+							$api.html($api.dom('.birthday'), ret.year + '-' + ret.month + '-' + ret.day);
+						} else {
+							console.log(err.msg);
+						}
+					});
+					break;
+				case 7:
+					api.prompt({
+						type : 'text',
+						buttons : ['确定', '取消']
+					}, function(ret, err) {
+						var index = ret.buttonIndex;
+						var text = ret.text;
+						if (index == 1) {
+							if (text.length > 50) {
+								api.toast({
+									msg : '做多能输入50个字！'
+								});
+							} else {
+								$api.text($api.dom('.remark'), text);
+							}
+						} else {
+						}
+					});
+					break;
+			}
+		}
+
+		var HotCitiesinfo;
+		function getHotCities(id) {
+			var data = {};
+			data.method = "getEmployeeByUserId";
+			data.request = {
+				"id" : id
+			}, console.log("个人信息getEmployeeByUserId请求数据："+JSON.stringify(data));
+			api.showProgress();
+			ajaxRequest(data, function(ret, err) {
+				api.hideProgress();
+				if (ret) {
+					$api.byId("empty").style.display = "none"
+					$api.dom(".flex-con").style.display = "block"
+					$api.dom(".h-right").style.display = "block"
+					if (ret.responseBody != null) {
+						HotCitiesinfo = ret.responseBody;
+						 console.log("个人信息getEmployeeByUserId返回数据："+JSON.stringify(HotCitiesinfo));
+						imagepath = '';
+						imagepath = HotCitiesinfo.employeeImage;
+						console.log("下载图片地址:" +imageUrl+ imagepath);
+						if (HotCitiesinfo.employeeImage != null) {
+							json();
+						} else {
+						}
+					}
+				} else {
+					var msg = err.msg;
+					showNetError(msg);
+					//				alert(JSON.stringify(err))
+				}
+			})
+		}
+
+		function showNetError(msg) {
+			$api.dom(".errmsg").innerHTML = msg
+			$api.byId("empty").style.display = "block"
+			$api.dom(".flex-con").style.display = "none"
+			$api.dom(".h-right").style.display = "none"
+		}
+
+		function tryAgain() {
+			userid = api.getPrefs({
+				sync : true,
+				key : 'userid'
+			});
+			getHotCities(userid);
+		}
+
+		function json() {
+			var json = [];
+			var list = {};
+			list.name = HotCitiesinfo.employeeName;
+			list.username = HotCitiesinfo.employeeAccount;
+			list.tel = HotCitiesinfo.employeePhone;
+			list.sex = sex[HotCitiesinfo.employeeGender];
+			if (HotCitiesinfo.employeeBirthday != null) {
+				list.birthday = HotCitiesinfo.employeeBirthday.substring(0, 10);
+			} else {
+				list.birthday = '';
+			}
+			list.paint = HotCitiesinfo.remark;
+			json.push(list);
+			var tmpl = doT.template($api.text($api.dom("#dotTmpl")));
+			$api.html($api.dom(".flex-con"), tmpl(json));
+			if (imagepath.length < 1) {
+				$api.css($api.dom('.hicp'), "background: url(../../image/setting/icon-icon.png);;background-size: 100%,100%;");
+			} else {
+	            
+				$api.css($api.dom('.hicp'), "background: url(" + imageUrl + imagepath + ");background-size: 100%,100%;");
+			}
+		}
+
+		//打开头像时间
+		function handpic(index) {
+			switch(index) {
+				case 1:
+					//拍照
+					api.getPicture({
+						sourceType : "camera",
+						encodingType : "jpg",
+						mediaValue : "pic",
+						destinationType : "url",
+						allowEdit : true,
+						quality : 90,
+						targetWidth : 400,
+						targetHeight : 400,
+						saveToPhotoAlbum : false
+					}, function(ret, err) {
+						if (ret) {
+							console.log(JSON.stringify(ret.data));
+							$api.css($api.dom('.hicp'), "background: url(" + JSON.stringify(ret.data) + ");background-size: 100%,100%;");
+							imagepath = ret.data;
+						} else {
+							//				        alert(JSON.stringify(err));
+						}
+					});
+					break;
+				case 2:
+					//从手机相册选择
+					api.getPicture({
+						sourceType : "album",
+						encodingType : "jpg",
+						mediaValue : "pic",
+						destinationType : "url",
+						allowEdit : true,
+						quality : 90,
+						targetWidth : 400,
+						targetHeight : 400,
+						saveToPhotoAlbum : false
+					}, function(ret, err) {
+						if (ret) {
+							console.log(JSON.stringify(ret.data));
+							$api.css($api.dom('.hicp'), "background: url(" + JSON.stringify(ret.data) + ");background-size: 100%,100%;");
+							imagepath = null;
+							imagepath = ret.data;
+						} else {
+							//				        alert(JSON.stringify(err));
+						}
+					});
+					break;
+				case 3:
+					//查看大图
+					api.openFrame({
+						name : 'bigimage',
+						url : 'bigimage.html',
+						pageParam : {
+							icon : imageUrl+imagepath
+						},
+						rect : {
+							x : 0,
+							y : 0,
+							w : api.frameWidth,
+							h : api.frameHeight
+						},
+						animation : {
+							type : "scube", //动画类型（详见动画类型常量）
+							subType : "from_top", //动画子类型（详见动画子类型常量）
+							duration : 300 //动画过渡时间，默认300毫秒
+						}
+					});
+					break;
+			}
+		}
+
+		imready = function() {
+			$api.fixStatusBar($api.dom('header'));
+			//获取教师id
+			imageUrl = api.getPrefs({
+				sync : true,
+				key : 'imageUrl'
+			});
+			userid = api.getPrefs({
+				sync : true,
+				key : 'userid'
+			});
+			getHotCities(userid);
+		};
+	</script>
+</html>

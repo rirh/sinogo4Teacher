@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+	<style>
+		/****************************************************************************************************************/
+
+		.line {
+			position: relative;
+		}
+
+		.line:after {
+			border-bottom: 1px solid #d9d9d9;
+			content: "";
+			display: block;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform: scaleY(0.5);
+		}
+
+		.tips {
+			height: 0.89rem;
+			background: #f6f6f6;
+			font-size: 0.28rem;
+			width: 100%;
+			color: #333333;
+			line-height: 0.89rem;
+			padding-left: 0.23rem;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+
+		.setbox {
+			background: #ffffff;
+			height: 1.67rem;
+			line-height: 1.67rem;
+			display: -webkit-flex;
+			/* 新版本语法: Chrome 21+ */
+			display: flex;
+			/* 新版本语法: Opera 12.1, Firefox 22+ */
+			display: -webkit-box;
+			/* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+			display: -moz-box;
+			/* 老版本语法: Firefox (buggy) */
+			display: -ms-flexbox;
+			/* 混合版本语法: IE 10 */
+		}
+
+		.setleft {
+			text-align: center;
+			display: block;
+			background: #FF8344;
+			margin-left: 0.23rem;
+			margin-top: 0.29rem;
+			line-height: 0.3rem;
+			height: 1.1rem;
+			width: 1.1rem;
+			color: #333333;
+			font-size: 0.26rem;
+			color: #FFFFFF;
+			padding-left: 0.11rem;
+			padding-top: 0.27rem;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			border-radius: 0.02rem;
+			border-radius: 0.03rem;
+		}
+
+		.desetleft {
+			text-align: center;
+			background: #666666;
+			display: block;
+			margin-left: 0.23rem;
+			margin-top: 0.29rem;
+			line-height: 0.3rem;
+			height: 1.1rem;
+			width: 1.1rem;
+			color: #333333;
+			font-size: 0.26rem;
+			color: #FFFFFF;
+			padding-left: 0.11rem;
+			padding-top: 0.27rem;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			border-radius: 0.03rem;
+		}
+
+		.setcon {
+			overflow: hidden;
+			text-align: right;
+			margin-left: 0.2rem;
+			font-size: 0.26rem;
+			-webkit-flex: 1;
+			/* Chrome */
+			-ms-flex: 1;
+			/* IE 10 */
+			flex: 1;
+			/* NEW, Spec - Opera 12.1, Firefox 20+ */
+			-webkit-box-flex: 1;
+			/* OLD - iOS 6-, Safari 3.1-6 */
+			-moz-box-flex: 1;
+			margin-right: 0.23rem;
+		}
+
+		.setright {
+			width: 0.16rem;
+			height: 0.28rem;
+			margin-right: 0.23rem;
+			background: url(../../image/setting/icon-todo.png);
+			background-size: cover;
+			margin-top: 0.695rem;
+		}
+
+		.y-line {
+			width: 1px;
+			height: 1.1rem;
+			margin-top: 0.29rem;
+			position: relative;
+		}
+
+		.y-line:after {
+			border-right: 1px solid #d9d9d9;
+			content: "";
+			display: block;
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			top: 0;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform: scaleX(0.5);
+		}
+
+		.txtbox {
+			display: block;
+			margin-top: 0.29rem;
+			margin-left: 0.3rem;
+			-webkit-flex: 1;
+			/* Chrome */
+			-ms-flex: 1;
+			/* IE 10 */
+			flex: 1;
+			/* NEW, Spec - Opera 12.1, Firefox 20+ */
+			-webkit-box-flex: 1;
+			/* OLD - iOS 6-, Safari 3.1-6 */
+			-moz-box-flex: 1;
+			/* OLD - Firefox 19- */
+		}
+
+		.txtbox div {
+			text-align: left;
+			color: #666666;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			word-break: keep-all;
+			font-size: 0.28rem;
+			line-height: 0.4rem;
+		}
+
+		p {
+			display: inline-block;
+			color: #333333;
+		}
+
+		.center {
+			display: -webkit-flex;
+			/* 新版本语法: Chrome 21+ */
+			display: flex;
+			/* 新版本语法: Opera 12.1, Firefox 22+ */
+			display: -webkit-box;
+			/* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+			display: -moz-box;
+			/* 老版本语法: Firefox (buggy) */
+			display: -ms-flexbox;
+			/* 混合版本语法: IE 10 */
+		}
+
+		.touch {
+			background: #EEEEEE;
+		}
+
+		.state {
+			display: inline-block;
+			color: #FF8344;
+			font-size: 0.26rem;
+			line-height: 1.67rem;
+		}
+
+		.destate {
+			display: inline-block;
+			color: #666666;
+			font-size: 0.26rem;
+			line-height: 1.67rem;
+		}
+
+		.tips {
+			position: relative;
+		}
+
+		.tips:after {
+			border-bottom: 1px solid #d9d9d9;
+			content: "";
+			display: block;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			-webkit-transform-origin: 0 0;
+			-webkit-transform: scaleY(0.5);
+		}
+
+		.off {
+			display: none;
+		}
+
+		#empty {
+			width: 100%;
+			height: 100%;
+			text-align: center;
+		}
+
+		#empty .errnet {
+			height: 30%;
+			background: url(../../image/icon_net_err.png) no-repeat center bottom;
+			background-size: 2.5rem 2.5rem;
+		}
+
+		#empty label {
+			margin-top: 0.5rem;
+			color: #666666;
+			font-size: 0.34rem;
+		}
+
+		#empty .try {
+			margin: 0.3rem auto;
+			width: 1.8rem;
+			height: 0.6rem;
+			color: #1A9973;
+			font-size: 0.34rem;
+			line-height: 0.6rem;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="main" class="flex-wrap flex-vertical">
+
+		<div class="flex-con">
+			<div class="doing">
+			</div>
+			<p class="tips">已结课班级</p>
+			<div class="finished"></div>
+		</div>
+	</div>
+
+	<div id="empty" style="display:none">
+		<div class="errnet"></div>
+		<label class="errmsg">网络连接异常</label>
+		<div class="try" onclick="tryAgain()">再试一次</div>
+	</div>
+
+</body>
+<script type="template" id="dotTmpl">
+	{{for(var i = 0 ; i
+	<it.length;i++){}} <div class="setbox" onclick="list('{{=i}}','{{=it[i].id}}')" tapmode='touch'>
+		<div {{ if( it[i].num==2 ){ }} class="desetleft" {{ }else if(it[i].num==0 ){ }} class="desetleft" {{ }else{ }} class="setleft" {{ }}}>注册人数{{=it[i].person}}</div>
+		<div class="setcon">
+			<div class="center">
+				<div class="y-line"></div>
+				<div class="txtbox">
+					<div class="p1">
+						<p>班级：</p>{{=it[i].cls}}</div>
+					<div class="p2">
+						<p>课程：</p>{{=it[i].less}}</div>
+					<div class="p3" style="display: none">
+						<p>课时</p>：{{=it[i].lesson}}</div>
+				</div>
+				<div class="off" {{ if( it[i].lesson==0 ){ }} class="state" {{ }else if( it[i].lesson==1 ){ }} class="destate" {{ } }}>{{=it[i].state}}</div>
+			</div>
+		</div>
+		<div class="setright sp">
+		</div>
+		</div>
+		<div class="line"></div>
+		{{}}}
+</script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/jquery-3.1.1.js"></script>
+<script type="text/javascript">
+	var mstate = ['未结课', '已结课'];
+	var hotcities;
+	var pagesize = 20;
+	var pageindex = 1;
+	var loadEnd = false;
+
+	function getHotCities(id) {
+		var userid = api.getPrefs({
+			sync: true,
+			key: 'userid'
+		});
+		var data = {};
+		data.method = "teacherClass";
+		data.request = {
+				"teacherId": userid,
+				"page": pageindex,
+				"pageSize": pagesize
+			},
+	console.log(JSON.stringify(data));
+		api.showProgress();
+		ajaxRequest(data, function(ret, err) {
+			api.hideProgress();
+			api.refreshHeaderLoadDone();
+			if (ret) {
+				if (ret.responseCode == 0) {
+					if (ret.responseBody != null) {
+						$api.byId("empty").style.display = "none"
+						$api.byId("main").style.display = "block"
+						hotcities = ret.responseBody.rows;
+						console.log('teacherClass服务器数据返回数据：' + JSON.stringify(ret));
+						json();
+					} else {
+						showEmpty('没有数据', 0);
+					}
+				} else {
+					showEmpty(ret.responseMsg)
+				}
+			} else {
+				showEmpty(err.msg)
+			}
+		})
+	}
+
+	function showEmpty(msg, type) {
+		$api.byId("empty").style.display = "block"
+		$api.byId("main").style.display = "none"
+		$api.dom(".errmsg").innerHTML = msg;
+		if (type == 0) {
+			$api.dom(".errnet").style.background = "url(../../image/icon_empty.png) no-repeat center bottom "
+			$api.dom(".errnet").style.backgroundSize = "2.18rem 2.18rem";
+		} else {
+			$api.dom(".errnet").style.background = "url(../../image/icon_net_err.png) no-repeat center bottom "
+			$api.dom(".errnet").style.backgroundSize = "2.5rem 2.5rem";
+		}
+	}
+
+	function tryAgain() {
+		getHotCities();
+	}
+
+	function list(tag, stu) {
+		console.log(stu);
+		api.openWin({
+			name: 'classstudenttitle',
+			url: 'classstudenttitle.html',
+			pageParam: {
+				id: stu
+			}
+		});
+	}
+
+	function json() {
+		var ajson = [];
+		var bjson = [];
+		var state = ['已考勤', '未考勤'];
+		console.log()
+		for (var i = 0; i <  hotcities.length; i++) {
+			var list = {};
+			var num = hotcities[i].classStatus;
+			console.log(num);
+			var date = new Date();
+			var hour = date.getHours();
+			var min = date.getMinutes();
+			list.id = hotcities[i].id;
+			list.person = hotcities[i].classEnrollment;
+			list.cls = hotcities[i].className;
+			list.less = hotcities[i].courseName;
+			list.lesson = '第' + parseInt(Math.random() * 40) + '课时  ' + hour + ':' + min;
+			list.state = state[num];
+			list.num = num;
+			if (num == 2) {
+				bjson.push(list);
+			} else {
+				ajson.push(list);
+			}
+		}
+
+		console.log(num + '----' + JSON.stringify(ajson) + '---' + JSON.stringify(bjson));
+		var tmpl = doT.template($api.text($api.dom("#dotTmpl")));
+		if (pageindex == 1) {
+			$api.dom('.doing').innerHTML = '';
+			$api.dom('.finished').innerHTML = '';
+		}
+		if (hotcities.length == 0) {
+			api.toast({
+				msg: '没有更多内容了...',
+				location: 'middle'
+			});
+			return;
+		} else {}
+		$api.dom('.doing').innerHTML += tmpl(ajson);
+		$api.dom('.finished').innerHTML += tmpl(bjson);
+		api.parseTapmode();
+	}
+
+	imready = function() {
+		$api.fixStatusBar($api.dom('header'));
+		api.setRefreshHeaderInfo({
+			visible: true,
+			loadingImg: 'widget://image/refresh.png',
+			bgColor: '#ccc',
+			textColor: '#fff',
+			textDown: '下拉刷新...',
+			textUp: '松开刷新...',
+			showTime: true
+		}, function(ret, err) {
+			//在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+			pageindex = 1;
+			loadEnd = false;
+			getHotCities();
+		});
+		//页面拉到底时自动加载更多
+		$(window).scroll(function(event) {
+			var wScrollY = window.scrollY; // 当前滚动条位置
+			var wInnerH = window.innerHeight; // 设备窗口的高度（不会变）
+			var bScrollH = document.body.scrollHeight; // 滚动条总高度
+			if (wScrollY + wInnerH >= bScrollH) {
+				if (loadEnd) {
+					api.toast({
+						msg: '没有更多内容了...',
+						location: 'middle'
+					});
+					return;
+				}
+				pageindex++;
+				api.showProgress();
+				getHotCities();
+			}
+		});
+		getHotCities();
+	};
+</script>
+
+</html>

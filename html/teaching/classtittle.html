@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+	<style>
+		.h-right {
+			text-align: right;
+			margin-right: 0.23rem;
+			-webkit-flex: 0.3;
+			/* Chrome */
+			-ms-flex: 0.3;
+			/* IE 10 */
+			flex: 0.3;
+			/* NEW, Spec - Opera 12.1, Firefox 20+ */
+			-webkit-box-flex: 0.3;
+			/* OLD - iOS 6-, Safari 3.1-6 */
+			-moz-box-flex: 0.3;
+		}
+
+		.h-left {
+			margin-left: 0.23rem;
+			text-align: left;
+			-webkit-flex: 0.3;
+			/* Chrome */
+			-ms-flex: 0.3;
+			/* IE 10 */
+			flex: 0.3;
+			/* NEW, Spec - Opera 12.1, Firefox 20+ */
+			-webkit-box-flex: 0.3;
+			/* OLD - iOS 6-, Safari 3.1-6 */
+			-moz-box-flex: 0.3;
+		}
+
+		.h-left img {
+			margin-top: 0.215rem;
+			width: 0.25rem;
+			height: 0.45rem;
+			background: url(../../image/setting/icon-back.png);
+			background-size: cover;
+			margin-left: 0;
+		}
+		/****************************************************************************************************************/
+	</style>
+</head>
+
+<body>
+	<div class="flex-wrap flex-vertical">
+		<header>
+			<div class="h-left" onclick="closeWin();"><img src="../../image/setting/icon-back.png" /></div>
+			<div class="h-conter">班级管理</div>
+			<div class="h-right"></div>
+		</header>
+		<div class="flex-con" id="main">
+
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript">
+	imready = function() {
+		$api.fixStatusBar($api.dom('header'));
+		api.openFrame({
+			name: 'classmanagement',
+			url: 'classmanagement.html',
+			rect: {
+				x: 0,
+				y: $api.dom('header').offsetHeight,
+				w: api.frameWidth,
+				h: api.frameHeight - $api.dom('header').offsetHeight
+			}
+		});
+
+	};
+</script>
+
+</html>

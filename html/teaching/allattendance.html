@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<style>
+			header {
+				background: #1ebeb6;
+				height: 0.88rem;
+				width: 100%;
+				display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+				display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+				display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+				display: -moz-box; /* 老版本语法: Firefox (buggy) */
+				display: -ms-flexbox; /* 混合版本语法: IE 10 */
+				overflow: hidden;
+			}
+			.tit-left {
+				width: 0%;
+				display: block;
+				-webkit-flex: 1; /* Chrome */
+				-ms-flex: 1; /* IE 10 */
+				flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 1; /* OLD - Firefox 19- */
+				text-align: left;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+			.tit-con {
+				text-align: center;
+				font-size: 0.34rem;
+				display: block;
+				-webkit-flex: 5; /* Chrome */
+				-ms-flex: 5; /* IE 10 */
+				flex: 5; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 5; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 5; /* OLD - Firefox 19- */
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+				font-size: 0.28rem;
+				height: 0.58rem;
+				padding-top: 0.15rem;
+			}
+			.tit-right {
+				width: 0%;
+				display: block;
+				-webkit-flex: 1; /* Chrome */
+				-ms-flex: 1; /* IE 10 */
+				flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 1; /* OLD - Firefox 19- */
+				text-align: right;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+				background: #1ebeb6;
+			}
+			.tit-con-all {
+				border: #FFFFFF solid 1px;
+				border-radius: 0.03rem;
+				margin: 0 auto;
+				display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+				display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+				display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older           WebKit browsers. */
+				display: -moz-box; /* 老版本语法: Firefox (buggy) */
+				display: -ms-flexbox; /* 混合版本语法: IE 10 */
+				text-align: center;
+				font-size: 0.28rem;
+				line-height: 0.58rem;
+				height: 0.58rem;
+				width: 4.67rem;
+				position: relative;
+			}
+			.tit-con-left {
+				background: #FFFFFF;
+				color: #1ebeb6;
+				border-radius: 0.03rem;
+				line-height: 0.58rem;
+				text-align: center;
+				width: 0%;
+				display: block;
+				-webkit-flex: 1; /* Chrome */
+				-ms-flex: 1; /* IE 10 */
+				flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 1; /* OLD - Firefox 19- */
+			}
+			.tit-con-right {
+				background: #1ebeb6;
+				color: #FFFFFF;
+				border-radius: 0.03rem;
+				line-height: 0.58rem;
+				text-align: center;
+				width: 0%;
+				display: block;
+				-webkit-flex: 1; /* Chrome */
+				-ms-flex: 1; /* IE 10 */
+				flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+				-webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */
+				-moz-box-flex: 1; /* OLD - Firefox 19- */
+			}
+			.back {
+				display: inline-block;
+				color: #FFFFFF;
+				text-align: center;
+				background: url(../../image/setting/icon-back.png);
+				background-size: cover;
+				margin-left: 0.23rem;
+				width: 0.24rem;
+				height: 0.45rem;
+				margin-top: 0.215rem;
+			}
+			/****************************************************************************************************************/
+		</style>
+	</head>
+	<body>
+		<div class="flex-wrap flex-vertical">
+			<header>
+				<div class="tit-left" onclick="closeWin();">
+					<div class="back"></div>
+				</div>
+				<div class="tit-con">
+					<div class="tit-con-all">
+						<div class="tit-con-left" onclick="swicth(1)">
+							出勤情况
+						</div>
+						<div class="tit-con-right" onclick="swicth(2)">
+							出勤记录
+						</div>
+					</div>
+				</div>
+				<div class="tit-right"></div>
+			</header>
+			<div class="flex-con"></div>
+		</div>
+	</body>
+	<script type="template" id="dotTmpl"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/doT.js"></script>
+	<script type="text/javascript">
+		function swicth(tag) {
+			var left = $api.dom('.tit-con-left');
+			var right = $api.dom('.tit-con-right');
+			if (tag == 1) {
+				$api.css(left, 'background:#FFF;color: #1ebeb6;');
+				$api.css(right, 'background:#1ebeb6;color: #FFF;');
+				openframe(0)
+				//打开listview
+			} else if (tag == 2) {
+				$api.css(left, 'background:#1ebeb6;color: #FFF;');
+				$api.css(right, 'background:#FFF;color: #1ebeb6;');
+				openframe(1)
+			}
+		}
+
+		function openframe(i) {
+			var frame = ['attendance', 'attendancelist'];
+			api.openFrame({
+				name : frame[i],
+				url : frame[i] + '.html',
+				rect : {
+					x : 0,
+					y : $api.dom('header').offsetHeight,
+					w : api.frameWidth,
+					h : api.frameHeight - $api.dom('header').offsetHeight
+				},
+				bounces : false,
+				bgColor : 'rgba(0,0,0,0)',
+				vScrollBarEnabled : true,
+				hScrollBarEnabled : true
+			});
+		}
+
+		function json() {
+			var json = [];
+			var list = {};
+			list.update = '';
+			list.admintel = '';
+			json.push(list);
+			var tmpl = doT.template($api.text($api.dom("#dotTmpl")));
+			$api.html($api.dom(".flex-con"), tmpl(json));
+		}
+
+		imready = function() {
+			$api.fixStatusBar($api.dom('header'));
+			openframe(0)
+			json();
+		};
+	</script>
+</html>

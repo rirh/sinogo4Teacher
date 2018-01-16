@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>作业列表</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <style>
+        @keyframes rot_left {
+            0% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(180deg);
+            }
+        }
+
+        @keyframes rot_right {
+            0% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(180deg);
+            }
+            100% {
+                transform: rotate(180deg);
+            }
+        }
+
+        @-webkit-keyframes rot_left {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            50% {
+                -webkit-transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(180deg);
+            }
+        }
+
+        @-webkit-keyframes rot_right {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            50% {
+                -webkit-transform: rotate(180deg);
+            }
+            100% {
+                -webkit-transform: rotate(180deg);
+            }
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+
+        #outer {
+            width: 1.12rem;
+            height: 1.12rem;
+            background: #ff8344;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            border: solid 1px #cecece;
+        }
+
+        #inner {
+            width: .85rem;
+            height: .85rem;
+            background: #ffffff;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -0.445rem;
+            margin-top: -0.445rem;
+            text-align: center;
+            line-height: .85rem;
+            font-size: .26rem;
+            color: #666;
+            border: solid 1px #cecece;
+        }
+
+        #load_left,
+        #load_right {
+            width: .56rem;
+            height: 1.12rem;
+            /*background: rgb(249, 199, 149);*/
+            position: absolute;
+            overflow: hidden;
+        }
+
+        #load_left {
+            top: 0;
+            left: 0;
+            border-top-left-radius: 100% 50%;
+            border-bottom-left-radius: 100% 50%;
+            transform-origin: 100% 50%;
+            /*-webkit-animation: rot_left 10s linear infinite;*/
+        }
+
+        #load_right {
+            top: 0;
+            left: 50%;
+            border-top-right-radius: 100% 50%;
+            border-bottom-right-radius: 100% 50%;
+            transform-origin: 0 50%;
+        }
+
+        #load_left span,
+        #load_right span {
+            display: inline-block;
+            width: .56rem;
+            height: 1.12rem;
+            background: #f9f9f9;
+            position: absolute;
+        }
+
+        #load_left span {
+            border-top-left-radius: 100% 50%;
+            border-bottom-left-radius: 100% 50%;
+            -webkit-transform-origin: 100% 50%;
+            -webkit-animation: rot_left 3s linear 1;
+            animation: rot_left 3s linear 1;
+        }
+
+        #load_right span {
+            top: 0;
+            right: 0%;
+            border-top-right-radius: 100% 50%;
+            border-bottom-right-radius: 100% 50%;
+            -webkit-transform-origin: 0 50%;
+            -webkit-animation: rot_right 3s linear 1;
+            animation: rot_right 3s linear 1;
+        }
+
+        ul {
+            width: 100%;
+            height: auto;
+            background: #fff;
+            margin-top: 0.
+        }
+
+        li {
+            height: 1.85rem;
+            list-style-type: none;
+            float: left;
+            width: 25%;
+        }
+
+        li>div {
+            margin-left: 0.3rem;
+        }
+
+        p {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="main" v-cloak>
+        <li v-show="isMessage" v-for="(item , index) in  studentRing">
+            <div id="outer" @click="getjobDetail(item)">
+                <div id="load_left"><span></span></div>
+                <div id="load_right"><span></span></div>
+                <div id="inner"><strong>{{(item.correctAnswer/item.totalAnswer)*100 | gridnum}}</strong>%</div>
+            </div>
+            <p>第{{item.questionNumber}}题</p>
+        </li>
+    </ul>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script>
+    mobliePhoneInfomation = function() { //判断手机设备
+        var browser = {
+            versions: function() {
+                var u = navigator.userAgent,
+                    app = navigator.appVersion;
+                return { //移动终端浏览器版本信息
+                    trident: u.indexOf('Trident') > -1, //IE内核
+                    presto: u.indexOf('Presto') > -1, //opera内核
+                    webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                    gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+                    mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/), //是否：移动终端
+                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+                    iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否：iPhone或者QQHD浏览器
+                    iPad: u.indexOf('iPad') > -1, //是否iPad
+                    webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+                };
+            }(),
+            language: (navigator.browserLanguage || navigator.language).toLowerCase()
+        };
+        var browserName = navigator.userAgent.toLowerCase();
+        if (/msie/i.test(browserName) && !/opera/.test(browserName)) {
+            console.log("内置浏览器：IE");
+        } else if (/firefox/i.test(browserName)) {
+            console.log("内置浏览器：Firefox");
+        } else if (/chrome/i.test(browserName) && /webkit/i.test(browserName) && /mozilla/i.test(browserName)) {
+            console.log("内置浏览器：Chrome");
+        } else if (/opera/i.test(browserName)) {
+            console.log("内置浏览器：Opera");
+        } else if (/webkit/i.test(browserName) && !(/chrome/i.test(browserName) && /webkit/i.test(browserName) && /mozilla/i.test(browserName))) {
+            console.log("内置浏览器：Safari");
+        } else {
+            console.log("内置浏览器：我也不知道");
+        }
+        console.log("语言版本: " + browser.language);
+        console.log(" 是否：移动终端: " + browser.versions.mobile);
+        console.log(" ios终端: " + browser.versions.ios);
+        console.log(" android终端: " + browser.versions.android);
+        console.log(" 是否：iPhone: " + browser.versions.iPhone);
+        console.log(" 是否iPad: " + browser.versions.iPad);
+        var br = navigator.userAgent;
+        var browserVer = (br.match(/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/) || [0, '0'])[1];
+        console.log(browserVer);
+
+    }
+    Vue.filter('gridnum', function(value) {
+        // 返回处理后的值
+        if (value != value) {
+            return 0;
+        }
+        return Math.floor(value);
+    })
+
+
+    var studentCompletion; //全局控制器Controller
+    initVue = function() { //初始化Vue需要的是双向数据绑定 当改变数据以后view会做相应的改变
+        var date = vueDateManager();
+        var methods = vueMethodsManager();
+        studentCompletion = new Vue({
+            el: '#main', //绑定元素
+            data: date, //本页面的静态动态全部数据
+            methods: methods, //本页面的全部方法
+            created: function() {
+                setTimeout(function() {
+                    // var leftRot = $api.domAll('#load_left');
+                    // rightRot = $api.domAll('#load_right');
+                    // showVal = $api.domAll('#inner strong');
+                    // for (var i = 0; i < date.studentRing.length; i++) {
+                    //     var left = leftRot[i].children[0];
+                    //     var right = rightRot[i].children[0];
+                    //     var val = parseInt($api.text(showVal[i])) * 360 / 100;
+                    //     studentCompletion.rotControl(left, right, val);
+                    // }
+                }, 3000);
+
+            }
+        })
+    }
+
+    vueDateManager = function() {
+        //初始化Vue数据date：一个json数组
+        var date = {};
+        date.studentRing = [];
+        for (var i = 0; i < 100; i++) {
+            var list = {};
+            list.totalAnswer = 50;
+            list.questionNumber = 50;
+            list.questionId = 50;
+            list.correctAnswer = 50;
+            date.studentRing.push(list);
+        }
+        date.RingNumber = 20;
+        date.isMessage = false;
+        date.pageParam = api.pageParam;
+        console.log("数据管理者" + JSON.stringify(date));
+        return date;
+    }
+    vueMethodsManager = function() {
+        //时间管理中心 每个Vue事件的处理都可以在这管理
+        var methods = {};
+        methods.init = function() {
+            c(1, studentCompletion.pageParam)
+            var data = {};
+            data.method = "getHomeWorkAccuracy";
+            data.request = {
+                "homeWorkId": studentCompletion.pageParam.jobDetails.id,
+            };
+            console.log(api.frameName + "getHomeWorkAccuracy请求数据：" + JSON.stringify(data));
+            api.showProgress();
+            ajaxRequest(data, function(ret, err) {
+                api.hideProgress();
+                if (ret) {
+                    console.log(api.frameName + "getHomeWorkAccuracy返回数据：" + JSON.stringify(ret));
+                    if (ret.responseCode == 0) {
+                        studentCompletion.studentRing = ret.responseBody;
+                        var leftRot = $api.domAll('#load_left');
+                        rightRot = $api.domAll('#load_right');
+                        showVal = $api.domAll('#inner strong');
+                        c(1111111111111111, studentCompletion.studentRing)
+                        for (var i = 0; i < studentCompletion.studentRing.length; i++) {
+                            var left = leftRot[i].children[0];
+                            var right = rightRot[i].children[0];
+                            if (studentCompletion.studentRing[i].totalAnswer == 0) {
+                                var val = 0;
+                                studentCompletion.rotControl(left, right, val);
+
+                            } else {
+                                var val = (studentCompletion.studentRing[i].correctAnswer) / (studentCompletion.studentRing[i].totalAnswer) * 360;
+                                studentCompletion.rotControl(left, right, val);
+
+                            }
+
+                        }
+                        studentCompletion.isMessage = true;
+
+                    } else {
+                        api.toast({
+                            msg: ret.responseMsg,
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                } else {
+                    api.toast({
+                        msg: ret.responseMsg,
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                }
+            })
+
+
+
+        };
+        methods.rotControl = function(leftRot, rightRot, val) { //确认发布作业
+            //TODO
+            console.log(val);
+            if (val <= 180) {
+                rightRot.style.transform = 'rotate(' + val + 'deg)';
+                leftRot.style.transform = 'rotate(0deg)';
+                rightRot.style.webkitTransform = 'rotate(' + val + 'deg)';
+                leftRot.style.webkitTransform = 'rotate(0deg)';
+            }
+            if (val > 180) {
+                leftRot.style.transform = 'rotate(' + (val - 180) + 'deg)';
+                rightRot.style.transform = 'rotate(180deg)';
+                leftRot.style.webkitTransform = 'rotate(' + (val - 180) + 'deg)';
+                rightRot.style.webkitTransform = 'rotate(180deg)';
+            }
+        };
+        methods.getjobDetail = function(item) {
+            if (item.totalAnswer == 0) {
+                return;
+            }
+            api.openWin({
+                name: 'jobStudentDetail_win',
+                url: 'jobStudentDetail_win.html',
+                pageParam: {
+                    question: item,
+                    classMessage: api.pageParam
+                }
+            });
+        };
+        console.log("事件管理者：" + JSON.stringify(methods));
+        return methods;
+
+
+
+
+    }
+    imready = function() {
+        // api.parseTapmode(); //默认页面加载完成后，引擎会对 dom 里面的元素进行 tapmode 属性解析，若是之后用代码创建的 dom 元素，则需要调用该方法后 tapmode 属性才会生效
+        // $api.fixStatusBar($api.dom('header'));
+        initVue();
+        studentCompletion.init();
+
+    };
+</script>
+
+
+</html>
